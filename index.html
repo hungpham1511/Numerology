@@ -8,678 +8,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Cinzel+Decorative:wght@400;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #7c3aed;
-            --primary-light: #a78bfa;
-            --primary-dark: #5b21b6;
-            --primary-glow: rgba(124, 58, 237, 0.35);
-            --accent: #f59e0b;
-            --accent-light: #fcd34d;
-            --accent-glow: rgba(245, 158, 11, 0.3);
-            --bg: #080612;
-            --bg2: #0e0a1f;
-            --bg3: #140d2e;
-            --glass: rgba(255, 255, 255, 0.04);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --glass-hover: rgba(255, 255, 255, 0.07);
-            --card: rgba(20, 13, 46, 0.8);
-            --card-border: rgba(124, 58, 237, 0.2);
-            --text: #f0ecff;
-            --text-muted: #8b7fc8;
-            --text-dim: #5a5280;
-            --success: #10b981;
-            --danger: #ef4444;
-            --info: #3b82f6;
-            --pink: #ec4899;
-        }
-
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-        html { scroll-behavior: smooth; }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* ===== BACKGROUND ===== */
-        .bg-scene {
-            position: fixed; inset: 0; z-index: 0; pointer-events: none;
-            background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(124,58,237,0.18) 0%, transparent 70%),
-                        radial-gradient(ellipse 60% 40% at 80% 80%, rgba(245,158,11,0.08) 0%, transparent 60%),
-                        radial-gradient(ellipse 50% 50% at 10% 70%, rgba(236,72,153,0.07) 0%, transparent 55%),
-                        linear-gradient(180deg, #080612 0%, #0e0a1f 50%, #080612 100%);
-        }
-
-        #particles { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
-
-        /* ===== LAYOUT ===== */
-        .site-wrap { position: relative; z-index: 1; }
-        .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
-
-        /* ===== HEADER ===== */
-        .site-header {
-            text-align: center;
-            padding: 80px 20px 64px;
-            animation: headerEntrance 1s ease both;
-        }
-        @keyframes headerEntrance {
-            from { opacity: 0; transform: translateY(-30px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-
-        .header-badge {
-            display: inline-flex; align-items: center; gap: 8px;
-            background: rgba(124,58,237,0.15); border: 1px solid rgba(124,58,237,0.3);
-            border-radius: 100px; padding: 6px 18px; font-size: 0.78rem;
-            color: var(--primary-light); letter-spacing: 0.08em; text-transform: uppercase;
-            margin-bottom: 28px; font-weight: 600;
-            backdrop-filter: blur(10px);
-            animation: headerEntrance 1s 0.1s ease both;
-        }
-        .header-badge .dot {
-            width: 6px; height: 6px; background: var(--primary-light);
-            border-radius: 50%; animation: pulse-dot 2s infinite;
-        }
-        @keyframes pulse-dot {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.4; transform: scale(0.7); }
-        }
-
-        /* ===== TITLE – split "Thần Số Học" to avoid Cinzel rendering broken Vietnamese ===== */
-        .site-header h1 {
-            font-size: clamp(2.4rem, 7vw, 4.5rem);
-            font-weight: 900;
-            line-height: 1.15;
-            margin-bottom: 20px;
-            animation: headerEntrance 1s 0.2s ease both;
-        }
-        .h1-latin {
-            font-family: 'Cinzel Decorative', serif;
-            font-size: 0.55em;
-            display: block;
-            letter-spacing: 0.18em;
-            background: linear-gradient(135deg, #c4b5fd 0%, var(--accent-light) 50%, var(--primary-light) 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-transform: uppercase;
-            margin-bottom: 6px;
-        }
-        .h1-viet {
-            font-family: 'Playfair Display', 'Inter', serif;
-            font-weight: 900;
-            display: block;
-            background: linear-gradient(135deg, #e0d4ff 0%, var(--accent-light) 40%, #f0ecff 70%, var(--primary-light) 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: shimmer 6s linear infinite;
-            background-size: 300% 100%;
-        }
-        @keyframes shimmer {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .site-header p {
-            color: var(--text-muted);
-            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
-            max-width: 500px; margin: 0 auto;
-            font-weight: 300;
-            animation: headerEntrance 1s 0.35s ease both;
-        }
-
-        /* ===== FLOATING ORBS ===== */
-        .orb {
-            position: fixed; border-radius: 50%; pointer-events: none; z-index: 0;
-            filter: blur(60px); opacity: 0.12;
-            animation: orbFloat linear infinite;
-        }
-        .orb-1 { width: 300px; height: 300px; background: var(--primary); top: 10%; left: -5%; animation-duration: 20s; }
-        .orb-2 { width: 200px; height: 200px; background: var(--accent); bottom: 15%; right: -3%; animation-duration: 17s; animation-delay: -8s; }
-        .orb-3 { width: 180px; height: 180px; background: var(--pink); top: 50%; left: 80%; animation-duration: 25s; animation-delay: -4s; }
-        @keyframes orbFloat {
-            0%   { transform: translateY(0) scale(1); }
-            33%  { transform: translateY(-40px) scale(1.05); }
-            66%  { transform: translateY(20px) scale(0.95); }
-            100% { transform: translateY(0) scale(1); }
-        }
-
-        /* ===== GLASS CARD ===== */
-        .glass-card {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-        }
-
-        /* ===== INPUT SECTION ===== */
-        .input-section {
-            background: linear-gradient(135deg, rgba(124,58,237,0.08) 0%, rgba(20,13,46,0.6) 100%);
-            border: 1px solid rgba(124,58,237,0.25);
-            border-radius: 24px;
-            padding: 40px;
-            margin-bottom: 36px;
-            backdrop-filter: blur(30px);
-            position: relative;
-            overflow: hidden;
-            animation: slideUp 0.8s 0.5s ease both;
-        }
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-        .input-section::before {
-            content: '';
-            position: absolute; top: -1px; left: 10%; right: 10%; height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(124,58,237,0.6), transparent);
-        }
-
-        .input-section-title {
-            font-size: 1.1rem; font-weight: 700; color: var(--text);
-            margin-bottom: 28px; display: flex; align-items: center; gap: 10px;
-        }
-        .input-section-title .icon {
-            width: 36px; height: 36px; background: rgba(124,58,237,0.2);
-            border-radius: 10px; display: flex; align-items: center; justify-content: center;
-            font-size: 1.1rem;
-        }
-
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .form-group { display: flex; flex-direction: column; gap: 8px; }
-        .form-group.full { grid-column: 1 / -1; }
-
-        .form-group label {
-            font-size: 0.8rem; color: var(--text-muted); font-weight: 600;
-            letter-spacing: 0.04em; text-transform: uppercase;
-        }
-
-        .form-group input {
-            padding: 14px 18px;
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.08);
-            background: rgba(255,255,255,0.04);
-            color: var(--text);
-            font-size: 1rem;
-            font-family: 'Inter', sans-serif;
-            outline: none;
-            transition: all 0.25s ease;
-        }
-        .form-group input:focus {
-            border-color: var(--primary);
-            background: rgba(124,58,237,0.08);
-            box-shadow: 0 0 0 3px rgba(124,58,237,0.15), 0 0 20px rgba(124,58,237,0.1);
-        }
-        .form-group input::placeholder { color: var(--text-dim); }
-
-        .date-grid { display: grid; grid-template-columns: 1fr 1fr 1.5fr; gap: 12px; }
-
-        .form-row-extra { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-
-        .btn-calculate {
-            display: flex; align-items: center; justify-content: center; gap: 10px;
-            width: 100%; padding: 16px 40px;
-            background: linear-gradient(135deg, var(--primary) 0%, #a855f7 50%, var(--primary) 100%);
-            background-size: 200% 100%;
-            color: #fff; border: none; border-radius: 14px;
-            font-size: 1.05rem; font-weight: 700; font-family: 'Inter', sans-serif;
-            cursor: pointer; transition: all 0.35s ease;
-            margin-top: 8px;
-            position: relative; overflow: hidden;
-            letter-spacing: 0.02em;
-        }
-        .btn-calculate::after {
-            content: '';
-            position: absolute; inset: 0;
-            background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.1) 50%, transparent 60%);
-            background-size: 200% 100%;
-            background-position: -100% 0;
-            transition: background-position 0.5s;
-        }
-        .btn-calculate:hover::after { background-position: 200% 0; }
-        .btn-calculate:hover {
-            background-position: right center;
-            transform: translateY(-2px);
-            box-shadow: 0 12px 40px rgba(124,58,237,0.5), 0 4px 15px rgba(0,0,0,0.3);
-        }
-        .btn-calculate:active { transform: translateY(0); }
-        .btn-calculate .btn-icon { font-size: 1.2rem; transition: transform 0.4s; }
-        .btn-calculate:hover .btn-icon { transform: rotate(20deg) scale(1.15); }
-
-        .btn-center { grid-column: 1 / -1; padding-top: 6px; }
-
-        /* ===== REFERENCE TABLE ===== */
-        .ref-section { margin-bottom: 32px; }
-        .ref-toggle-btn {
-            display: flex; align-items: center; gap: 10px;
-            background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border);
-            border-radius: 12px; padding: 12px 18px; cursor: pointer;
-            color: var(--text-muted); font-size: 0.9rem; font-weight: 600;
-            font-family: 'Inter', sans-serif;
-            transition: all 0.2s; width: 100%;
-        }
-        .ref-toggle-btn:hover { background: rgba(255,255,255,0.06); color: var(--text); }
-        .ref-toggle-btn .arrow { margin-left: auto; transition: transform 0.3s; font-size: 0.7rem; }
-        .ref-toggle-btn.open .arrow { transform: rotate(180deg); }
-
-        .ref-body {
-            display: none; padding: 20px;
-            background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border);
-            border-top: none; border-radius: 0 0 12px 12px;
-            overflow-x: auto;
-        }
-        .ref-body.open { display: block; animation: fadeDown 0.3s ease; }
-        @keyframes fadeDown {
-            from { opacity: 0; transform: translateY(-8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .ref-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
-        .ref-table th, .ref-table td {
-            padding: 8px 10px; text-align: center;
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-        .ref-table th { background: rgba(124,58,237,0.2); color: var(--accent-light); font-weight: 700; }
-        .ref-table .vowel { color: var(--accent-light); font-weight: 700; }
-
-        /* ===== RESULTS ===== */
-        #results { display: none; }
-
-        /* ===== SECTION HEADER ===== */
-        .section-header {
-            display: flex; align-items: center; gap: 16px;
-            margin: 48px 0 24px;
-        }
-        .section-header .sh-icon {
-            width: 44px; height: 44px; border-radius: 12px;
-            background: linear-gradient(135deg, rgba(124,58,237,0.3), rgba(168,85,247,0.2));
-            border: 1px solid rgba(124,58,237,0.3);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.3rem; flex-shrink: 0;
-        }
-        .section-header h2 {
-            font-size: 1.3rem; font-weight: 700; color: var(--text);
-        }
-        .section-header p {
-            font-size: 0.83rem; color: var(--text-muted); margin-top: 2px;
-        }
-        .section-divider { flex: 1; height: 1px; background: linear-gradient(90deg, rgba(124,58,237,0.4), transparent); }
-
-        /* ===== NUMBER CARDS ===== */
-        .numbers-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 16px;
-        }
-
-        .num-card {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 18px;
-            padding: 26px 20px;
-            text-align: center;
-            backdrop-filter: blur(15px);
-            transition: all 0.35s ease;
-            position: relative;
-            overflow: hidden;
-            cursor: default;
-            animation: cardPop 0.5s ease both;
-        }
-        @keyframes cardPop {
-            from { opacity: 0; transform: scale(0.9) translateY(16px); }
-            to   { opacity: 1; transform: scale(1) translateY(0); }
-        }
-        .num-card::before {
-            content: '';
-            position: absolute; inset: 0;
-            background: radial-gradient(circle at 50% 0%, rgba(124,58,237,0.12) 0%, transparent 70%);
-            opacity: 0; transition: opacity 0.3s;
-        }
-        .num-card:hover {
-            transform: translateY(-6px) scale(1.02);
-            border-color: rgba(124,58,237,0.5);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.35), 0 0 0 1px rgba(124,58,237,0.2), 0 0 30px rgba(124,58,237,0.1);
-        }
-        .num-card:hover::before { opacity: 1; }
-
-        .num-card .card-icon { font-size: 1.4rem; margin-bottom: 8px; }
-        .num-card .label {
-            font-size: 0.72rem; color: var(--text-muted); font-weight: 600;
-            text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px;
-        }
-        .num-card .value {
-            font-size: 3rem; font-weight: 900; line-height: 1;
-            background: linear-gradient(135deg, var(--accent-light), var(--accent));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-            margin-bottom: 6px;
-            transition: transform 0.3s;
-        }
-        .num-card:hover .value { transform: scale(1.08); }
-        .num-card .value.master {
-            background: linear-gradient(135deg, #f472b6, #a78bfa, #60a5fa);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-        }
-        .num-card .desc { font-size: 0.78rem; color: var(--text-muted); line-height: 1.4; }
-
-        /* ===== NAME TABLE ===== */
-        .name-breakdown-card {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 18px;
-            padding: 24px;
-            overflow-x: auto;
-            backdrop-filter: blur(15px);
-        }
-        .name-table { border-collapse: collapse; font-size: 0.85rem; min-width: 100%; }
-        .name-table th, .name-table td {
-            padding: 8px 10px; text-align: center;
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-        .name-table th {
-            background: rgba(124,58,237,0.12);
-            color: var(--text-muted); font-size: 0.75rem; font-weight: 600;
-            text-transform: uppercase; letter-spacing: 0.04em;
-        }
-        .name-table .letter-cell { font-weight: 800; font-size: 1.1rem; }
-        .name-table .vowel-row td { color: var(--accent-light); }
-        .name-table .consonant-row td { color: var(--primary-light); }
-        .name-table .total-row td { font-weight: 700; border-top: 2px solid rgba(124,58,237,0.4); color: var(--text); }
-        .name-table .space-cell { background: rgba(255,255,255,0.01); }
-
-        /* ===== TIMELINE GRID ===== */
-        .timeline-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
-        .timeline-card {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            padding: 22px 14px;
-            text-align: center;
-            backdrop-filter: blur(12px);
-            transition: all 0.3s;
-            animation: cardPop 0.5s ease both;
-        }
-        .timeline-card:hover { transform: translateY(-4px); border-color: rgba(124,58,237,0.4); box-shadow: 0 12px 30px rgba(0,0,0,0.3); }
-        .timeline-card .tc-label { font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; font-weight: 600; }
-        .timeline-card .tc-num { font-size: 2.4rem; font-weight: 900; color: var(--primary-light); line-height: 1; }
-        .timeline-card.challenge .tc-num { color: #f87171; }
-        .timeline-card .tc-ages { font-size: 0.75rem; color: var(--accent); margin-top: 6px; font-weight: 500; }
-
-        /* ===== PERIODS ===== */
-        .periods-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-
-        /* ===== PYTHAGORAS GRID ===== */
-        .pytha-wrap { display: flex; gap: 32px; flex-wrap: wrap; align-items: flex-start; }
-        .pytha-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 96px);
-            grid-template-rows: repeat(3, 96px);
-            gap: 8px;
-        }
-        .pytha-cell {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 14px;
-            display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            position: relative;
-            transition: all 0.3s;
-        }
-        .pytha-cell.filled {
-            border-color: rgba(124,58,237,0.4);
-            background: rgba(124,58,237,0.08);
-        }
-        .pytha-cell:hover { transform: scale(1.08); box-shadow: 0 8px 20px rgba(124,58,237,0.2); }
-        .pytha-cell .pc-digit { position: absolute; top: 7px; left: 10px; font-size: 0.65rem; color: var(--text-dim); font-weight: 700; }
-        .pytha-cell .pc-count { font-size: 1.5rem; font-weight: 800; color: var(--accent-light); }
-        .pytha-cell.empty .pc-count { color: rgba(255,255,255,0.1); font-size: 1.2rem; }
-
-        .pytha-arrows { flex: 1; min-width: 220px; display: flex; flex-direction: column; gap: 8px; }
-        .arrow-item {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
-            padding: 10px 14px;
-            transition: all 0.2s;
-        }
-        .arrow-item:hover { background: var(--glass-hover); transform: translateX(4px); }
-        .arrow-label { font-size: 0.82rem; font-weight: 700; }
-        .arrow-label.present { color: var(--success); }
-        .arrow-label.absent { color: var(--danger); }
-        .arrow-desc { font-size: 0.77rem; color: var(--text-muted); margin-top: 2px; }
-
-        /* ===== KARMIC ===== */
-        .karmic-grid { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
-        .karmic-badge {
-            background: rgba(239,68,68,0.12);
-            border: 1px solid rgba(239,68,68,0.3);
-            color: #fca5a5;
-            border-radius: 12px;
-            padding: 12px 22px;
-            font-size: 1.5rem; font-weight: 800;
-            transition: all 0.25s;
-            animation: cardPop 0.4s ease both;
-        }
-        .karmic-badge:hover { background: rgba(239,68,68,0.22); transform: scale(1.06); }
-        .karmic-none {
-            color: var(--success); font-size: 0.95rem;
-            display: flex; align-items: center; gap: 10px;
-            padding: 14px 0;
-        }
-
-        /* ===== MEANINGS / DETAIL CARDS ===== */
-        .meanings-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
-        .meaning-card {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            padding: 22px;
-            backdrop-filter: blur(12px);
-            transition: all 0.35s;
-            border-left: 3px solid var(--primary);
-            animation: cardPop 0.5s ease both;
-        }
-        .meaning-card:hover { transform: translateX(5px) translateY(-2px); border-left-color: var(--accent); box-shadow: 0 8px 30px rgba(0,0,0,0.25); }
-        .meaning-card .m-title { font-weight: 700; color: var(--accent-light); font-size: 1rem; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
-        .meaning-card .m-body { color: var(--text-muted); font-size: 0.87rem; line-height: 1.7; }
-        .meaning-card.master-card { border-left-color: #a78bfa; }
-        .meaning-card .m-keywords {
-            display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px;
-        }
-        .kw-tag {
-            background: rgba(124,58,237,0.15); border: 1px solid rgba(124,58,237,0.25);
-            border-radius: 100px; padding: 3px 10px; font-size: 0.73rem;
-            color: var(--primary-light); font-weight: 500;
-        }
-        .meaning-card .m-shadow {
-            margin-top: 14px; padding-top: 12px;
-            border-top: 1px solid rgba(255,255,255,0.06);
-        }
-        .meaning-card .m-shadow-title {
-            font-size: 0.75rem; color: #f87171; font-weight: 700;
-            text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;
-        }
-        .meaning-card .m-shadow-body { font-size: 0.82rem; color: rgba(248,113,113,0.8); line-height: 1.6; }
-
-        /* ===== CALC DETAILS ===== */
-        .calc-detail {
-            background: rgba(255,255,255,0.015);
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 14px;
-            margin-top: 12px;
-            overflow: hidden;
-        }
-        .calc-detail summary {
-            cursor: pointer; padding: 14px 18px;
-            font-weight: 600; color: var(--primary-light);
-            font-size: 0.9rem; list-style: none;
-            display: flex; align-items: center; gap: 10px;
-            user-select: none;
-            transition: background 0.2s;
-        }
-        .calc-detail summary:hover { background: rgba(124,58,237,0.06); }
-        .calc-detail summary::before {
-            content: '▶'; font-size: 0.65rem;
-            transition: transform 0.25s; color: var(--primary-light);
-        }
-        .calc-detail[open] summary::before { transform: rotate(90deg); }
-        .calc-detail summary::-webkit-details-marker { display: none; }
-        .calc-steps { padding: 0 18px 16px; }
-        .calc-step {
-            padding: 10px 14px; margin-bottom: 8px; border-radius: 10px;
-            background: rgba(255,255,255,0.025);
-            border-left: 3px solid rgba(124,58,237,0.5);
-            font-size: 0.85rem;
-        }
-        .calc-step .step-label { color: var(--accent); font-weight: 600; font-size: 0.78rem; margin-bottom: 3px; text-transform: uppercase; letter-spacing: 0.04em; }
-        .calc-step .step-content { color: var(--text); }
-        .calc-step .step-content .highlight { color: var(--accent-light); font-weight: 700; }
-        .formula-box {
-            background: rgba(124,58,237,0.1);
-            border: 1px solid rgba(124,58,237,0.25);
-            border-radius: 10px; padding: 12px 16px;
-            margin: 8px 0; font-family: 'Inter', monospace;
-            font-size: 0.9rem; color: var(--text);
-        }
-        .formula-box .result { color: var(--accent-light); font-weight: 700; font-size: 1.1rem; }
-
-        /* ===== INFO BOX ===== */
-        .info-box {
-            background: rgba(59,130,246,0.08);
-            border: 1px solid rgba(59,130,246,0.2);
-            border-radius: 12px; padding: 12px 16px;
-            color: #93c5fd; font-size: 0.82rem;
-            margin-bottom: 16px; line-height: 1.6;
-            display: flex; gap: 10px; align-items: flex-start;
-        }
-        .info-box .info-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
-
-        /* ===== LOADING OVERLAY ===== */
-        .loading-overlay {
-            display: none; position: fixed; inset: 0; z-index: 1000;
-            background: rgba(8,6,18,0.88); backdrop-filter: blur(10px);
-            align-items: center; justify-content: center;
-            flex-direction: column; gap: 20px;
-        }
-        .loading-overlay.active { display: flex; }
-        .loader-ring {
-            width: 64px; height: 64px; position: relative;
-        }
-        .loader-ring::before, .loader-ring::after {
-            content: ''; position: absolute; inset: 0; border-radius: 50%;
-        }
-        .loader-ring::before {
-            border: 3px solid rgba(124,58,237,0.15);
-        }
-        .loader-ring::after {
-            border: 3px solid transparent;
-            border-top-color: var(--primary-light);
-            border-right-color: var(--accent-light);
-            animation: spin 0.9s cubic-bezier(0.4,0,0.2,1) infinite;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        .loading-rune {
-            font-size: 2rem;
-            position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
-            animation: pulse 1.5s ease-in-out infinite;
-        }
-        @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
-        .loading-text { color: var(--text-muted); font-size: 0.9rem; animation: pulse 1.5s infinite; }
-
-        /* ===== FOOTER ===== */
-        footer {
-            text-align: center;
-            padding: 60px 20px 44px;
-            color: var(--text-dim);
-            font-size: 0.82rem;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            margin-top: 60px;
-            position: relative;
-            overflow: hidden;
-        }
-        footer::before {
-            content: '';
-            position: absolute; top: 0; left: 20%; right: 20%; height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(124,58,237,0.5), rgba(245,158,11,0.4), transparent);
-        }
-        .footer-main { margin-bottom: 10px; }
-        .footer-main strong { color: var(--text-muted); }
-        .footer-signature {
-            margin-top: 18px;
-            font-size: 0.88rem;
-            letter-spacing: 0.06em;
-            color: transparent;
-            background: linear-gradient(135deg, var(--primary-light), var(--accent-light), var(--pink));
-            -webkit-background-clip: text;
-            background-clip: text;
-            font-style: italic;
-            font-weight: 500;
-            display: inline-flex; align-items: center; gap: 8px;
-        }
-        .footer-signature::before { content: '✦'; font-style: normal; }
-        .footer-signature::after  { content: '✦'; font-style: normal; }
-        .footer-heart {
-            display: inline-block;
-            color: var(--pink);
-            animation: heartbeat 1.8s ease infinite;
-            -webkit-text-fill-color: var(--pink);
-        }
-        @keyframes heartbeat {
-            0%,100% { transform: scale(1); }
-            14%     { transform: scale(1.25); }
-            28%     { transform: scale(1); }
-            42%     { transform: scale(1.15); }
-            56%     { transform: scale(1); }
-        }
-
-        /* ===== SCROLL REVEAL ===== */
-        .reveal {
-            opacity: 0; transform: translateY(24px);
-            transition: opacity 0.65s ease, transform 0.65s ease;
-        }
-        .reveal.visible { opacity: 1; transform: translateY(0); }
-
-        /* ===== STAGGER ANIMATION ===== */
-        .stagger > * { animation-delay: calc(var(--i, 0) * 80ms); }
-
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 900px) {
-            .pytha-wrap { justify-content: center; }
-        }
-        @media (max-width: 768px) {
-            .site-header { padding: 60px 16px 44px; }
-            .input-section { padding: 24px 20px; }
-            .form-grid { grid-template-columns: 1fr; }
-            .form-group.full { grid-column: 1; }
-            .form-row-extra { grid-template-columns: 1fr; }
-            .date-grid { grid-template-columns: 1fr 1fr; }
-            .timeline-grid { grid-template-columns: repeat(2, 1fr); }
-            .periods-grid { grid-template-columns: 1fr; }
-            .numbers-grid { grid-template-columns: repeat(2, 1fr); }
-            .pytha-grid { grid-template-columns: repeat(3, 80px); grid-template-rows: repeat(3, 80px); }
-            .meanings-grid { grid-template-columns: 1fr; }
-            .btn-center { grid-column: 1; }
-            .section-header { margin: 36px 0 18px; }
-        }
-        @media (max-width: 480px) {
-            .container { padding: 0 16px; }
-            .site-header { padding: 48px 16px 36px; }
-            .numbers-grid { grid-template-columns: 1fr 1fr; }
-            .timeline-grid { grid-template-columns: 1fr 1fr; }
-            .pytha-grid { grid-template-columns: repeat(3, 68px); grid-template-rows: repeat(3, 68px); }
-            .date-grid { grid-template-columns: 1fr; }
-            .input-section { padding: 20px 16px; }
-            .section-header h2 { font-size: 1.1rem; }
-            .section-header .sh-icon { width: 36px; height: 36px; font-size: 1.1rem; }
-        }
-    </style>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+
 <div class="bg-scene"></div>
 <div class="orb orb-1"></div>
 <div class="orb orb-2"></div>
@@ -694,880 +26,218 @@
 </div>
 
 <div class="site-wrap">
-<header class="site-header">
-    <div class="header-badge"><span class="dot"></span> Pythagoras Numerology</div>
-    <h1>
-        <span class="h1-latin">Numerology</span>
-        <span class="h1-viet">Thần Số Học</span>
-    </h1>
-    <p>Khám phá bản thân qua khoa học về những con số và ý nghĩa ẩn sâu trong ngày sinh của bạn</p>
-</header>
 
-<div class="container">
+    <header class="site-header">
+        <div class="header-badge"><span class="dot"></span> Pythagoras Numerology</div>
+        <h1>
+            <span class="h1-latin">Numerology</span>
+            <span class="h1-viet">Thần Số Học</span>
+        </h1>
+        <p>Khám phá bản thân qua khoa học về những con số và ý nghĩa ẩn sâu trong ngày sinh của bạn</p>
+    </header>
 
-    <!-- Reference Table -->
-    <div class="ref-section reveal">
-        <button class="ref-toggle-btn" id="refToggle" onclick="toggleRef()">
-            <span>📊</span>
-            <span>Bảng Quy Đổi Pythagoras (A–Z)</span>
-            <span class="arrow">▼</span>
-        </button>
-        <div class="ref-body" id="refBody">
-            <table class="ref-table">
-                <thead>
-                    <tr><th>Số</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th></tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td style="color:var(--text-muted);font-weight:600">Hàng 1</td>
-                        <td class="vowel">A</td><td>B</td><td>C</td><td>D</td>
-                        <td class="vowel">E</td><td>F</td><td>G</td><td>H</td>
-                        <td class="vowel">I</td>
-                    </tr>
-                    <tr>
-                        <td style="color:var(--text-muted);font-weight:600">Hàng 2</td>
-                        <td>J</td><td>K</td><td>L</td><td>M</td>
-                        <td>N</td><td class="vowel">O</td><td>P</td><td>Q</td>
-                        <td>R</td>
-                    </tr>
-                    <tr>
-                        <td style="color:var(--text-muted);font-weight:600">Hàng 3</td>
-                        <td>S</td><td>T</td><td class="vowel">U</td><td>V</td>
-                        <td>W</td><td>X</td><td>Y</td><td>Z</td>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </table>
-            <p style="font-size:0.78rem;color:var(--text-muted);margin-top:10px;">
-                <span style="color:var(--accent-light);font-weight:600">Màu vàng</span> = Nguyên âm (A, E, I, O, U) &nbsp;|&nbsp; Màu trắng = Phụ âm
-            </p>
-        </div>
-    </div>
+    <div class="container">
 
-    <!-- Input Form -->
-    <div class="input-section reveal">
-        <div class="input-section-title">
-            <div class="icon">✨</div>
-            Nhập Thông Tin Của Bạn
-        </div>
-
-        <div class="form-grid">
-            <div class="form-group full">
-                <label>Họ và tên khai sinh (không dấu)</label>
-                <input type="text" id="fullName" placeholder="Ví dụ: Nguyen Van An" autocomplete="off">
+        <!-- Reference Table -->
+        <div class="ref-section reveal">
+            <button class="ref-toggle-btn" id="refToggle" onclick="toggleRef()">
+                <span>📊</span>
+                <span>Bảng Quy Đổi Pythagoras (A–Z)</span>
+                <span class="arrow">▼</span>
+            </button>
+            <div class="ref-body" id="refBody">
+                <table class="ref-table">
+                    <thead>
+                        <tr><th>Số</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="color:var(--text-muted);font-weight:600">Hàng 1</td>
+                            <td class="vowel">A</td><td>B</td><td>C</td><td>D</td>
+                            <td class="vowel">E</td><td>F</td><td>G</td><td>H</td>
+                            <td class="vowel">I</td>
+                        </tr>
+                        <tr>
+                            <td style="color:var(--text-muted);font-weight:600">Hàng 2</td>
+                            <td>J</td><td>K</td><td>L</td><td>M</td>
+                            <td>N</td><td class="vowel">O</td><td>P</td><td>Q</td>
+                            <td>R</td>
+                        </tr>
+                        <tr>
+                            <td style="color:var(--text-muted);font-weight:600">Hàng 3</td>
+                            <td>S</td><td>T</td><td class="vowel">U</td><td>V</td>
+                            <td>W</td><td>X</td><td>Y</td><td>Z</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="font-size:.78rem;color:var(--text-muted);margin-top:10px;">
+                    <span style="color:var(--accent-light);font-weight:600">Màu vàng</span> = Nguyên âm (A, E, I, O, U) &nbsp;|&nbsp; Màu trắng = Phụ âm
+                </p>
             </div>
+        </div>
 
-            <div class="form-group full">
-                <label>Ngày / Tháng / Năm sinh</label>
-                <div class="date-grid">
-                    <input type="number" id="birthDay" placeholder="Ngày (1–31)" min="1" max="31">
-                    <input type="number" id="birthMonth" placeholder="Tháng (1–12)" min="1" max="12">
-                    <input type="number" id="birthYear" placeholder="Năm (vd: 1990)" min="1900" max="2100">
+        <!-- Input Form -->
+        <div class="input-section reveal">
+            <div class="input-section-title">
+                <div class="icon">✨</div>
+                Nhập Thông Tin Của Bạn
+            </div>
+            <div class="form-grid">
+                <div class="form-group full">
+                    <label>Họ và tên khai sinh (không dấu)</label>
+                    <input type="text" id="fullName" placeholder="Ví dụ: Nguyen Van An" autocomplete="off">
+                </div>
+                <div class="form-group full">
+                    <label>Ngày / Tháng / Năm sinh</label>
+                    <div class="date-grid">
+                        <input type="number" id="birthDay"   placeholder="Ngày (1–31)"   min="1" max="31">
+                        <input type="number" id="birthMonth" placeholder="Tháng (1–12)"  min="1" max="12">
+                        <input type="number" id="birthYear"  placeholder="Năm (vd: 1990)" min="1900" max="2100">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Năm tính toán (Số Năm Cá Nhân)</label>
+                    <input type="number" id="currentYear" value="2026" min="1900" max="2100">
+                </div>
+                <div class="form-group">
+                    <label>Tháng tính toán (Số Tháng Cá Nhân)</label>
+                    <input type="number" id="currentMonth" placeholder="Để trống = tháng hiện tại" min="1" max="12">
+                </div>
+                <div class="btn-center">
+                    <button class="btn-calculate" id="calcBtn" onclick="calculate()">
+                        <span class="btn-icon">🔮</span>
+                        Khám Phá Thần Số Học
+                    </button>
                 </div>
             </div>
+        </div>
 
-            <div class="form-group">
-                <label>Năm tính toán (Số Năm Cá Nhân)</label>
-                <input type="number" id="currentYear" value="2026" min="1900" max="2100">
+        <!-- Results -->
+        <div id="results">
+
+            <!-- Name Breakdown -->
+            <div class="section-header reveal">
+                <div class="sh-icon">📝</div>
+                <div><h2>Bảng Phân Tích Tên</h2><p>Mỗi chữ cái được quy đổi thành số theo bảng Pythagoras</p></div>
+                <div class="section-divider"></div>
             </div>
-
-            <div class="form-group">
-                <label>Tháng tính toán (Số Tháng Cá Nhân)</label>
-                <input type="number" id="currentMonth" value="" placeholder="Để trống = tháng hiện tại" min="1" max="12">
+            <div class="info-box reveal">
+                <span class="info-icon">ℹ️</span>
+                <span>Nguyên âm <strong style="color:var(--accent-light)">(vàng)</strong> tính Số Linh Hồn · Phụ âm <strong style="color:var(--primary-light)">(tím)</strong> tính Số Nhân Cách · Tổng tất cả tính Số Vận Mệnh</span>
             </div>
+            <div class="name-breakdown-card reveal"><div id="nameBreakdown"></div></div>
 
-            <div class="btn-center">
-                <button class="btn-calculate" id="calcBtn" onclick="calculate()">
-                    <span class="btn-icon">🔮</span>
-                    Khám Phá Thần Số Học
-                </button>
+            <!-- Core Numbers -->
+            <div class="section-header reveal">
+                <div class="sh-icon">⭐</div>
+                <div><h2>Các Chỉ Số Cốt Lõi</h2><p>5 con số quan trọng nhất trong biểu đồ của bạn</p></div>
+                <div class="section-divider"></div>
             </div>
-        </div>
-    </div>
+            <div class="numbers-grid reveal" id="coreNumbers"></div>
+            <div id="coreCalcDetails" class="reveal"></div>
 
-    <!-- Results -->
-    <div id="results">
-
-        <!-- Name Breakdown -->
-        <div class="section-header reveal">
-            <div class="sh-icon">📝</div>
-            <div>
-                <h2>Bảng Phân Tích Tên</h2>
-                <p>Mỗi chữ cái được quy đổi thành số theo bảng Pythagoras</p>
+            <!-- Bridge Numbers -->
+            <div class="section-header reveal">
+                <div class="sh-icon">🌉</div>
+                <div><h2>Số Cầu Nối</h2><p>Khoảng cách giữa các chỉ số cần hài hòa</p></div>
+                <div class="section-divider"></div>
             </div>
-            <div class="section-divider"></div>
-        </div>
-        <div class="info-box reveal">
-            <span class="info-icon">ℹ️</span>
-            <span>Nguyên âm <strong style="color:var(--accent-light)">(vàng)</strong> tính Số Linh Hồn · Phụ âm <strong style="color:var(--primary-light)">(tím)</strong> tính Số Nhân Cách · Tổng tất cả tính Số Vận Mệnh</span>
-        </div>
-        <div class="name-breakdown-card reveal">
-            <div id="nameBreakdown"></div>
-        </div>
+            <div class="numbers-grid reveal" id="bridgeNumbers"></div>
+            <div id="bridgeCalcDetails" class="reveal"></div>
 
-        <!-- Core Numbers -->
-        <div class="section-header reveal">
-            <div class="sh-icon">⭐</div>
-            <div>
-                <h2>Các Chỉ Số Cốt Lõi</h2>
-                <p>5 con số quan trọng nhất trong biểu đồ của bạn</p>
+            <!-- Personal Year / Month -->
+            <div class="section-header reveal">
+                <div class="sh-icon">📅</div>
+                <div><h2>Số Năm &amp; Tháng Cá Nhân</h2><p>Năng lượng đang ảnh hưởng đến bạn trong thời điểm này</p></div>
+                <div class="section-divider"></div>
             </div>
-            <div class="section-divider"></div>
-        </div>
-        <div class="numbers-grid reveal stagger" id="coreNumbers"></div>
-        <div id="coreCalcDetails" class="reveal"></div>
+            <div class="numbers-grid reveal" id="personalNumbers"></div>
+            <div id="personalCalcDetails" class="reveal"></div>
 
-        <!-- Bridge Numbers -->
-        <div class="section-header reveal">
-            <div class="sh-icon">🌉</div>
-            <div>
-                <h2>Số Cầu Nối</h2>
-                <p>Khoảng cách giữa các chỉ số cần hài hòa</p>
+            <!-- Pinnacles -->
+            <div class="section-header reveal">
+                <div class="sh-icon">🏔️</div>
+                <div><h2>Bốn Đỉnh Cao Cuộc Đời</h2><p>Bốn giai đoạn đỉnh cao mang đến cơ hội và bài học lớn</p></div>
+                <div class="section-divider"></div>
             </div>
-            <div class="section-divider"></div>
-        </div>
-        <div class="numbers-grid reveal stagger" id="bridgeNumbers"></div>
-        <div id="bridgeCalcDetails" class="reveal"></div>
+            <div class="timeline-grid reveal" id="pinnacles"></div>
+            <div id="pinnacleCalcDetails" class="reveal"></div>
 
-        <!-- Personal Year/Month -->
-        <div class="section-header reveal">
-            <div class="sh-icon">📅</div>
-            <div>
-                <h2>Số Năm &amp; Tháng Cá Nhân</h2>
-                <p>Năng lượng đang ảnh hưởng đến bạn trong thời điểm này</p>
+            <!-- Challenges -->
+            <div class="section-header reveal">
+                <div class="sh-icon">⚔️</div>
+                <div><h2>Bốn Thử Thách Cuộc Đời</h2><p>Những thử thách bạn cần vượt qua để trưởng thành</p></div>
+                <div class="section-divider"></div>
             </div>
-            <div class="section-divider"></div>
-        </div>
-        <div class="numbers-grid reveal stagger" id="personalNumbers"></div>
-        <div id="personalCalcDetails" class="reveal"></div>
+            <div class="timeline-grid reveal" id="challenges"></div>
+            <div id="challengeCalcDetails" class="reveal"></div>
 
-        <!-- Four Pinnacles -->
-        <div class="section-header reveal">
-            <div class="sh-icon">🏔️</div>
-            <div>
-                <h2>Bốn Đỉnh Cao Cuộc Đời</h2>
-                <p>Bốn giai đoạn đỉnh cao mang đến cơ hội và bài học lớn</p>
+            <!-- Life Periods -->
+            <div class="section-header reveal">
+                <div class="sh-icon">🌊</div>
+                <div><h2>Ba Giai Đoạn Cuộc Đời</h2><p>Ba làn sóng lớn định hình hành trình của bạn</p></div>
+                <div class="section-divider"></div>
             </div>
-            <div class="section-divider"></div>
-        </div>
-        <div class="timeline-grid reveal stagger" id="pinnacles"></div>
-        <div id="pinnacleCalcDetails" class="reveal"></div>
+            <div class="periods-grid reveal" id="periods"></div>
+            <div id="periodCalcDetails" class="reveal"></div>
 
-        <!-- Four Challenges -->
-        <div class="section-header reveal">
-            <div class="sh-icon">⚔️</div>
-            <div>
-                <h2>Bốn Thử Thách Cuộc Đời</h2>
-                <p>Những thử thách bạn cần vượt qua để trưởng thành</p>
+            <!-- Karmic Lessons -->
+            <div class="section-header reveal">
+                <div class="sh-icon">🔁</div>
+                <div><h2>Bài Học Nghiệp (Karmic Lessons)</h2><p>Các số không xuất hiện trong tên — những bài học chưa hoàn thành</p></div>
+                <div class="section-divider"></div>
             </div>
-            <div class="section-divider"></div>
-        </div>
-        <div class="timeline-grid reveal stagger" id="challenges"></div>
-        <div id="challengeCalcDetails" class="reveal"></div>
+            <div id="karmicLessons" class="reveal"></div>
 
-        <!-- Life Periods -->
-        <div class="section-header reveal">
-            <div class="sh-icon">🌊</div>
-            <div>
-                <h2>Ba Giai Đoạn Cuộc Đời</h2>
-                <p>Ba làn sóng lớn định hình hành trình của bạn</p>
+            <!-- Pythagoras Chart -->
+            <div class="section-header reveal">
+                <div class="sh-icon">🔢</div>
+                <div><h2>Biểu Đồ Ngày Sinh (Pythagoras)</h2><p>Tần suất xuất hiện các con số trong ngày sinh của bạn</p></div>
+                <div class="section-divider"></div>
             </div>
-            <div class="section-divider"></div>
-        </div>
-        <div class="periods-grid reveal stagger" id="periods"></div>
-        <div id="periodCalcDetails" class="reveal"></div>
-
-        <!-- Karmic Lessons -->
-        <div class="section-header reveal">
-            <div class="sh-icon">🔁</div>
-            <div>
-                <h2>Bài Học Nghiệp (Karmic Lessons)</h2>
-                <p>Các số không xuất hiện trong tên — những bài học chưa hoàn thành</p>
+            <div class="pytha-wrap reveal">
+                <div class="pytha-grid" id="pythaGrid"></div>
+                <div class="pytha-arrows" id="pythaArrows"></div>
             </div>
-            <div class="section-divider"></div>
-        </div>
-        <div id="karmicLessons" class="reveal"></div>
+            <div id="pythaCalcDetails" class="reveal"></div>
 
-        <!-- Pythagoras Chart -->
-        <div class="section-header reveal">
-            <div class="sh-icon">🔢</div>
-            <div>
-                <h2>Biểu Đồ Ngày Sinh (Pythagoras)</h2>
-                <p>Tần suất xuất hiện các con số trong ngày sinh của bạn</p>
+            <!-- Detailed Meanings -->
+            <div class="section-header reveal">
+                <div class="sh-icon">💡</div>
+                <div><h2>Luận Giải Chi Tiết Từng Con Số</h2><p>Phân tích sâu ý nghĩa, tố chất và bóng tối của mỗi chỉ số</p></div>
+                <div class="section-divider"></div>
             </div>
-            <div class="section-divider"></div>
+            <div class="meanings-grid reveal" id="meanings"></div>
+
+        </div><!-- /#results -->
+
+    </div><!-- /.container -->
+
+    <footer>
+        <div class="footer-main">
+            <strong>Thần Số Học</strong> &mdash; Pythagoras Numerology Calculator &mdash; <strong>Khám phá hành trình của bạn qua những con số</strong>
         </div>
-        <div class="pytha-wrap reveal">
-            <div class="pytha-grid" id="pythaGrid"></div>
-            <div class="pytha-arrows" id="pythaArrows"></div>
+        <div class="footer-signature">
+            From hngphm with <span class="footer-heart">♥</span> love
         </div>
-        <div id="pythaCalcDetails" class="reveal"></div>
+    </footer>
 
-        <!-- Detailed Meanings -->
-        <div class="section-header reveal">
-            <div class="sh-icon">💡</div>
-            <div>
-                <h2>Luận Giải Chi Tiết Từng Con Số</h2>
-                <p>Phân tích sâu ý nghĩa, tố chất và bóng tối của mỗi chỉ số</p>
-            </div>
-            <div class="section-divider"></div>
-        </div>
-        <div class="meanings-grid reveal stagger" id="meanings"></div>
-
-    </div><!-- /#results -->
-
-</div><!-- /.container -->
-
-<footer>
-    <div class="footer-main">
-        <strong>Thần Số Học</strong> &mdash; Pythagoras Numerology Calculator &mdash; <strong>Khám phá hành trình của bạn qua những con số</strong>
-    </div>
-    <div class="footer-signature">
-        From hngphm with <span class="footer-heart">♥</span> love
-    </div>
-</footer>
 </div><!-- /.site-wrap -->
 
-<script>
-// ===== PARTICLES =====
-(function() {
-    const canvas = document.getElementById('particles');
-    const ctx = canvas.getContext('2d');
-    let W, H, particles = [];
+<!--
+    Script load order matters:
+    1. engine.js   — pure math functions (no DOM)
+    2. meanings.js — data objects
+    3. render.js   — DOM builders (needs engine + meanings)
+    4. particles.js — canvas animation (needs DOM ready)
+    5. main.js     — app bootstrap (needs everything above)
+-->
+<script src="js/engine.js"></script>
+<script src="js/meanings.js"></script>
+<script src="js/render.js"></script>
+<script src="js/particles.js"></script>
+<script src="js/main.js"></script>
 
-    function resize() {
-        W = canvas.width = window.innerWidth;
-        H = canvas.height = window.innerHeight;
-    }
-
-    function randomParticle() {
-        const shapes = ['star', 'circle'];
-        return {
-            x: Math.random() * W, y: Math.random() * H,
-            r: Math.random() * 1.8 + 0.3,
-            vx: (Math.random() - 0.5) * 0.22,
-            vy: (Math.random() - 0.5) * 0.22,
-            alpha: Math.random() * 0.55 + 0.08,
-            shape: shapes[Math.floor(Math.random() * shapes.length)],
-            twinkle: Math.random() * Math.PI * 2,
-            twinkleSpeed: 0.02 + Math.random() * 0.03
-        };
-    }
-
-    function init() {
-        resize();
-        particles = Array.from({ length: 120 }, randomParticle);
-    }
-
-    function drawStar(x, y, r, alpha) {
-        ctx.save();
-        ctx.translate(x, y);
-        ctx.beginPath();
-        for (let i = 0; i < 4; i++) {
-            const angle = (i / 4) * Math.PI * 2;
-            const ox = Math.cos(angle) * r * 2.5;
-            const oy = Math.sin(angle) * r * 2.5;
-            const ix = Math.cos(angle + Math.PI / 4) * r * 0.8;
-            const iy = Math.sin(angle + Math.PI / 4) * r * 0.8;
-            i === 0 ? ctx.moveTo(ox, oy) : null;
-            ctx.lineTo(ox, oy);
-            ctx.lineTo(ix, iy);
-        }
-        ctx.closePath();
-        ctx.fillStyle = `rgba(252, 211, 77, ${alpha * 0.6})`;
-        ctx.fill();
-        ctx.restore();
-    }
-
-    function draw() {
-        ctx.clearRect(0, 0, W, H);
-        for (let p of particles) {
-            p.twinkle += p.twinkleSpeed;
-            const twinkleAlpha = p.alpha * (0.6 + 0.4 * Math.sin(p.twinkle));
-            if (p.shape === 'star' && p.r > 0.9) {
-                drawStar(p.x, p.y, p.r * 0.5, twinkleAlpha);
-            } else {
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(167, 139, 250, ${twinkleAlpha})`;
-                ctx.fill();
-            }
-            p.x += p.vx; p.y += p.vy;
-            if (p.x < 0 || p.x > W) p.vx *= -1;
-            if (p.y < 0 || p.y > H) p.vy *= -1;
-        }
-        requestAnimationFrame(draw);
-    }
-
-    window.addEventListener('resize', resize);
-    init(); draw();
-})();
-
-// ===== SCROLL REVEAL =====
-const revealAll = () => {
-    document.querySelectorAll('.reveal').forEach(el => {
-        const rect = el.getBoundingClientRect();
-        if (rect.top < window.innerHeight - 40) el.classList.add('visible');
-    });
-};
-window.addEventListener('scroll', revealAll, { passive: true });
-document.addEventListener('DOMContentLoaded', revealAll);
-
-// ===== REFERENCE TOGGLE =====
-function toggleRef() {
-    const btn = document.getElementById('refToggle');
-    const body = document.getElementById('refBody');
-    btn.classList.toggle('open');
-    body.classList.toggle('open');
-}
-
-// ===== NUMEROLOGY ENGINE =====
-const PYTHA = {
-    A:1,B:2,C:3,D:4,E:5,F:6,G:7,H:8,I:9,
-    J:1,K:2,L:3,M:4,N:5,O:6,P:7,Q:8,R:9,
-    S:1,T:2,U:3,V:4,W:5,X:6,Y:7,Z:8
-};
-const VOWELS = new Set(['A','E','I','O','U']);
-
-function removeAccents(str) {
-    return str.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[\u0110\u0111]/g,'D');
-}
-
-function isMaster(n) { return n===11||n===22||n===33; }
-
-function reduceToSingle(n, keepMaster=true) {
-    if (n<0) n=Math.abs(n);
-    while (n>9) {
-        if (keepMaster && isMaster(n)) return n;
-        let s=0, t=n; while(t>0){s+=t%10;t=Math.floor(t/10);} n=s;
-    }
-    return n;
-}
-
-function sumDigits(n) {
-    let s=0, str=String(Math.abs(n));
-    for (let c of str) s+=parseInt(c);
-    return s;
-}
-
-function reduceComponent(n, keepMaster=true) {
-    let s=sumDigits(n);
-    while(s>9){
-        if(keepMaster&&isMaster(s))return s;
-        s=sumDigits(s);
-    }
-    return s;
-}
-
-function reduceWithSteps(n, keepMaster=true) {
-    if(n<0)n=Math.abs(n);
-    let steps=[];
-    while(n>9){
-        if(keepMaster&&isMaster(n)){steps.push(`${n} là Master Number → giữ nguyên`);return{value:n,steps};}
-        let digits=String(n).split('').map(Number);
-        let sum=digits.reduce((a,b)=>a+b,0);
-        steps.push(`${digits.join(' + ')} = ${sum}`);
-        n=sum;
-    }
-    return{value:n,steps};
-}
-
-function reduceComponentWithSteps(n, keepMaster=true) {
-    let digits=String(Math.abs(n)).split('').map(Number);
-    let s=digits.reduce((a,b)=>a+b,0);
-    let steps=[`${digits.join(' + ')} = ${s}`];
-    while(s>9){
-        if(keepMaster&&isMaster(s)){steps.push(`${s} là Master Number → giữ nguyên`);return{value:s,steps};}
-        let d2=String(s).split('').map(Number);
-        let s2=d2.reduce((a,b)=>a+b,0);
-        steps.push(`${d2.join(' + ')} = ${s2}`);
-        s=s2;
-    }
-    return{value:s,steps};
-}
-
-// ===== CALCULATIONS =====
-function calcLifePathDetailed(day,month,year) {
-    let dS=reduceComponentWithSteps(day);
-    let mS=reduceComponentWithSteps(month);
-    let yS=reduceComponentWithSteps(year);
-    let total=dS.value+mS.value+yS.value;
-    let fin=reduceWithSteps(total,true);
-    return{value:fin.value,detail:{day:{raw:day,reduced:dS.value,steps:dS.steps},month:{raw:month,reduced:mS.value,steps:mS.steps},year:{raw:year,reduced:yS.value,steps:yS.steps},total,finalSteps:fin.steps}};
-}
-function calcBirthdayDetailed(day) {
-    let s=reduceComponentWithSteps(day,true);
-    return{value:s.value,steps:s.steps};
-}
-function getNameNumbersDetailed(fullName) {
-    let clean=removeAccents(fullName).toUpperCase().replace(/[^A-Z ]/g,'');
-    let letters=[],vowelSum=0,consonantSum=0,totalSum=0,letterCounts={};
-    let vowelParts=[],consonantParts=[],allParts=[];
-    for(let ch of clean){
-        if(ch===' '){letters.push({char:' ',value:0,isVowel:false,isSpace:true});continue;}
-        let val=PYTHA[ch]||0;
-        if(!val)continue;
-        let isV=VOWELS.has(ch);
-        letters.push({char:ch,value:val,isVowel:isV,isSpace:false});
-        totalSum+=val;allParts.push(`${val}`);
-        if(isV){vowelSum+=val;vowelParts.push(`${val}`);}
-        else{consonantSum+=val;consonantParts.push(`${val}`);}
-        letterCounts[val]=(letterCounts[val]||0)+1;
-    }
-    let soulS=reduceWithSteps(vowelSum,true);
-    let destS=reduceWithSteps(totalSum,true);
-    let persS=reduceWithSteps(consonantSum,true);
-    return{soul:soulS.value,destiny:destS.value,personality:persS.value,letterCounts,letters,detail:{vowelParts,vowelSum,soulSteps:soulS.steps,consonantParts,consonantSum,personalitySteps:persS.steps,allParts,totalSum,destinySteps:destS.steps}};
-}
-function calcPinnaclesDetailed(day,month,year,lifePath) {
-    let d=reduceComponent(day),m=reduceComponent(month),y=reduceComponent(year);
-    let lp=isMaster(lifePath)?reduceToSingle(lifePath,false):lifePath;
-    let fe=Math.max(27,36-lp);
-    let p1=reduceToSingle(m+d,true),p2=reduceToSingle(d+y,true);
-    let p3=reduceToSingle(p1+p2,true),p4=reduceToSingle(m+y,true);
-    return{pinnacles:[{num:p1,from:0,to:fe},{num:p2,from:fe+1,to:fe+9},{num:p3,from:fe+10,to:fe+18},{num:p4,from:fe+19,to:null}],detail:{d,m,y,lp,firstEnd:fe,formulas:[`ĐC1 = Tháng(${m}) + Ngày(${d}) = ${m+d} → ${p1}`,`ĐC2 = Ngày(${d}) + Năm(${y}) = ${d+y} → ${p2}`,`ĐC3 = ĐC1(${p1}) + ĐC2(${p2}) = ${p1+p2} → ${p3}`,`ĐC4 = Tháng(${m}) + Năm(${y}) = ${m+y} → ${p4}`]}};
-}
-function calcChallengesDetailed(day,month,year) {
-    let d=reduceComponent(day,false),m=reduceComponent(month,false),y=reduceComponent(year,false);
-    let c1=Math.abs(m-d),c2=Math.abs(d-y),c3=Math.abs(c1-c2),c4=Math.abs(m-y);
-    return{challenges:[{num:reduceToSingle(c1,false)},{num:reduceToSingle(c2,false)},{num:reduceToSingle(c3,false)},{num:reduceToSingle(c4,false)}],detail:{d,m,y,formulas:[`TT1 = |Tháng(${m}) - Ngày(${d})| = ${c1}`,`TT2 = |Ngày(${d}) - Năm(${y})| = ${c2}`,`TT3 = |TT1(${c1}) - TT2(${c2})| = ${c3}`,`TT4 = |Tháng(${m}) - Năm(${y})| = ${c4}`]}};
-}
-function calcLifePeriodsDetailed(day,month,year,lifePath) {
-    let d=reduceComponent(day,true),m=reduceComponent(month,true),y=reduceComponent(year,true);
-    let lp=isMaster(lifePath)?reduceToSingle(lifePath,false):lifePath;
-    let fe=Math.max(27,36-lp);
-    return{periods:[{num:m,label:'Giai đoạn 1 · Hình thành',from:0,to:fe},{num:d,label:'Giai đoạn 2 · Hiện thực',from:fe+1,to:fe+27},{num:y,label:'Giai đoạn 3 · Hội nhập',from:fe+28,to:null}],detail:{firstEnd:fe,lp,formulas:[`GĐ1 = Rút gọn tháng sinh (${month}) → ${m}  |  0 – ${fe} tuổi`,`GĐ2 = Rút gọn ngày sinh (${day}) → ${d}  |  ${fe+1} – ${fe+27} tuổi`,`GĐ3 = Rút gọn năm sinh (${year}) → ${y}  |  ${fe+28}+ tuổi`],note:`Tuổi chuyển giai đoạn = 36 − Số Đường Đời (${lp}) = ${fe}`}};
-}
-function calcPersonalYearDetailed(day,month,currentYear) {
-    let dS=sumDigits(day),mS=sumDigits(month),yS=sumDigits(currentYear);
-    let total=dS+mS+yS;
-    let res=reduceWithSteps(total,true);
-    return{value:res.value,detail:{digitBreak:`(${String(day).split('').join('+')}) + (${String(month).split('').join('+')}) + (${String(currentYear).split('').join('+')}) = ${dS} + ${mS} + ${yS} = ${total}`,steps:res.steps}};
-}
-function calcPersonalMonthDetailed(personalYear,currentMonth) {
-    let sum=personalYear+currentMonth;
-    let res=reduceWithSteps(sum,false);
-    return{value:res.value,detail:{formula:`Số Năm(${personalYear}) + Tháng(${currentMonth}) = ${sum}`,steps:res.steps}};
-}
-function calcKarmicLessons(lc){let m=[];for(let i=1;i<=9;i++)if(!lc[i])m.push(i);return m;}
-function calcPythagorasChart(day,month,year) {
-    let dateStr=String(day)+String(month)+String(year);
-    let counts={};for(let i=1;i<=9;i++)counts[i]=0;
-    for(let c of dateStr){let d=parseInt(c);if(d>=1&&d<=9)counts[d]++;}
-    return{counts,dateStr};
-}
-function getPythaArrows(counts) {
-    let arrows=[];
-    const lines=[[3,6,9,'Mũi tên 3-6-9','Trí tuệ, trí nhớ tốt, khả năng học hỏi'],[2,5,8,'Mũi tên 2-5-8','Cân bằng cảm xúc, thực tế'],[1,4,7,'Mũi tên 1-4-7','Hành động, thực tiễn, quyết đoán'],[3,2,1,'Mũi tên 1-2-3','Lập kế hoạch và tổ chức tốt'],[6,5,4,'Mũi tên 4-5-6','Ý chí, quyết tâm và sự bền bỉ'],[9,8,7,'Mũi tên 7-8-9','Hành động, năng lực và hoàn thành'],[1,5,9,'Mũi tên 1-5-9','Quyết tâm, ý chí mạnh mẽ'],[3,5,7,'Mũi tên 3-5-7','Tâm linh, trực giác, tin tưởng nội tâm']];
-    for(let [a,b,c,label,desc] of lines){
-        if(counts[a]>0&&counts[b]>0&&counts[c]>0)arrows.push({label,desc,type:'full'});
-    }
-    for(let [a,b,c,label,desc] of lines){
-        if(!counts[a]&&!counts[b]&&!counts[c])arrows.push({label:`Thiếu ${label}`,desc:`Cần phát triển: ${desc.toLowerCase()}`,type:'empty'});
-    }
-    return arrows;
-}
-
-// ===== DETAILED MEANINGS =====
-const MEANINGS = {
-    1:{
-        icon:'🦁', title:'Số 1 · Người Tiên Phong',
-        desc:'Bạn sinh ra để dẫn đầu. Số 1 mang năng lượng khởi đầu mạnh mẽ, ý chí sắt đá và khả năng độc lập vượt trội. Người mang số này tự tin bước vào những lãnh thổ chưa ai khai phá, trở thành người định hướng và truyền cảm hứng cho người xung quanh.',
-        keywords:['Lãnh đạo','Tiên phong','Độc lập','Sáng tạo','Quyết đoán'],
-        shadow:'Dễ có xu hướng độc đoán, tự cao và thiếu lắng nghe người khác. Đôi khi cứng nhắc và khó chia sẻ quyền kiểm soát.'
-    },
-    2:{
-        icon:'🕊️', title:'Số 2 · Người Hợp Tác',
-        desc:'Nhạy cảm, nhân ái và có tài ngoại giao thiên bẩm. Số 2 là sợi dây kết nối — bạn tìm thấy niềm vui trong việc làm cho những mối quan hệ trở nên hài hòa, điều giải xung đột và hỗ trợ người khác từ hậu trường.',
-        keywords:['Hợp tác','Ngoại giao','Nhạy cảm','Hòa giải','Trực giác'],
-        shadow:'Dễ quá phụ thuộc vào sự chấp thuận của người khác, thiếu lập trường và bỏ qua nhu cầu của bản thân.'
-    },
-    3:{
-        icon:'🎨', title:'Số 3 · Người Sáng Tạo',
-        desc:'Bạn là ánh sáng trong phòng — tràn đầy năng lượng, óc hài hước và tài biểu đạt. Số 3 mang năng lực sáng tạo vượt bậc, có thể truyền đạt ý tưởng qua lời nói, nghệ thuật hoặc văn chương khiến người nghe mê đắm.',
-        keywords:['Sáng tạo','Biểu đạt','Lạc quan','Nghệ thuật','Giao tiếp'],
-        shadow:'Dễ phân tán, thiếu tập trung và bỏ dở việc giữa chừng. Đôi khi nói nhiều hơn làm và tránh né cảm xúc sâu.'
-    },
-    4:{
-        icon:'🏗️', title:'Số 4 · Người Xây Dựng',
-        desc:'Kiên nhẫn, tỉ mỉ và đáng tin cậy như đá tảng. Số 4 xây dựng mọi thứ từ nền móng vững chắc — từ sự nghiệp, gia đình đến các hệ thống. Bạn là người mà mọi người tìm đến khi cần sự ổn định và bền vững thực sự.',
-        keywords:['Kỷ luật','Bền bỉ','Thực tế','Tổ chức','Đáng tin'],
-        shadow:'Dễ trở nên quá cứng nhắc, chống lại sự thay đổi và kiệt sức vì làm việc quá mức. Đôi khi chú trọng vật chất hơn tình cảm.'
-    },
-    5:{
-        icon:'🦋', title:'Số 5 · Người Tự Do',
-        desc:'Không thể bị giam cầm — bạn sinh ra để khám phá, trải nghiệm và biến đổi. Số 5 yêu thích sự đa dạng, du lịch và bất kỳ điều gì mới mẻ. Bạn thích nghi nhanh và có khả năng kết nối với mọi loại người.',
-        keywords:['Tự do','Phiêu lưu','Linh hoạt','Đa năng','Năng động'],
-        shadow:'Dễ thiếu ổn định, sợ cam kết và tìm kiếm kích thích liên tục dẫn đến bỏ lỡ chiều sâu trong các mối quan hệ.'
-    },
-    6:{
-        icon:'💝', title:'Số 6 · Người Chăm Sóc',
-        desc:'Trái tim của cộng đồng. Số 6 mang tình yêu vô điều kiện, tinh thần trách nhiệm sâu sắc và thiên hướng bảo vệ người mình yêu thương. Bạn tạo ra không gian an toàn và ấm áp mà người khác được nghỉ ngơi và chữa lành.',
-        keywords:['Yêu thương','Trách nhiệm','Gia đình','Hòa bình','Bảo vệ'],
-        shadow:'Dễ trở thành người hi sinh thái quá, kiểm soát từ sự lo lắng và khó chấp nhận khi người khác không làm đúng ý mình.'
-    },
-    7:{
-        icon:'🔭', title:'Số 7 · Người Tìm Kiếm',
-        desc:'Tâm hồn triết học với trí tuệ sâu thẳm. Số 7 không chấp nhận câu trả lời bề mặt — bạn đào sâu vào bản chất của vạn vật, từ khoa học đến tâm linh, để tìm ra sự thật ẩn sau tất cả. Trực giác của bạn rất đặc biệt.',
-        keywords:['Trí tuệ','Trực giác','Chiều sâu','Tâm linh','Phân tích'],
-        shadow:'Dễ thu mình lại, khó tin tưởng người khác và sống quá nhiều trong đầu. Đôi khi lạnh lùng hoặc bi quan trước thực tại.'
-    },
-    8:{
-        icon:'👑', title:'Số 8 · Người Thành Đạt',
-        desc:'Quyền năng và tầm nhìn kinh doanh hiếm có. Số 8 biết cách biến nguồn lực thành kết quả — không chỉ về vật chất mà còn về tầm ảnh hưởng và di sản. Bạn hiểu sâu về chu kỳ nhân-quả và cân bằng vũ trụ.',
-        keywords:['Thành công','Quyền lực','Tham vọng','Tài chính','Di sản'],
-        shadow:'Dễ bị cuốn vào tham vọng, bỏ qua cảm xúc bản thân và người thân. Đôi khi độc đoán hoặc ám ảnh với sự kiểm soát.'
-    },
-    9:{
-        icon:'🌍', title:'Số 9 · Người Nhân Văn',
-        desc:'Linh hồn vĩ đại nhất — bác ái, lý tưởng và tầm nhìn toàn nhân loại. Số 9 đã trải qua tất cả các số trước và mang trí tuệ tổng hợp. Bạn có khả năng chữa lành, truyền cảm hứng và đóng góp cho điều lớn lao hơn bản thân.',
-        keywords:['Bác ái','Nhân văn','Lý tưởng','Buông bỏ','Truyền cảm hứng'],
-        shadow:'Dễ hy sinh bản thân đến kiệt sức, khó buông bỏ quá khứ và đôi khi xa cách vì tư duy quá lý tưởng.'
-    },
-    11:{
-        icon:'✨', title:'Số 11 · Master Number – Người Soi Sáng',
-        desc:'Con số thiêng liêng nhất. Số 11 mang trực giác siêu việt, khả năng kết nối với nguồn năng lượng cao hơn và sứ mệnh truyền sáng tới thế giới. Bạn cảm nhận được những điều người khác không thể thấy và thường là chất xúc tác cho sự thức tỉnh của tập thể.',
-        keywords:['Tâm linh','Trực giác mạnh','Truyền cảm hứng','Sứ mệnh','Soi sáng'],
-        shadow:'Dễ chịu áp lực của kỳ vọng cao, lo âu mãn tính và cảm giác không thuộc về nơi này. Phải học cân bằng giữa lý tưởng và thực tại.'
-    },
-    22:{
-        icon:'🏛️', title:'Số 22 · Master Number – Người Xây Dựng Vĩ Đại',
-        desc:'Master Builder — người duy nhất có thể biến ước mơ thành công trình vĩ đại. Số 22 kết hợp tầm nhìn của số 11 với năng lực thực thi của số 4, tạo ra những điều có thể thay đổi hàng ngàn cuộc đời. Đây là tiềm năng cao nhất để lại di sản.',
-        keywords:['Tầm nhìn lớn','Thực thi xuất sắc','Di sản','Quy mô','Bứt phá'],
-        shadow:'Gánh nặng quá lớn dễ dẫn đến tê liệt, sợ thất bại và đôi khi thu mình xuống chỉ sống với số 4 thay vì bộc lộ toàn bộ tiềm năng.'
-    },
-    33:{
-        icon:'🙏', title:'Số 33 · Master Number – Người Thầy Yêu Thương',
-        desc:'Tình yêu vô điều kiện ở cấp độ cao nhất. Số 33 là Master Teacher — sứ mệnh là giảng dạy, chữa lành và nâng đỡ nhân loại bằng tình thương thuần khiết. Ảnh hưởng của bạn không ồn ào nhưng sâu sắc và biến đổi cuộc đời người khác theo cách mà họ mang ơn mãi.',
-        keywords:['Tình yêu vô điều kiện','Chữa lành','Giảng dạy','Phụng sự','Cao cả'],
-        shadow:'Dễ bị lợi dụng, mang vác gánh nặng của người khác đến kiệt cùng. Cần học đặt ranh giới lành mạnh và yêu thương bản thân trước.'
-    }
-};
-
-const KARMIC_MEANINGS = {
-    1:'Cần học cách tự tin, độc lập và chủ động hơn trong cuộc sống.',
-    2:'Cần học cách hợp tác, kiên nhẫn và nhạy cảm với người khác.',
-    3:'Cần học cách biểu đạt bản thân, giao tiếp và sáng tạo hơn.',
-    4:'Cần học cách kỷ luật, tổ chức và xây dựng nền tảng vững chắc.',
-    5:'Cần học cách chấp nhận thay đổi, linh hoạt và tự do hơn.',
-    6:'Cần học cách yêu thương, trách nhiệm và chăm sóc người khác.',
-    7:'Cần học cách suy ngẫm, tin tưởng trực giác và tìm kiếm chiều sâu.',
-    8:'Cần học cách quản lý tài chính, quyền lực và sự thành công.',
-    9:'Cần học cách bao dung, rộng lượng và phụng sự cộng đồng.'
-};
-
-// ===== RENDER HELPERS =====
-function renderNumCard(label, value, desc, icon='', delay=0) {
-    let mc=isMaster(value)?' master':'';
-    return `<div class="num-card" style="animation-delay:${delay}ms">
-        <div class="card-icon">${icon}</div>
-        <div class="label">${label}</div>
-        <div class="value${mc}">${value}</div>
-        <div class="desc">${desc}</div>
-    </div>`;
-}
-function renderCalcDetail(title, stepsHtml) {
-    return `<details class="calc-detail">
-        <summary>Xem cách tính: ${title}</summary>
-        <div class="calc-steps">${stepsHtml}</div>
-    </details>`;
-}
-function renderStep(label, content) {
-    return `<div class="calc-step">
-        <div class="step-label">${label}</div>
-        <div class="step-content">${content}</div>
-    </div>`;
-}
-function renderFormula(text) {
-    return `<div class="formula-box">${text}</div>`;
-}
-function renderNameBreakdownTable(letters) {
-    if(!letters.length)return'';
-    let h='',v='',c='',n='';
-    for(let l of letters){
-        if(l.isSpace){
-            h+=`<td class="space-cell" style="width:16px"></td>`;
-            v+=`<td class="space-cell"></td>`;
-            c+=`<td class="space-cell"></td>`;
-            n+=`<td class="space-cell"></td>`;
-        } else {
-            h+=`<td class="letter-cell" style="color:${l.isVowel?'var(--accent-light)':'var(--primary-light)'}">${l.char}</td>`;
-            v+=`<td>${l.isVowel?l.value:''}</td>`;
-            c+=`<td>${!l.isVowel?l.value:''}</td>`;
-            n+=`<td style="font-weight:700">${l.value}</td>`;
-        }
-    }
-    return `<table class="name-table">
-        <tr><th style="text-align:left;min-width:90px">Chữ cái</th>${h}</tr>
-        <tr class="vowel-row"><th style="text-align:left">Nguyên âm</th>${v}</tr>
-        <tr class="consonant-row"><th style="text-align:left">Phụ âm</th>${c}</tr>
-        <tr class="total-row"><th style="text-align:left">Giá trị</th>${n}</tr>
-    </table>`;
-}
-
-function renderMeaningCard(n) {
-    let m = MEANINGS[n] || MEANINGS[reduceToSingle(n,false)];
-    if(!m) return '';
-    let mc = isMaster(n) ? ' master-card' : '';
-    let keywordsHtml = m.keywords.map(k=>`<span class="kw-tag">${k}</span>`).join('');
-    return `<div class="meaning-card${mc}">
-        <div class="m-title">${m.icon} ${m.title}</div>
-        <div class="m-body">${m.desc}</div>
-        <div class="m-keywords">${keywordsHtml}</div>
-        <div class="m-shadow">
-            <div class="m-shadow-title">⚠ Mặt tối cần chú ý</div>
-            <div class="m-shadow-body">${m.shadow}</div>
-        </div>
-    </div>`;
-}
-
-// ===== MAIN CALCULATE =====
-function calculate() {
-    let name=document.getElementById('fullName').value.trim();
-    let day=parseInt(document.getElementById('birthDay').value);
-    let month=parseInt(document.getElementById('birthMonth').value);
-    let year=parseInt(document.getElementById('birthYear').value);
-    let currentYear=parseInt(document.getElementById('currentYear').value)||new Date().getFullYear();
-    let cmInput=document.getElementById('currentMonth').value;
-    let currentMonth=cmInput?parseInt(cmInput):new Date().getMonth()+1;
-
-    if(!name||!day||!month||!year){alert('Vui lòng nhập đầy đủ thông tin!');return;}
-    if(day<1||day>31||month<1||month>12||year<1900){alert('Ngày tháng năm sinh không hợp lệ!');return;}
-
-    const overlay=document.getElementById('loadingOverlay');
-    overlay.classList.add('active');
-
-    setTimeout(()=>{
-        try { _doCalculate(name,day,month,year,currentYear,currentMonth); }
-        catch(e){ console.error(e); alert('Có lỗi xảy ra khi tính toán!'); }
-        finally { overlay.classList.remove('active'); }
-    }, 450);
-}
-
-function _doCalculate(name,day,month,year,currentYear,currentMonth) {
-    let lpData=calcLifePathDetailed(day,month,year);
-    let lifePath=lpData.value;
-    let bdData=calcBirthdayDetailed(day);
-    let birthday=bdData.value;
-    let nameData=getNameNumbersDetailed(name);
-    let{soul,destiny,personality}=nameData;
-    let nd=nameData.detail;
-
-    let sM=isMaster(soul)?reduceToSingle(soul,false):soul;
-    let pM=isMaster(personality)?reduceToSingle(personality,false):personality;
-    let lM=isMaster(lifePath)?reduceToSingle(lifePath,false):lifePath;
-    let bM=isMaster(birthday)?reduceToSingle(birthday,false):birthday;
-    let bridgeSP=Math.abs(sM-pM);
-    let bridgeLB=Math.abs(lM-bM);
-
-    let pinnData=calcPinnaclesDetailed(day,month,year,lifePath);
-    let challData=calcChallengesDetailed(day,month,year);
-    let periodData=calcLifePeriodsDetailed(day,month,year,lifePath);
-    let pyData=calcPersonalYearDetailed(day,month,currentYear);
-    let personalYear=pyData.value;
-    let pmData=calcPersonalMonthDetailed(personalYear,currentMonth);
-    let personalMonth=pmData.value;
-    let karmic=calcKarmicLessons(nameData.letterCounts);
-    let pythaResult=calcPythagorasChart(day,month,year);
-    let pythaCounts=pythaResult.counts;
-    let pythaArrows=getPythaArrows(pythaCounts);
-
-    // --- NAME BREAKDOWN ---
-    document.getElementById('nameBreakdown').innerHTML=renderNameBreakdownTable(nameData.letters);
-
-    // --- CORE NUMBERS ---
-    document.getElementById('coreNumbers').innerHTML=[
-        renderNumCard('Số Đường Đời',lifePath,'Chỉ số quan trọng nhất','🛤️',0),
-        renderNumCard('Số Vận Mệnh',destiny,'Từ họ và tên đầy đủ','📜',80),
-        renderNumCard('Số Linh Hồn',soul,'Từ các nguyên âm trong tên','💜',160),
-        renderNumCard('Số Nhân Cách',personality,'Từ các phụ âm trong tên','🎭',240),
-        renderNumCard('Số Ngày Sinh',birthday,'Từ ngày sinh','🎂',320)
-    ].join('');
-
-    let lpD=lpData.detail;
-    let coreDetailsHtml=
-        renderCalcDetail('Số Đường Đời (Life Path)',
-            renderStep('Công thức','Rút gọn Ngày + Rút gọn Tháng + Rút gọn Năm → Rút gọn tổng')+
-            renderStep('Bước 1: Rút gọn ngày',`Ngày = ${lpD.day.raw} → ${lpD.day.steps.length?lpD.day.steps.join(' → '):'không cần rút gọn'} → <span class="highlight">${lpD.day.reduced}</span>`)+
-            renderStep('Bước 2: Rút gọn tháng',`Tháng = ${lpD.month.raw} → ${lpD.month.steps.length?lpD.month.steps.join(' → '):'không cần rút gọn'} → <span class="highlight">${lpD.month.reduced}</span>`)+
-            renderStep('Bước 3: Rút gọn năm',`Năm = ${lpD.year.raw} → ${lpD.year.steps.join(' → ')} → <span class="highlight">${lpD.year.reduced}</span>`)+
-            renderStep('Bước 4: Tổng',`${lpD.day.reduced} + ${lpD.month.reduced} + ${lpD.year.reduced} = ${lpD.total}`)+
-            (lpD.finalSteps.length?renderStep('Bước 5: Rút gọn',lpD.finalSteps.join(' → ')):'') +
-            renderFormula(`Số Đường Đời = <span class="result">${lifePath}</span>`))+
-        renderCalcDetail('Số Vận Mệnh (Expression)',
-            renderStep('Công thức','Cộng giá trị tất cả chữ cái trong tên → Rút gọn')+
-            renderStep('Giá trị từng chữ',nd.allParts.join(' + ')+` = <span class="highlight">${nd.totalSum}</span>`)+
-            (nd.destinySteps.length?renderStep('Rút gọn',nd.destinySteps.join(' → ')):'') +
-            renderFormula(`Số Vận Mệnh = <span class="result">${destiny}</span>`))+
-        renderCalcDetail('Số Linh Hồn (Soul Urge)',
-            renderStep('Công thức','Chỉ cộng giá trị các <span class="highlight">nguyên âm</span> (A,E,I,O,U) trong tên')+
-            renderStep('Các nguyên âm',nd.vowelParts.join(' + ')+` = <span class="highlight">${nd.vowelSum}</span>`)+
-            (nd.soulSteps.length?renderStep('Rút gọn',nd.soulSteps.join(' → ')):'') +
-            renderFormula(`Số Linh Hồn = <span class="result">${soul}</span>`))+
-        renderCalcDetail('Số Nhân Cách (Personality)',
-            renderStep('Công thức','Chỉ cộng giá trị các <span class="highlight">phụ âm</span> trong tên')+
-            renderStep('Các phụ âm',nd.consonantParts.join(' + ')+` = <span class="highlight">${nd.consonantSum}</span>`)+
-            (nd.personalitySteps.length?renderStep('Rút gọn',nd.personalitySteps.join(' → ')):'') +
-            renderFormula(`Số Nhân Cách = <span class="result">${personality}</span>`))+
-        renderCalcDetail('Số Ngày Sinh (Birthday)',
-            renderStep('Công thức','Rút gọn ngày sinh về 1 chữ số (giữ Master Number)')+
-            renderStep('Tính',`Ngày = ${day} → ${bdData.steps.length?bdData.steps.join(' → '):'không cần rút gọn'}`)+
-            renderFormula(`Số Ngày Sinh = <span class="result">${birthday}</span>`));
-    document.getElementById('coreCalcDetails').innerHTML=coreDetailsHtml;
-
-    // --- BRIDGE NUMBERS ---
-    document.getElementById('bridgeNumbers').innerHTML=[
-        renderNumCard('Cầu Nối Linh Hồn – Nhân Cách',bridgeSP,`|${sM} − ${pM}| = ${bridgeSP}`,'🌉',0),
-        renderNumCard('Cầu Nối Đường Đời – Ngày Sinh',bridgeLB,`|${lM} − ${bM}| = ${bridgeLB}`,'🔗',80)
-    ].join('');
-    document.getElementById('bridgeCalcDetails').innerHTML=
-        renderCalcDetail('Số Cầu Nối',
-            renderStep('Công thức','Cầu nối = |Số A − Số B| (Master Number rút gọn trước)')+
-            renderStep('Cầu nối Linh Hồn − Nhân Cách',`|${sM} − ${pM}| = <span class="highlight">${bridgeSP}</span>`)+
-            renderStep('Cầu nối Đường Đời − Ngày Sinh',`|${lM} − ${bM}| = <span class="highlight">${bridgeLB}</span>`));
-
-    // --- PERSONAL YEAR/MONTH ---
-    document.getElementById('personalNumbers').innerHTML=[
-        renderNumCard(`Số Năm Cá Nhân ${currentYear}`,personalYear,'Năng lượng của năm hiện tại','🌟',0),
-        renderNumCard(`Số Tháng Cá Nhân (T${currentMonth})`,personalMonth,'Năng lượng của tháng hiện tại','🌙',80)
-    ].join('');
-    document.getElementById('personalCalcDetails').innerHTML=
-        renderCalcDetail('Số Năm & Tháng Cá Nhân',
-            renderStep('Công thức Năm Cá Nhân','Cộng từng chữ số: Ngày + Tháng + Năm hiện tại → Rút gọn')+
-            renderStep('Tính',pyData.detail.digitBreak)+
-            (pyData.detail.steps.length?renderStep('Rút gọn',pyData.detail.steps.join(' → ')):'') +
-            renderFormula(`Số Năm Cá Nhân ${currentYear} = <span class="result">${personalYear}</span>`)+
-            renderStep('Công thức Tháng Cá Nhân','Số Năm Cá Nhân + Tháng hiện tại → Rút gọn')+
-            renderStep('Tính',pmData.detail.formula)+
-            (pmData.detail.steps.length?renderStep('Rút gọn',pmData.detail.steps.join(' → ')):'') +
-            renderFormula(`Số Tháng Cá Nhân (T${currentMonth}) = <span class="result">${personalMonth}</span>`));
-
-    // --- PINNACLES ---
-    document.getElementById('pinnacles').innerHTML=pinnData.pinnacles.map((p,i)=>
-        `<div class="timeline-card" style="animation-delay:${i*80}ms">
-            <div class="tc-label">Đỉnh cao ${i+1}</div>
-            <div class="tc-num${isMaster(p.num)?' master':''}">${p.num}</div>
-            <div class="tc-ages">${p.from} – ${p.to!==null?p.to:'∞'} tuổi</div>
-        </div>`
-    ).join('');
-    let pd=pinnData.detail;
-    document.getElementById('pinnacleCalcDetails').innerHTML=
-        renderCalcDetail('Bốn Đỉnh Cao',
-            renderStep('Chuẩn bị',`Ngày rút gọn = ${pd.d}, Tháng rút gọn = ${pd.m}, Năm rút gọn = ${pd.y}`)+
-            renderStep('Tuổi bắt đầu',`36 − Số Đường Đời(${pd.lp}) = ${pd.firstEnd} tuổi`)+
-            pd.formulas.map((f,i)=>renderStep(`Đỉnh cao ${i+1}`,f)).join(''));
-
-    // --- CHALLENGES ---
-    document.getElementById('challenges').innerHTML=challData.challenges.map((c,i)=>
-        `<div class="timeline-card challenge" style="animation-delay:${i*80}ms">
-            <div class="tc-label">Thử thách ${i+1}</div>
-            <div class="tc-num">${c.num}</div>
-            <div class="tc-ages">${pinnData.pinnacles[i].from} – ${pinnData.pinnacles[i].to!==null?pinnData.pinnacles[i].to:'∞'} tuổi</div>
-        </div>`
-    ).join('');
-    let cd=challData.detail;
-    document.getElementById('challengeCalcDetails').innerHTML=
-        renderCalcDetail('Bốn Thử Thách',
-            renderStep('Chuẩn bị',`Ngày = ${cd.d}, Tháng = ${cd.m}, Năm = ${cd.y} (không giữ Master Number)`)+
-            cd.formulas.map((f,i)=>renderStep(`Thử thách ${i+1}`,f)).join(''));
-
-    // --- LIFE PERIODS ---
-    document.getElementById('periods').innerHTML=periodData.periods.map((p,i)=>
-        `<div class="timeline-card" style="animation-delay:${i*80}ms">
-            <div class="tc-label">${p.label}</div>
-            <div class="tc-num">${p.num}</div>
-            <div class="tc-ages">${p.from} – ${p.to!==null?p.to:'∞'} tuổi</div>
-        </div>`
-    ).join('');
-    let prd=periodData.detail;
-    document.getElementById('periodCalcDetails').innerHTML=
-        renderCalcDetail('Ba Giai Đoạn',
-            renderStep('Công thức',prd.note)+
-            prd.formulas.map((f,i)=>renderStep(`Giai đoạn ${i+1}`,f)).join(''));
-
-    // --- KARMIC LESSONS ---
-    let presentNums={};
-    for(let i=1;i<=9;i++)presentNums[i]=nameData.letterCounts[i]||0;
-    let karmicDetailHtml=
-        renderStep('Công thức','Đếm số lần xuất hiện của từng số 1–9 trong tên. Số nào không xuất hiện = Bài học nghiệp.')+
-        renderStep('Thống kê',Object.entries(presentNums).map(([k,v])=>
-            `Số ${k}: <span style="color:${v>0?'var(--success)':'var(--danger)'};">${v>0?v+' lần':'THIẾU'}</span>`
-        ).join(' &nbsp;|&nbsp; '));
-
-    if(karmic.length===0){
-        document.getElementById('karmicLessons').innerHTML=
-            '<div class="karmic-none">✅ Bạn không có bài học nghiệp nào — tên của bạn đã có đủ các con số từ 1 đến 9.</div>'+
-            renderCalcDetail('Bài Học Nghiệp',karmicDetailHtml);
-    } else {
-        document.getElementById('karmicLessons').innerHTML=
-            '<div class="karmic-grid">'+
-            karmic.map(k=>`<div class="karmic-badge">${k}</div>`).join('')+
-            '</div>'+
-            '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;margin-bottom:12px">'+
-            karmic.map(k=>`<div class="meaning-card" style="border-left-color:var(--danger)"><div class="m-title">Số ${k}</div><div class="m-body">${KARMIC_MEANINGS[k]}</div></div>`).join('')+
-            '</div>'+
-            renderCalcDetail('Bài Học Nghiệp',karmicDetailHtml);
-    }
-
-    // --- PYTHAGORAS CHART ---
-    let gridOrder=[3,6,9,2,5,8,1,4,7];
-    document.getElementById('pythaGrid').innerHTML=gridOrder.map(d=>{
-        let c=pythaCounts[d];
-        let display=c>0?String(d).repeat(c):'–';
-        return `<div class="pytha-cell ${c>0?'filled':'empty'}">
-            <span class="pc-digit">${d}</span>
-            <span class="pc-count">${display}</span>
-        </div>`;
-    }).join('');
-
-    document.getElementById('pythaArrows').innerHTML=pythaArrows.length>0?
-        pythaArrows.map(a=>{
-            let cls=a.type==='full'?'present':'absent';
-            return `<div class="arrow-item"><span class="arrow-label ${cls}">${a.type==='full'?'✓':'✗'} ${a.label}</span><div class="arrow-desc">${a.desc}</div></div>`;
-        }).join('')+
-        `<div class="arrow-item" style="background:rgba(245,158,11,0.05);border-color:rgba(245,158,11,0.2)">
-            <span class="arrow-label" style="color:var(--accent-light)">Đọc biểu đồ</span>
-            <div class="arrow-desc">Hàng ngang: 3-6-9 (Trí tuệ) · 2-5-8 (Cảm xúc) · 1-4-7 (Thể chất)<br>Hàng dọc: 1-2-3 (Suy nghĩ) · 4-5-6 (Ý chí) · 7-8-9 (Hành động)</div>
-        </div>`:
-        '<div class="arrow-item"><span class="arrow-desc">Không có mũi tên đặc biệt</span></div>';
-
-    document.getElementById('pythaCalcDetails').innerHTML=
-        renderCalcDetail('Biểu Đồ Pythagoras',
-            renderStep('Công thức','Tách từng chữ số trong ngày/tháng/năm sinh, đếm số lần xuất hiện của mỗi số 1–9')+
-            renderStep('Ngày sinh',`${day}/${month}/${year} → các chữ số: <span class="highlight">${pythaResult.dateStr.split('').filter(c=>c!=='0').join(', ')}</span> (bỏ số 0)`)+
-            renderStep('Đếm',Object.entries(pythaCounts).map(([k,v])=>`Số ${k}: <strong>${v}</strong>`).join(' &nbsp;|&nbsp; '))+
-            renderStep('Cách đọc biểu đồ',
-                '<strong>Hàng ngang:</strong> 3-6-9 (Trí tuệ) | 2-5-8 (Cảm xúc) | 1-4-7 (Thể chất)<br>'+
-                '<strong>Hàng dọc:</strong> 1-2-3 (Suy nghĩ) | 4-5-6 (Ý chí) | 7-8-9 (Hành động)<br>'+
-                '<strong>Đường chéo:</strong> 1-5-9 (Quyết tâm) | 3-5-7 (Tâm linh)'));
-
-    // --- MEANINGS (detailed) ---
-    let allNums=[lifePath,destiny,soul,personality,birthday].filter((v,i,a)=>a.indexOf(v)===i);
-    document.getElementById('meanings').innerHTML=allNums.map((n,i)=>{
-        let card=renderMeaningCard(n);
-        // inject animation delay
-        return card.replace('class="meaning-card', `class="meaning-card" style="animation-delay:${i*100}ms" data-tmp="x`).replace(' data-tmp="x"','');
-    }).join('');
-
-    // inject delay properly
-    document.querySelectorAll('.meaning-card').forEach((el,i)=>{
-        el.style.animationDelay = (i*100)+'ms';
-    });
-
-    // --- SHOW RESULTS ---
-    let resultsEl=document.getElementById('results');
-    resultsEl.style.display='block';
-    setTimeout(()=>{ revealAll(); },50);
-    resultsEl.scrollIntoView({behavior:'smooth',block:'start'});
-}
-
-document.addEventListener('keydown',e=>{ if(e.key==='Enter')calculate(); });
-
-document.addEventListener('DOMContentLoaded',()=>{
-    const now=new Date();
-    document.getElementById('currentYear').value=now.getFullYear();
-    revealAll();
-});
-</script>
 </body>
 </html>
