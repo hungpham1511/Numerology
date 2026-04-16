@@ -97,7 +97,7 @@ function _doCalculate(name, day, month, year, currentYear, currentMonth) {
             renderFormula(`Số Đường Đời = <span class="result">${lifePath}</span>`)) +
 
         renderCalcDetail('Số Vận Mệnh (Expression)',
-            renderStep('Công thức', 'Cộng giá trị tất cả chữ cái → rút gọn') +
+            renderStep('Công thức', 'Cộng giá trị tất cả chữ cái → rút gọn (giữ Master Number ở bước cuối)') +
             renderStep('Giá trị', nd.allParts.join(' + ') + ` = <span class="highlight">${nd.totalSum}</span>`) +
             (nd.destinySteps.length ? renderStep('Rút gọn', nd.destinySteps.join(' → ')) : '') +
             renderFormula(`Số Vận Mệnh = <span class="result">${destiny}</span>`)) +
@@ -115,7 +115,7 @@ function _doCalculate(name, day, month, year, currentYear, currentMonth) {
             renderFormula(`Số Nhân Cách = <span class="result">${personality}</span>`)) +
 
         renderCalcDetail('Số Ngày Sinh (Birthday)',
-            renderStep('Công thức', 'Rút gọn ngày sinh, giữ Master Number (11, 22)') +
+            renderStep('Công thức', 'Rút gọn ngày sinh về 1 chữ số') +
             renderStep('Tính', `Ngày = ${day} → ${bdData.steps.length ? bdData.steps.join(' → ') : 'không cần rút gọn'}`) +
             renderFormula(`Số Ngày Sinh = <span class="result">${birthday}</span>`));
 
@@ -127,7 +127,7 @@ function _doCalculate(name, day, month, year, currentYear, currentMonth) {
     ].join('');
     document.getElementById('bridgeCalcDetails').innerHTML =
         renderCalcDetail('Số Cầu Nối',
-            renderStep('Công thức', '|Số A − Số B| (Master Number rút gọn về 1 chữ số trước khi trừ)') +
+            renderStep('Công thức', '|Số A − Số B| (nếu Số Đường Đời là 11/22/33 thì rút gọn trước khi trừ)') +
             renderStep('Cầu nối Linh Hồn − Nhân Cách', `|${bD.sR} − ${bD.pR}| = <span class="highlight">${bSP}</span>`) +
             renderStep('Cầu nối Đường Đời − Ngày Sinh',  `|${bD.lR} − ${bD.bR}| = <span class="highlight">${bLB}</span>`));
 
