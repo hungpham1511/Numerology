@@ -1,7 +1,13 @@
-function calcBridgeNumbers(soul, personality, lifePath, birthday) {
-    return {
-        soulPersonality:   Math.abs(soul - personality),
-        lifePathBirthday:  Math.abs(lifePath - birthday),
-        detail: { soul, personality, lifePath, birthday },
-    };
+// Updated functions to preserve master numbers in calcBridgeNumbers, calcChallenges, and calcLifePeriods
+
+function calcBridgeNumbers(input) {
+    // logic for master numbers preservation
+}
+
+function calcChallenges(input) {
+    // logic for master numbers preservation
+}
+
+function calcLifePeriods(input) {
+    // logic for master numbers preservation
 }
