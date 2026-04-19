@@ -44,12 +44,23 @@ function reduceMaster(n) {
     return n;
 }
 
-function reduceComponentTrace(n) {
-    const digits = String(Math.abs(n)).split('').map(Number);
+function reduceComponentTrace(n, keepMaster = false) {
+    n = Math.abs(n);
+
+    // Check if n itself is already a Master Number before reducing
+    if (keepMaster && isMaster(n)) {
+        return { value: n, steps: [`${n} là Master Number → giữ nguyên`] };
+    }
+
+    const digits = String(n).split('').map(Number);
     let s = digits.reduce((a, b) => a + b, 0);
     const steps = [`${digits.join(' + ')} = ${s}`];
 
     while (s > 9) {
+        if (keepMaster && isMaster(s)) {
+            steps.push(`${s} là Master Number → giữ nguyên`);
+            return { value: s, steps };
+        }
         const d2 = String(s).split('').map(Number);
         const s2 = d2.reduce((a, b) => a + b, 0);
         steps.push(`${d2.join(' + ')} = ${s2}`);
@@ -81,9 +92,9 @@ function reduceTrace(n, keepMaster = true) {
 // ── Life Path ────────────────────────────────────────────────────
 
 function calcLifePath(day, month, year) {
-    const dayR = reduceComponentTrace(day);
-    const monthR = reduceComponentTrace(month);
-    const yearR = reduceComponentTrace(year);
+    const dayR = reduceComponentTrace(day, true);
+    const monthR = reduceComponentTrace(month, true);
+    const yearR = reduceComponentTrace(year, true);
 
     const total = dayR.value + monthR.value + yearR.value;
     const finalR = reduceTrace(total, true);
@@ -145,9 +156,9 @@ function getNameNumbers(fullName) {
         }
     }
 
-    const soulR = reduceTrace(vowelSum, false);
+    const soulR = reduceTrace(vowelSum, true);
     const destR = reduceTrace(totalSum, true);
-    const persR = reduceTrace(consonantSum, false);
+    const persR = reduceTrace(consonantSum, true);
 
     return {
         soul: soulR.value,

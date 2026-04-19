@@ -2,9 +2,10 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Thần Số Học | Numerology Calculator</title>
     <meta name="description" content="Khám phá bản thân qua khoa học về những con số - Tính toán đầy đủ các chỉ số Thần Số Học theo phương pháp Pythagoras.">
+    <meta name="theme-color" content="#080612">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Cinzel+Decorative:wght@400;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
@@ -91,18 +92,18 @@
                 <div class="form-group full">
                     <label>Ngày / Tháng / Năm sinh</label>
                     <div class="date-grid">
-                        <input type="number" id="birthDay"   placeholder="Ngày (1–31)"   min="1" max="31">
-                        <input type="number" id="birthMonth" placeholder="Tháng (1–12)"  min="1" max="12">
-                        <input type="number" id="birthYear"  placeholder="Năm (vd: 1990)" min="1900" max="2100">
+                        <input type="number" id="birthDay"   placeholder="Ngày (1–31)"   min="1" max="31" inputmode="numeric">
+                        <input type="number" id="birthMonth" placeholder="Tháng (1–12)"  min="1" max="12" inputmode="numeric">
+                        <input type="number" id="birthYear"  placeholder="Năm (vd: 1990)" min="1900" max="2100" inputmode="numeric">
                     </div>
                 </div>
                 <div class="form-group">
                     <label>Năm tính toán (Số Năm Cá Nhân)</label>
-                    <input type="number" id="currentYear" value="2026" min="1900" max="2100">
+                    <input type="number" id="currentYear" value="2026" min="1900" max="2100" inputmode="numeric">
                 </div>
                 <div class="form-group">
                     <label>Tháng tính toán (Số Tháng Cá Nhân)</label>
-                    <input type="number" id="currentMonth" placeholder="Để trống = tháng hiện tại" min="1" max="12">
+                    <input type="number" id="currentMonth" placeholder="Để trống = tháng hiện tại" min="1" max="12" inputmode="numeric">
                 </div>
                 <div class="btn-center">
                     <button class="btn-calculate" id="calcBtn" onclick="calculate()">
@@ -212,6 +213,76 @@
 
         </div><!-- /#results -->
 
+        <!-- ═══════════════════════════════════════════════════ -->
+        <!-- NAME SUGGESTER SECTION                             -->
+        <!-- ═══════════════════════════════════════════════════ -->
+        <div class="suggest-section reveal">
+            <div class="suggest-header">
+                <div class="suggest-header-icon">💎</div>
+                <div>
+                    <h2>Gợi Ý Tên Theo Thần Số Học</h2>
+                    <p>Tìm tên đệm & tên chính tối ưu cho số học của bạn</p>
+                </div>
+            </div>
+
+            <div class="suggest-form">
+                <div class="suggest-form-grid">
+                    <div class="form-group">
+                        <label>Họ (Last name, không dấu)</label>
+                        <input type="text" id="suggestLastName" placeholder="Ví dụ: Nguyen" autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <label>Ngày sinh</label>
+                        <div class="date-grid">
+                            <input type="number" id="suggestDay" placeholder="Ngày" min="1" max="31" inputmode="numeric">
+                            <input type="number" id="suggestMonth" placeholder="Tháng" min="1" max="12" inputmode="numeric">
+                            <input type="number" id="suggestYear" placeholder="Năm" min="1900" max="2100" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Giới tính</label>
+                        <div class="gender-toggle">
+                            <button class="gender-btn active" data-gender="male" id="genderMale" onclick="setGender('male')">
+                                <span>👨</span> Nam
+                            </button>
+                            <button class="gender-btn" data-gender="female" id="genderFemale" onclick="setGender('female')">
+                                <span>👩</span> Nữ
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Số Vận Mệnh mong muốn <span class="label-hint">(tuỳ chọn)</span></label>
+                        <div class="target-chips" id="targetChips">
+                            <button class="chip" data-num="0" onclick="toggleChip(this)">Tự động</button>
+                            <button class="chip" data-num="1" onclick="toggleChip(this)">1</button>
+                            <button class="chip" data-num="2" onclick="toggleChip(this)">2</button>
+                            <button class="chip" data-num="3" onclick="toggleChip(this)">3</button>
+                            <button class="chip" data-num="4" onclick="toggleChip(this)">4</button>
+                            <button class="chip" data-num="5" onclick="toggleChip(this)">5</button>
+                            <button class="chip" data-num="6" onclick="toggleChip(this)">6</button>
+                            <button class="chip" data-num="7" onclick="toggleChip(this)">7</button>
+                            <button class="chip" data-num="8" onclick="toggleChip(this)">8</button>
+                            <button class="chip" data-num="9" onclick="toggleChip(this)">9</button>
+                            <button class="chip chip-master" data-num="11" onclick="toggleChip(this)">11</button>
+                            <button class="chip chip-master" data-num="22" onclick="toggleChip(this)">22</button>
+                            <button class="chip chip-master" data-num="33" onclick="toggleChip(this)">33</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="btn-center">
+                    <button class="btn-suggest" id="suggestBtn" onclick="suggestNames()">
+                        <span class="btn-icon">💎</span>
+                        Gợi Ý Tên Tối Ưu
+                    </button>
+                </div>
+            </div>
+
+            <div id="suggestResults" style="display:none">
+                <div class="suggest-summary" id="suggestSummary"></div>
+                <div class="suggest-grid" id="suggestGrid"></div>
+            </div>
+        </div>
+
     </div><!-- /.container -->
 
     <footer>
@@ -236,6 +307,7 @@
 <script src="js/engine.js"></script>
 <script src="js/meanings.js"></script>
 <script src="js/render.js"></script>
+<script src="js/suggest.js"></script>
 <script src="js/particles.js"></script>
 <script src="js/main.js"></script>
 

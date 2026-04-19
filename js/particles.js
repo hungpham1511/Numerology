@@ -71,8 +71,13 @@
     }
 
     function init() {
+        // Respect reduced motion preference
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
         resize();
-        particles = Array.from({ length: 120 }, randomParticle);
+        // Fewer particles on mobile for performance
+        const count = window.innerWidth < 768 ? 50 : 120;
+        particles = Array.from({ length: count }, randomParticle);
         draw();
     }
 

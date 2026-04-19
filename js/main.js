@@ -275,3 +275,97 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('keydown', e => {
     if (e.key === 'Enter') calculate();
 });
+
+// ══════════════════════════════════════════════════════════════════
+// NAME SUGGESTER UI WIRING
+// ══════════════════════════════════════════════════════════════════
+
+let _selectedGender = 'male';
+let _selectedTargets = [];
+
+function setGender(g) {
+    _selectedGender = g;
+    document.getElementById('genderMale').classList.toggle('active', g === 'male');
+    document.getElementById('genderFemale').classList.toggle('active', g === 'female');
+}
+
+function toggleChip(btn) {
+    const num = parseInt(btn.dataset.num);
+
+    if (num === 0) {
+        // "Auto" chip — deselect all others
+        _selectedTargets = [];
+        document.querySelectorAll('.target-chips .chip').forEach(c => c.classList.remove('active'));
+        btn.classList.add('active');
+        return;
+    }
+
+    // Deselect "Auto"
+    const autoChip = document.querySelector('.chip[data-num="0"]');
+    if (autoChip) autoChip.classList.remove('active');
+
+    btn.classList.toggle('active');
+    if (btn.classList.contains('active')) {
+        if (!_selectedTargets.includes(num)) _selectedTargets.push(num);
+    } else {
+        _selectedTargets = _selectedTargets.filter(n => n !== num);
+    }
+
+    // If nothing selected, re-activate auto
+    if (_selectedTargets.length === 0 && autoChip) {
+        autoChip.classList.add('active');
+    }
+}
+
+function suggestNames() {
+    const lastName = document.getElementById('suggestLastName').value.trim();
+    const day      = parseInt(document.getElementById('suggestDay').value);
+    const month    = parseInt(document.getElementById('suggestMonth').value);
+    const year     = parseInt(document.getElementById('suggestYear').value);
+
+    if (!lastName || !day || !month || !year) {
+        alert('Vui lòng nhập đầy đủ Họ và Ngày sinh!');
+        return;
+    }
+    if (day < 1 || day > 31 || month < 1 || month > 12 || year < 1900) {
+        alert('Ngày tháng năm sinh không hợp lệ!');
+        return;
+    }
+
+    const overlay = document.getElementById('loadingOverlay');
+    overlay.classList.add('active');
+
+    setTimeout(() => {
+        try {
+            const targets = _selectedTargets.length > 0 ? _selectedTargets : null;
+            const results = generateNameSuggestions(lastName, day, month, year, _selectedGender, targets);
+            const lpData = calcLifePath(day, month, year);
+            const lifePath = lpData.value;
+
+            // Count total combinations for display
+            const middles = VN_NAMES.middle[_selectedGender] || VN_NAMES.middle.male;
+            const firsts  = VN_NAMES.first[_selectedGender]  || VN_NAMES.first.male;
+            const totalCombos = middles.length * firsts.length;
+
+            // Render summary
+            document.getElementById('suggestSummary').innerHTML =
+                renderSuggestSummary(lifePath, totalCombos, _selectedGender, targets);
+
+            // Render cards
+            document.getElementById('suggestGrid').innerHTML =
+                results.map((item, i) => renderSuggestCard(item, i, lifePath)).join('');
+
+            // Show results
+            const resultsEl = document.getElementById('suggestResults');
+            resultsEl.style.display = 'block';
+
+            setTimeout(revealAll, 50);
+            resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } catch (e) {
+            console.error(e);
+            alert('Có lỗi xảy ra: ' + e.message);
+        } finally {
+            overlay.classList.remove('active');
+        }
+    }, 400);
+}
