@@ -108,25 +108,25 @@ function renderChartWheel(chart) {
         const angle = (180-(lon-base))*Math.PI/180;
         return [center+r*Math.cos(angle), center-r*Math.sin(angle)];
     };
-    const line = (lon,r1,r2,color='#d2d8c7',width=1) => {
+    const line = (lon,r1,r2,color='var(--chart-line)',width=1) => {
         const a=point(lon,r1),b=point(lon,r2);
         return `<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="${color}" stroke-width="${width}"/>`;
     };
     let svg = '<svg viewBox="0 0 520 520" role="img" aria-label="Bản đồ sao: vị trí thiên thể trong 12 cung hoàng đạo. Xem bảng bên cạnh để đọc chính xác.">';
-    for (const r of [238,204,166,115]) svg+=`<circle cx="260" cy="260" r="${r}" fill="none" stroke="#cbd2be" stroke-width="1"/>`;
+    for (const r of [238,204,166,115]) svg+=`<circle cx="260" cy="260" r="${r}" fill="none" stroke="var(--chart-line)" stroke-width="1"/>`;
     for (let d=0;d<360;d+=5) svg+=line(d,204,d%30===0?238: d%10===0?213:209);
     for (let i=0;i<12;i++) {
         const p=point(i*30+15,222);
-        svg+=`<text x="${p[0]}" y="${p[1]+6}" text-anchor="middle" fill="#48654f" font-size="21">${ZODIAC_SYMBOLS[i]}\uFE0E</text>`;
+        svg+=`<text x="${p[0]}" y="${p[1]+6}" text-anchor="middle" fill="var(--chart-sign)" font-size="21">${ZODIAC_SYMBOLS[i]}\uFE0E</text>`;
         if(chart.angles) {
-            svg+=line(chart.houseStart+i*30,115,204,'#c0cbb3');
+            svg+=line(chart.houseStart+i*30,115,204,'var(--chart-line)');
             const h=point(chart.houseStart+i*30+15,133);
-            svg+=`<text x="${h[0]}" y="${h[1]+4}" text-anchor="middle" fill="#7e8b74" font-size="10">${i+1}</text>`;
+            svg+=`<text x="${h[0]}" y="${h[1]+4}" text-anchor="middle" fill="var(--text-muted)" font-size="10">${i+1}</text>`;
         }
     }
     for(const aspect of chart.aspects) {
         const a=point(chart.planets[aspect.a].longitude,113),b=point(chart.planets[aspect.b].longitude,113);
-        const color=[90,180].includes(aspect.angle)?'#b77a5d':'#769182';
+        const color=[90,180].includes(aspect.angle)?'var(--chart-hard)':'var(--chart-soft)';
         svg+=`<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="${color}" stroke-opacity=".45" stroke-width=".8"/>`;
     }
     // Greedy radial tracks keep nearby planet symbols legible, including across 0 degrees.
@@ -136,15 +136,15 @@ function renderChartWheel(chart) {
         while(placed.some(q=>q.lane===lane&&angularDistance(q.longitude,p.longitude)<11)) lane++;
         placed.push({...p,lane});
         const xy=point(p.longitude,188-lane*17);
-        svg+=line(p.longitude,199,204,'#395d49',1.6);
-        svg+=`<text x="${xy[0]}" y="${xy[1]+6}" text-anchor="middle" fill="#315c4a" font-size="19"><title>${p.name}: ${p.name==='Mặt Trời'?'':p.symbol} ${p.degree} ${ZODIAC[p.index]}</title>${p.symbol}</text>`;
+        svg+=line(p.longitude,199,204,'var(--primary-light)',1.6);
+        svg+=`<text x="${xy[0]}" y="${xy[1]+6}" text-anchor="middle" fill="var(--primary-light)" font-size="19"><title>${p.name}: ${p.name==='Mặt Trời'?'':p.symbol} ${p.degree} ${ZODIAC[p.index]}</title>${p.symbol}</text>`;
     });
     if(chart.angles) for(const [label,lon] of [['ASC',chart.angles.ascendant],['MC',chart.angles.midheaven]]) {
-        svg+=line(lon,116,246,'#a3743f',1.5);
+        svg+=line(lon,116,246,'var(--accent-light)',1.5);
         const p=point(lon,252);
-        svg+=`<text x="${p[0]}" y="${p[1]+3}" text-anchor="middle" fill="#8a5b29" font-size="9" font-weight="bold">${label}</text>`;
+        svg+=`<text x="${p[0]}" y="${p[1]+3}" text-anchor="middle" fill="var(--accent-light)" font-size="9" font-weight="bold">${label}</text>`;
     }
-    svg+='<circle cx="260" cy="260" r="26" fill="#fffdf8"/><text x="260" y="266" text-anchor="middle" fill="#a3743f" font-size="23">✧</text></svg>';
+    svg+='<circle cx="260" cy="260" r="26" fill="var(--bg2)"/><text x="260" y="266" text-anchor="middle" fill="var(--accent-light)" font-size="23">✧</text></svg>';
     return svg;
 }
 

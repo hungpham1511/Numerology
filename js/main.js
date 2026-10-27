@@ -14,6 +14,51 @@ function toggleRef() {
 
 let numberRequest = 0;
 
+let suggestionRequest = 0;
+let astroRequest = 0;
+
+function startCalculation(formId, label) {
+    const form = document.getElementById(formId);
+    let status = form.querySelector('.calculation-status');
+    if (!status) {
+        status = document.createElement('div');
+        status.className = 'calculation-status';
+        status.setAttribute('role', 'status');
+        status.setAttribute('aria-live', 'polite');
+        status.innerHTML = '<span class="calculation-orbit" aria-hidden="true"><i>✦</i><b>7</b><b>3</b><b>9</b></span><span class="calculation-copy"></span><span class="calculation-sparkles" aria-hidden="true">✧ ✦</span>';
+        form.append(status);
+    }
+    status.querySelector('.calculation-copy').textContent = label;
+    status.hidden = false;
+    form.classList.add('is-calculating');
+    form.setAttribute('aria-busy', 'true');
+    // One short entrance beat, concurrent with actual work/loading; no fake progress.
+    // Skip even this beat when the user asks for reduced motion.
+    const ready = matchMedia('(prefers-reduced-motion: reduce)').matches || !status.animate
+        ? Promise.resolve()
+        : status.animate([{opacity:.4,transform:'translateY(5px)'},{opacity:1,transform:'translateY(0)'}],
+            {duration:360,easing:'ease-out'}).finished.catch(() => {});
+    return {ready};
+}
+
+function finishCalculation(formId) {
+    const form = document.getElementById(formId);
+    form.classList.remove('is-calculating');
+    form.setAttribute('aria-busy', 'false');
+    const status = form.querySelector('.calculation-status');
+    if (status) status.hidden = true;
+}
+
+function animateResults(id) {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const result = document.getElementById(id);
+    const cards = result.querySelectorAll('.num-card,.timeline-card,.suggest-card,.astro-highlight,.chart-card,.aspect-item');
+    cards.forEach((card, i) => {
+        if (card.animate) card.animate([{opacity:0,transform:'translateY(15px) scale(.97)'},{opacity:1,transform:'translateY(0) scale(1)'}],
+            {duration:430,delay:Math.min(i,5)*45,easing:'cubic-bezier(.2,.8,.2,1)',fill:'backwards'});
+    });
+}
+
 // ── Form submit ──────────────────────────────────────────────────
 async function calculate() {
     const request = ++numberRequest;
@@ -34,14 +79,16 @@ async function calculate() {
             !Number.isInteger(currentMonth) || currentMonth < 1 || currentMonth > 12) {
             throw new Error('Năm tính cần trong 1900–2100; tháng tính cần từ 1 đến 12.');
         }
-        await Promise.all(['js/meanings.js', 'js/render.js', 'js/numbers.js'].map(loadLocalScript));
+        const feedback = startCalculation('numberForm', 'Đang kết nối những con số của bạn…');
+        await Promise.all([...['js/meanings.js', 'js/render.js', 'js/numbers.js'].map(loadLocalScript), feedback.ready]);
         if (request !== numberRequest) return;
         _doCalculate(name, day, month, year, currentYear, currentMonth);
         document.getElementById('resultIdentity').textContent = `${name} · ${day}/${month}/${year}`;
+        animateResults('results');
     } catch (e) {
         document.getElementById('results').style.display = 'none';
         error.textContent = e.message;
-    } finally { button.disabled = false; }
+    } finally { finishCalculation('numberForm'); button.disabled = false; }
 }
 
 // ── Init ─────────────────────────────────────────────────────────
@@ -58,6 +105,7 @@ let _selectedGender = 'male';
 let _selectedTargets = [];
 
 function setGender(g) {
+    suggestionRequest++;
     _selectedGender = g;
     document.getElementById('genderMale').classList.toggle('active', g === 'male');
     document.getElementById('genderFemale').classList.toggle('active', g === 'female');
@@ -67,6 +115,7 @@ function setGender(g) {
 }
 
 function toggleChip(btn) {
+    suggestionRequest++;
     document.getElementById('suggestResults').style.display = 'none';
     const num = parseInt(btn.dataset.num);
 
@@ -98,6 +147,7 @@ function toggleChip(btn) {
 }
 
 async function suggestNames() {
+    const request = ++suggestionRequest;
     const error = document.getElementById('suggestError');
     error.textContent = '';
     const button = document.getElementById('suggestBtn');
@@ -109,7 +159,9 @@ async function suggestNames() {
         const year = Number(document.getElementById('suggestYear').value);
         normalizeName(lastName);
         validateBirthDate(day, month, year);
-        await loadLocalScript('js/suggest.js');
+        const feedback = startCalculation('suggestForm', 'Đang dệt những gợi ý tên…');
+        await Promise.all([loadLocalScript('js/suggest.js'), feedback.ready]);
+        if (request !== suggestionRequest) return;
         const targets = _selectedTargets.length ? _selectedTargets : null;
         const yIsVowel = document.getElementById('suggestYConvention').value === 'vowel';
         const results = generateNameSuggestions(lastName, day, month, year, _selectedGender, targets, yIsVowel);
@@ -118,10 +170,11 @@ async function suggestNames() {
         document.getElementById('suggestSummary').innerHTML = renderSuggestSummary(lifePath, total, _selectedGender, targets);
         document.getElementById('suggestGrid').innerHTML = results.map((item, i) => renderSuggestCard(item, i, lifePath)).join('');
         document.getElementById('suggestResults').style.display = 'block';
+        animateResults('suggestResults');
     } catch (e) {
         document.getElementById('suggestResults').style.display = 'none';
         error.textContent = e.message;
-    } finally { button.disabled = false; }
+    } finally { finishCalculation('suggestForm'); button.disabled = false; }
 }
 
 const scriptLoads = new Map();
@@ -139,6 +192,7 @@ function loadLocalScript(src) {
 }
 
 function selectView(view) {
+    numberRequest++; suggestionRequest++; astroRequest++;
     document.querySelectorAll('[data-panel]').forEach(panel => { panel.hidden = panel.dataset.panel !== view; });
     document.querySelectorAll('[data-view]').forEach(button => {
         button.setAttribute('aria-pressed', String(button.dataset.view === view));
@@ -151,23 +205,28 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('suggestForm').addEventListener('submit', e => { e.preventDefault(); suggestNames(); });
     document.getElementById('astroForm').addEventListener('submit', async e => {
         e.preventDefault();
+        const request = ++astroRequest;
         const button = document.getElementById('astroBtn');
         const error = document.getElementById('astroError');
         error.textContent = ''; button.disabled = true; button.textContent = 'Đang tính vị trí thiên thể…';
         try {
-            await loadLocalScript('js/vendor/astronomy.browser.min.js');
+            const feedback = startCalculation('astroForm', 'Đang nối các vì sao trên bầu trời của bạn…');
+            await Promise.all([loadLocalScript('js/vendor/astronomy.browser.min.js'), feedback.ready]);
             await loadLocalScript('js/astro.js');
+            if (request !== astroRequest) return;
             showBirthChart();
+            animateResults('astroResults');
         } catch (err) {
             document.getElementById('astroResults').hidden = true;
             error.textContent = err.message;
-        } finally { button.disabled = false; button.textContent = 'Vẽ bản đồ sao ↗'; }
+        } finally { finishCalculation('astroForm'); button.disabled = false; button.textContent = 'Vẽ bản đồ sao ↗'; }
     });
     document.getElementById('unknownTime').addEventListener('change', e => {
         document.getElementById('astroTime').disabled = e.target.checked;
         document.getElementById('astroResults').hidden = true;
     });
     document.getElementById('birthPlace').addEventListener('change', e => {
+        astroRequest++;
         const option = e.target.selectedOptions[0];
         if (option.dataset.lat) {
             document.getElementById('latitude').value = option.dataset.lat;
@@ -179,8 +238,8 @@ document.addEventListener('DOMContentLoaded', () => {
     for (const formId of ['numberForm', 'suggestForm', 'astroForm']) {
         document.getElementById(formId).addEventListener('input', () => {
             if (formId === 'numberForm') { numberRequest++; document.getElementById('results').style.display = 'none'; }
-            if (formId === 'suggestForm') document.getElementById('suggestResults').style.display = 'none';
-            if (formId === 'astroForm') document.getElementById('astroResults').hidden = true;
+            if (formId === 'suggestForm') { suggestionRequest++; document.getElementById('suggestResults').style.display = 'none'; }
+            if (formId === 'astroForm') { astroRequest++; document.getElementById('astroResults').hidden = true; }
         });
     }
 });

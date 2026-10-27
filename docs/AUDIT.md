@@ -53,3 +53,9 @@ Trình duyệt desktop (nội dung 1265px) và mobile (viewport 390px, nội dun
 ## Giới hạn
 
 Chưa geocoding mọi địa điểm; nơi khác nhập tọa độ/múi giờ thủ công. Whole Sign, chưa Placidus/Chiron/La Hầu/Kế Đô/nghịch hành. Diễn giải mới là gợi ý theo cung Mặt Trời. Chưa thử mọi trình duyệt hoặc hosting production. Độ đúng phép tính không chứng minh giá trị khoa học của diễn giải.
+
+## Cập nhật giao diện tím
+
+Theo yêu cầu sau bản phát hành `8040613`: đổi nền tím đêm, điểm hồng/cyan, thẻ nhiều màu và SVG bản đồ sao theo theme. Thêm animation xử lý 360ms đồng thời tải module, hiệu ứng xuất hiện thẻ, trạng thái aria-busy và hủy kết quả cũ khi đổi đầu vào/công cụ. Không đổi công thức. Chế độ giảm chuyển động bỏ cả nhịp animation.
+
+Đã thử trạng thái đang tính và hoàn tất ở ba công cụ, mobile 390px không tràn ngang, và chế độ giảm chuyển động. 13/13 nhóm test công thức vẫn qua. Tải đầu gồm HTML/CSS/engine/main hiện là 77,092 byte, vẫn không tải font ngoài hoặc thư viện thiên văn lúc mở trang; con số 66 KB/42,5% ở mục trước thuộc bản `8040613`.

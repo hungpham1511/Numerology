@@ -37,6 +37,10 @@ Không biết giờ sinh: dùng 12:00 địa phương, ẩn ASC/MC/nhà. Tất c
 
 [Astronomy Engine 2.1.19](https://github.com/cosinekitty/astronomy) lưu tại `js/vendor/`, có giấy phép MIT. Swiss Ephemeris chỉ dùng tạo fixture đối chiếu, không đóng gói làm thư viện web. 11 mẫu độc lập nằm trong `tests/astronomy-reference.json`.
 
+## Giao diện và chuyển động
+
+Theme tím đêm với điểm hồng–cyan, thẻ kết quả nhiều màu và bản đồ sao cùng bảng màu. Cả ba công cụ có một nhịp animation 360ms đồng thời tải dữ liệu cần thiết, sau đó thẻ kết quả xuất hiện lần lượt. Không hiển thị phần trăm tiến độ giả. Với `prefers-reduced-motion`, bỏ cả nhịp chờ animation và hiệu ứng kết quả.
+
 ## Tải tài nguyên
 
 `engine.js` và `main.js` tải ban đầu bằng `defer`. `meanings.js`, `render.js`, `numbers.js` tải khi tính số; `suggest.js` khi gợi ý tên; `astro.js` và thư viện thiên văn khi vẽ bản đồ sao. Không font ngoài, animation canvas hoặc delay giả. `particles.js` cũ không được tải.
