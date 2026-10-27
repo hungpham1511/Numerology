@@ -58,7 +58,7 @@ const HARMONY_MAP = {
 
 // ── Core suggestion function ──────────────────────────────────────
 
-function generateNameSuggestions(lastName, day, month, year, gender, targetNumbers) {
+function generateNameSuggestions(lastName, day, month, year, gender, targetNumbers, yIsVowel = true) {
     const middles = VN_NAMES.middle[gender] || VN_NAMES.middle.male;
     const firsts  = VN_NAMES.first[gender]  || VN_NAMES.first.male;
 
@@ -77,7 +77,7 @@ function generateNameSuggestions(lastName, day, month, year, gender, targetNumbe
             if (seen.has(key)) continue;
             seen.add(key);
 
-            const nameData = getNameNumbers(fullName);
+            const nameData = getNameNumbers(fullName, yIsVowel);
             const { soul, destiny, personality } = nameData;
 
             // Calculate bridge numbers
@@ -137,7 +137,7 @@ function scoreName({ destiny, soul, personality, lifePath, lpSingle, bridges, ka
         const harmList = HARMONY_MAP[lpSingle] || [];
         const destSingle = isMaster(destiny) ? reduceSingleDigit(destiny) : destiny;
         if (harmList.includes(destiny) || harmList.includes(destSingle)) {
-            score += 35;
+            score += 32;
         }
         // Extra bonus for master destiny numbers
         if (isMaster(destiny)) score += 8;
@@ -146,7 +146,7 @@ function scoreName({ destiny, soul, personality, lifePath, lpSingle, bridges, ka
     // ── 2. Soul-Personality harmony (20 points max) ──
     // Lower bridge = more harmony
     const spBridge = bridges.soulPersonality;
-    score += Math.max(0, 20 - spBridge * 4);
+    score += spBridge === null ? 0 : Math.max(0, 20 - spBridge * 4);
 
     // ── 3. Life Path harmony (20 points max) ──
     const lbBridge = bridges.lifePathBirthday;
@@ -165,10 +165,7 @@ function scoreName({ destiny, soul, personality, lifePath, lpSingle, bridges, ka
     const karmicPenalty = karmic.length * 3;
     score += Math.max(0, 20 - karmicPenalty);
 
-    // Bonus: if no karmic lessons at all
-    if (karmic.length === 0) score += 5;
-
-    return Math.round(score);
+    return Math.max(0, Math.min(100, Math.round(score)));
 }
 
 // ── Render suggestion cards ──────────────────────────────────────
@@ -192,7 +189,7 @@ function renderSuggestCard(item, rank, lifePath) {
 
     return `<div class="suggest-card" style="animation-delay:${rank * 50}ms">
         <div class="sg-rank">#${rank + 1}</div>
-        <div class="sg-name">${item.fullName}</div>
+        <div class="sg-name">${escapeHtml(item.fullName)}</div>
         <div class="sg-score-bar">
             <div class="sg-score-fill" style="width:${scorePercent}%;background:${scoreColor}"></div>
         </div>
@@ -223,7 +220,7 @@ function renderSuggestSummary(lifePath, totalCombos, gender, targetNumbers) {
     const genderLabel = gender === 'female' ? 'Nữ' : 'Nam';
     const targetLabel = (targetNumbers && targetNumbers.length > 0)
         ? `Mục tiêu: Số ${targetNumbers.join(', ')}`
-        : 'Tự động tối ưu hài hòa';
+        : 'Xếp hạng theo quy tắc tham khảo';
 
     return `<div class="sg-summary-inner">
         <div class="sg-summary-item">

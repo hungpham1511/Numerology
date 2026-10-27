@@ -3,45 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Thần Số Học | Numerology Calculator</title>
-    <meta name="description" content="Khám phá bản thân qua khoa học về những con số - Tính toán đầy đủ các chỉ số Thần Số Học theo phương pháp Pythagoras.">
-    <meta name="theme-color" content="#080612">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Cinzel+Decorative:wght@400;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <title>Numen · Thần số học &amp; Bản đồ sao</title>
+    <meta name="description" content="Tính thần số học minh bạch từng bước, khám phá tên và bản đồ sao cá nhân. Xử lý dữ liệu ngay trên thiết bị.">
+    <meta name="theme-color" content="#f6f3ec">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+<noscript><p class="form-error">Bật JavaScript để dùng các công cụ tính toán. Dữ liệu được xử lý ngay trên thiết bị.</p></noscript>
 
-<div class="bg-scene"></div>
-<div class="orb orb-1"></div>
-<div class="orb orb-2"></div>
-<div class="orb orb-3"></div>
-<canvas id="particles"></canvas>
-
-<div class="loading-overlay" id="loadingOverlay">
-    <div class="loader-ring">
-        <span class="loading-rune">🔮</span>
-    </div>
-    <div class="loading-text">Đang giải mã vũ trụ số học...</div>
-</div>
-
+<a class="skip-link" href="#workspace">Đến công cụ</a>
 <div class="site-wrap">
 
+    <nav class="topbar" aria-label="Thương hiệu">
+        <a class="brand" href="./"><span class="brand-mark">✳</span> NUMEN<span class="brand-note">by hngphm</span></a>
+        <span class="privacy-note"><span class="status-dot"></span> Tính trên thiết bị của bạn</span>
+    </nav>
     <header class="site-header">
-        <div class="header-badge"><span class="dot"></span> Pythagoras Numerology</div>
-        <h1>
-            <span class="h1-latin">Numerology</span>
-            <span class="h1-viet">Thần Số Học</span>
-        </h1>
-        <p>Khám phá bản thân qua khoa học về những con số và ý nghĩa ẩn sâu trong ngày sinh của bạn</p>
+        <div class="hero-copy">
+            <div class="eyebrow">NHỮNG CON SỐ · NHỮNG CHÒM SAO · BẠN</div>
+            <h1>Một góc nhìn mới.<br><em>Về chính bạn.</em></h1>
+            <p>Từ những con số trong tên đến bầu trời ngày bạn sinh.<br class="desktop-break"> Khám phá, đối chiếu và tự viết câu chuyện của mình.</p>
+            <div class="hero-meta"><span>01 / Thần số học</span><span>02 / Gợi ý tên</span><span>03 / Bản đồ sao</span></div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+            <svg viewBox="0 0 400 400" fill="none">
+                <circle cx="200" cy="200" r="172"/><circle cx="200" cy="200" r="148"/><circle cx="200" cy="200" r="98"/>
+                <path d="M200 16v368M16 200h368M70 70l260 260M70 330L330 70"/>
+                <path d="M200 52L328 274H72L200 52ZM200 348L72 126h256L200 348Z"/>
+                <circle cx="200" cy="200" r="53" class="art-center"/>
+                <text x="200" y="224" class="art-number">9</text>
+                <text x="200" y="43">✧</text><text x="362" y="207">♃</text><text x="200" y="369">☽</text><text x="39" y="207">☉</text>
+                <circle cx="286" cy="52" r="5" class="art-dot"/><circle cx="54" cy="286" r="4" class="art-dot"/>
+            </svg>
+            <span class="art-caption">AS ABOVE, SO WITHIN.</span>
+        </div>
     </header>
-
-    <div class="container">
-
+    <main class="container" id="workspace">
+        <nav class="view-nav" aria-label="Chọn công cụ">
+            <button type="button" data-view="numbers" aria-pressed="true">01 <span>Thần số học</span></button>
+            <button type="button" data-view="names" aria-pressed="false">02 <span>Gợi ý tên</span></button>
+            <button type="button" data-view="stars" aria-pressed="false">03 <span>Bản đồ sao</span></button>
+        </nav>
+        <div data-panel="numbers">
+        <div class="workspace-heading"><div><span class="eyebrow">HIỂU CÁC CON SỐ CỦA BẠN</span><h2>Bắt đầu từ những điều quen thuộc.</h2></div><span class="small-note">Không tài khoản. Không lưu dữ liệu.</span></div>
         <!-- Reference Table -->
         <div class="ref-section reveal">
-            <button class="ref-toggle-btn" id="refToggle" onclick="toggleRef()">
+            <button type="button" class="ref-toggle-btn" id="refToggle" onclick="toggleRef()" aria-controls="refBody" aria-expanded="false">
                 <span>📊</span>
                 <span>Bảng Quy Đổi Pythagoras (A–Z)</span>
                 <span class="arrow">▼</span>
@@ -73,49 +80,58 @@
                     </tbody>
                 </table>
                 <p style="font-size:.78rem;color:var(--text-muted);margin-top:10px;">
-                    <span style="color:var(--accent-light);font-weight:600">Màu vàng</span> = Nguyên âm (A, E, I, O, U) &nbsp;|&nbsp; Màu trắng = Phụ âm
+                    <span style="color:var(--accent-light);font-weight:600">Màu vàng</span> = Nguyên âm (A, E, I, O, U; Y theo lựa chọn) &nbsp;|&nbsp; Màu trắng = Phụ âm
                 </p>
             </div>
         </div>
 
         <!-- Input Form -->
-        <div class="input-section reveal">
+        <form class="input-section reveal" id="numberForm" novalidate>
             <div class="input-section-title">
-                <div class="icon">✨</div>
-                Nhập Thông Tin Của Bạn
+                <div class="icon">↗</div>
+                Thông tin khai sinh
             </div>
             <div class="form-grid">
                 <div class="form-group full">
-                    <label>Họ và tên khai sinh (không dấu)</label>
-                    <input type="text" id="fullName" placeholder="Ví dụ: Nguyen Van An" autocomplete="off">
+                    <label for="fullName">Họ và tên khai sinh (có dấu hoặc không dấu)</label>
+                    <input type="text" id="fullName" placeholder="Ví dụ: Nguyễn Văn An" autocomplete="off">
                 </div>
                 <div class="form-group full">
                     <label>Ngày / Tháng / Năm sinh</label>
                     <div class="date-grid">
-                        <input type="number" id="birthDay"   placeholder="Ngày (1–31)"   min="1" max="31" inputmode="numeric">
-                        <input type="number" id="birthMonth" placeholder="Tháng (1–12)"  min="1" max="12" inputmode="numeric">
-                        <input type="number" id="birthYear"  placeholder="Năm (vd: 1990)" min="1900" max="2100" inputmode="numeric">
+                        <input type="number" id="birthDay" aria-label="Ngày sinh"   placeholder="Ngày (1–31)"   min="1" max="31" inputmode="numeric">
+                        <input type="number" id="birthMonth" aria-label="Tháng sinh" placeholder="Tháng (1–12)"  min="1" max="12" inputmode="numeric">
+                        <input type="number" id="birthYear" aria-label="Năm sinh"  placeholder="Năm (vd: 1990)" min="1900" max="2100" inputmode="numeric">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label>Năm tính toán (Số Năm Cá Nhân)</label>
+                    <label for="currentYear">Năm tính toán (Số Năm Cá Nhân)</label>
                     <input type="number" id="currentYear" value="2026" min="1900" max="2100" inputmode="numeric">
                 </div>
                 <div class="form-group">
-                    <label>Tháng tính toán (Số Tháng Cá Nhân)</label>
+                    <label for="currentMonth">Tháng tính toán (Số Tháng Cá Nhân)</label>
                     <input type="number" id="currentMonth" placeholder="Để trống = tháng hiện tại" min="1" max="12" inputmode="numeric">
                 </div>
+                <div class="form-group"><label for="yConvention">Quy ước chữ Y</label><select id="yConvention"><option value="vowel">Y là nguyên âm (tên tiếng Việt)</option><option value="consonant">Y là phụ âm</option></select></div>
+                <p class="form-help">Chọn theo cách đọc tên. Tên tiếng Anh có Y cần xét phát âm; đây là lựa chọn thủ công.</p>
                 <div class="btn-center">
-                    <button class="btn-calculate" id="calcBtn" onclick="calculate()">
-                        <span class="btn-icon">🔮</span>
-                        Khám Phá Thần Số Học
+                    <button class="btn-calculate" id="calcBtn" type="submit">
+                        <span class="btn-icon">↗</span>
+                        Đọc những con số của tôi
                     </button>
                 </div>
             </div>
-        </div>
+            <p class="form-error" id="numberError" role="alert"></p>
+        </form>
+        <details class="method-note"><summary>Quy ước tính &amp; nguồn đối chiếu</summary><div>
+            <p>Đường đời: rút gọn riêng ngày, tháng, năm, giữ 11/22/33 ở từng thành phần và tổng. Tên: quy đổi A–Z sau khi bỏ dấu, Đ → D; Y theo lựa chọn. Số ngày sinh ở đây dùng dạng rút gọn 1–9, kèm ngày gốc trong cách tính.</p>
+            <p>Cầu nối: rút gọn cả hai chỉ số về 1–9 trước khi lấy hiệu tuyệt đối. Cầu nối Đường đời–Ngày sinh là chỉ số bổ sung của công cụ, khác cầu nối Đường đời–Vận mệnh. Đỉnh cao: cộng các thành phần ngày/tháng/năm đã về 1–9, giữ 11/22/33 ở kết quả; mốc đầu = 36 − Đường đời rút gọn.</p>
+            <p>Năm/tháng cá nhân theo năm lịch, luôn về 1–9. Ba giai đoạn giữ Master Number; chuyển ở năm cá nhân 1 đầu tiên từ năm tròn 27 tuổi, sau đó 27 năm. Mốc tuổi là gần đúng theo năm lịch. Không có nguyên âm/phụ âm: chỉ số tương ứng không xác định (—).</p>
+            <p>Các trường phái có thể dùng quy ước khác. Đối chiếu: <a href="https://www.worldnumerology.com/do-your-own-reading/" target="_blank" rel="noopener">Đường đời</a> · <a href="https://www.worldnumerology.com/numerology-bridge-numbers/" target="_blank" rel="noopener">Cầu nối</a> · <a href="https://www.worldnumerology.com/numerology-period-cycles/" target="_blank" rel="noopener">Giai đoạn</a>. Các luận giải là nội dung tham khảo về niềm tin, không phải kết luận khoa học.</p>
+        </div></details>
 
         <!-- Results -->
-        <div id="results">
+        <div id="results" aria-live="polite"><div class="result-heading"><span class="eyebrow">HỒ SƠ CON SỐ</span><h2 id="resultIdentity"></h2></div>
 
             <!-- Name Breakdown -->
             <div class="section-header reveal">
@@ -212,6 +228,8 @@
             <div class="meanings-grid reveal" id="meanings"></div>
 
         </div><!-- /#results -->
+        </div><!-- /numbers -->
+        <div data-panel="names" hidden>
 
         <!-- ═══════════════════════════════════════════════════ -->
         <!-- NAME SUGGESTER SECTION                             -->
@@ -221,31 +239,31 @@
                 <div class="suggest-header-icon">💎</div>
                 <div>
                     <h2>Gợi Ý Tên Theo Thần Số Học</h2>
-                    <p>Tìm tên đệm & tên chính tối ưu cho số học của bạn</p>
+                    <p>Khám phá tên đệm và tên chính với các chỉ số bạn chọn</p>
                 </div>
             </div>
 
-            <div class="suggest-form">
+            <form class="suggest-form" id="suggestForm" novalidate>
                 <div class="suggest-form-grid">
                     <div class="form-group">
-                        <label>Họ (Last name, không dấu)</label>
-                        <input type="text" id="suggestLastName" placeholder="Ví dụ: Nguyen" autocomplete="off">
+                        <label for="suggestLastName">Họ (có dấu hoặc không dấu)</label>
+                    <input type="text" id="suggestLastName" placeholder="Ví dụ: Nguyen" autocomplete="off">
                     </div>
                     <div class="form-group">
                         <label>Ngày sinh</label>
                         <div class="date-grid">
-                            <input type="number" id="suggestDay" placeholder="Ngày" min="1" max="31" inputmode="numeric">
-                            <input type="number" id="suggestMonth" placeholder="Tháng" min="1" max="12" inputmode="numeric">
-                            <input type="number" id="suggestYear" placeholder="Năm" min="1900" max="2100" inputmode="numeric">
+                            <input type="number" id="suggestDay" aria-label="Ngày sinh cho gợi ý tên" placeholder="Ngày" min="1" max="31" inputmode="numeric">
+                            <input type="number" id="suggestMonth" aria-label="Tháng sinh cho gợi ý tên" placeholder="Tháng" min="1" max="12" inputmode="numeric">
+                            <input type="number" id="suggestYear" aria-label="Năm sinh cho gợi ý tên" placeholder="Năm" min="1900" max="2100" inputmode="numeric">
                         </div>
                     </div>
                     <div class="form-group">
                         <label>Giới tính</label>
                         <div class="gender-toggle">
-                            <button class="gender-btn active" data-gender="male" id="genderMale" onclick="setGender('male')">
+                            <button type="button" class="gender-btn active" data-gender="male" id="genderMale" aria-pressed="true" onclick="setGender('male')">
                                 <span>👨</span> Nam
                             </button>
-                            <button class="gender-btn" data-gender="female" id="genderFemale" onclick="setGender('female')">
+                            <button type="button" class="gender-btn" data-gender="female" id="genderFemale" aria-pressed="false" onclick="setGender('female')">
                                 <span>👩</span> Nữ
                             </button>
                         </div>
@@ -253,29 +271,32 @@
                     <div class="form-group">
                         <label>Số Vận Mệnh mong muốn <span class="label-hint">(tuỳ chọn)</span></label>
                         <div class="target-chips" id="targetChips">
-                            <button class="chip" data-num="0" onclick="toggleChip(this)">Tự động</button>
-                            <button class="chip" data-num="1" onclick="toggleChip(this)">1</button>
-                            <button class="chip" data-num="2" onclick="toggleChip(this)">2</button>
-                            <button class="chip" data-num="3" onclick="toggleChip(this)">3</button>
-                            <button class="chip" data-num="4" onclick="toggleChip(this)">4</button>
-                            <button class="chip" data-num="5" onclick="toggleChip(this)">5</button>
-                            <button class="chip" data-num="6" onclick="toggleChip(this)">6</button>
-                            <button class="chip" data-num="7" onclick="toggleChip(this)">7</button>
-                            <button class="chip" data-num="8" onclick="toggleChip(this)">8</button>
-                            <button class="chip" data-num="9" onclick="toggleChip(this)">9</button>
-                            <button class="chip chip-master" data-num="11" onclick="toggleChip(this)">11</button>
-                            <button class="chip chip-master" data-num="22" onclick="toggleChip(this)">22</button>
-                            <button class="chip chip-master" data-num="33" onclick="toggleChip(this)">33</button>
+                            <button type="button" class="chip active" data-num="0" onclick="toggleChip(this)" aria-pressed="true">Tự động</button>
+                            <button type="button" class="chip" data-num="1" onclick="toggleChip(this)" aria-pressed="false">1</button>
+                            <button type="button" class="chip" data-num="2" onclick="toggleChip(this)" aria-pressed="false">2</button>
+                            <button type="button" class="chip" data-num="3" onclick="toggleChip(this)" aria-pressed="false">3</button>
+                            <button type="button" class="chip" data-num="4" onclick="toggleChip(this)" aria-pressed="false">4</button>
+                            <button type="button" class="chip" data-num="5" onclick="toggleChip(this)" aria-pressed="false">5</button>
+                            <button type="button" class="chip" data-num="6" onclick="toggleChip(this)" aria-pressed="false">6</button>
+                            <button type="button" class="chip" data-num="7" onclick="toggleChip(this)" aria-pressed="false">7</button>
+                            <button type="button" class="chip" data-num="8" onclick="toggleChip(this)" aria-pressed="false">8</button>
+                            <button type="button" class="chip" data-num="9" onclick="toggleChip(this)" aria-pressed="false">9</button>
+                            <button type="button" class="chip chip-master" data-num="11" onclick="toggleChip(this)" aria-pressed="false">11</button>
+                            <button type="button" class="chip chip-master" data-num="22" onclick="toggleChip(this)" aria-pressed="false">22</button>
+                            <button type="button" class="chip chip-master" data-num="33" onclick="toggleChip(this)" aria-pressed="false">33</button>
                         </div>
                     </div>
                 </div>
+                <div class="form-group"><label for="suggestYConvention">Quy ước chữ Y</label><select id="suggestYConvention"><option value="vowel">Y là nguyên âm (tên tiếng Việt)</option><option value="consonant">Y là phụ âm</option></select></div>
+                <p class="form-help">Điểm 0–100 là quy tắc xếp hạng nội bộ, không đo chất lượng tên hay dự đoán tương lai. Mục tiêu được ưu tiên chấm điểm, không phải bộ lọc bắt buộc.</p>
                 <div class="btn-center">
-                    <button class="btn-suggest" id="suggestBtn" onclick="suggestNames()">
+                    <button class="btn-suggest" id="suggestBtn" type="submit">
                         <span class="btn-icon">💎</span>
-                        Gợi Ý Tên Tối Ưu
+                        Khám phá các gợi ý ↗
                     </button>
                 </div>
-            </div>
+                <p class="form-error" id="suggestError" role="alert"></p>
+            </form>
 
             <div id="suggestResults" style="display:none">
                 <div class="suggest-summary" id="suggestSummary"></div>
@@ -283,11 +304,37 @@
             </div>
         </div>
 
-    </div><!-- /.container -->
+        </div><!-- /names -->
+        <section data-panel="stars" hidden>
+            <div class="workspace-heading"><div><span class="eyebrow">BẦU TRỜI NGÀY BẠN SINH</span><h2>Mỗi khoảnh khắc, một bầu trời.</h2></div><span class="small-note">Tropical · Địa tâm · Whole Sign</span></div>
+            <form class="input-section" id="astroForm" novalidate>
+                <div class="input-section-title"><div class="icon">✧</div>Thông tin bản đồ sao</div>
+                <div class="form-grid">
+                    <div class="form-group"><label for="astroDate">Ngày sinh</label><input type="date" id="astroDate" min="1900-01-01" max="2100-12-31" required></div>
+                    <div class="form-group"><label for="astroTime">Giờ sinh tại nơi sinh</label><input type="time" id="astroTime" required><label class="checkbox-label"><input type="checkbox" id="unknownTime"> Tôi chưa biết giờ sinh</label></div>
+                    <div class="form-group full"><label for="birthPlace">Nơi sinh (tọa độ trung tâm thành phố)</label><select id="birthPlace">
+                        <option value="hcm" data-lat="10.8231" data-lon="106.6297" data-zone="Asia/Ho_Chi_Minh">TP. Hồ Chí Minh</option>
+                        <option value="hanoi" data-lat="21.0278" data-lon="105.8342" data-zone="Asia/Ho_Chi_Minh">Hà Nội</option>
+                        <option value="danang" data-lat="16.0544" data-lon="108.2022" data-zone="Asia/Ho_Chi_Minh">Đà Nẵng</option>
+                        <option value="hue" data-lat="16.4637" data-lon="107.5909" data-zone="Asia/Ho_Chi_Minh">Huế</option>
+                        <option value="cantho" data-lat="10.0452" data-lon="105.7469" data-zone="Asia/Ho_Chi_Minh">Cần Thơ</option>
+                        <option value="custom">Nơi khác — nhập tọa độ và múi giờ bên dưới</option>
+                    </select></div>
+                    <div class="form-group"><label for="latitude">Vĩ độ (Bắc +, Nam −)</label><input type="number" id="latitude" step="any" min="-89.9" max="89.9" value="10.8231" required></div>
+                    <div class="form-group"><label for="longitude">Kinh độ (Đông +, Tây −)</label><input type="number" id="longitude" step="any" min="-180" max="180" value="106.6297" required></div>
+                    <div class="form-group full"><label for="timezone">Múi giờ nơi sinh (IANA hoặc UTC±HH:mm)</label><input type="text" id="timezone" value="Asia/Ho_Chi_Minh" placeholder="Ví dụ: America/New_York hoặc UTC+07:00" required><p class="form-help">Múi giờ IANA xét lịch sử giờ mùa hè. Với giờ lặp khi đổi mùa, nhập UTC offset đúng ở thời điểm sinh. Tọa độ có thể chỉnh để sát nơi sinh.</p></div>
+                    <div class="btn-center"><button class="btn-calculate" id="astroBtn" type="submit">Vẽ bản đồ sao ↗</button></div>
+                </div>
+                <p class="form-error" id="astroError" role="alert"></p>
+            </form>
+            <p class="astro-method">10 thiên thể · Cung Mọc &amp; Thiên Đỉnh · 12 nhà Whole Sign · 5 góc hợp chính, orb 6°. Không biết giờ sinh: dùng 12:00 địa phương làm mốc, ẩn cung Mọc và nhà. Vị trí Mặt Trăng có thể đổi cung trong ngày.</p>
+            <div id="astroResults" hidden aria-live="polite"></div>
+        </section>
+    </main><!-- /.container -->
 
     <footer>
         <div class="footer-main">
-            <strong>Thần Số Học</strong> &mdash; Pythagoras Numerology Calculator &mdash; <strong>Khám phá hành trình của bạn qua những con số</strong>
+<strong>NUMEN</strong> · Một khoảng dừng để hiểu mình.<br>Thần số học và chiêm tinh là công cụ chiêm nghiệm, không phải phương pháp dự đoán đã được khoa học xác nhận.
         </div>
         <div class="footer-signature">
             From hngphm with <span class="footer-heart">♥</span> love
@@ -296,20 +343,9 @@
 
 </div><!-- /.site-wrap -->
 
-<!--
-    Script load order matters:
-    1. engine.js   — pure math functions (no DOM)
-    2. meanings.js — data objects
-    3. render.js   — DOM builders (needs engine + meanings)
-    4. particles.js — canvas animation (needs DOM ready)
-    5. main.js     — app bootstrap (needs everything above)
--->
-<script src="js/engine.js"></script>
-<script src="js/meanings.js"></script>
-<script src="js/render.js"></script>
-<script src="js/suggest.js"></script>
-<script src="js/particles.js"></script>
-<script src="js/main.js"></script>
+<!-- Core loads immediately; number results, suggestions and astronomy load on demand. -->
+<script defer src="js/engine.js"></script>
+<script defer src="js/main.js"></script>
 
 </body>
 </html>

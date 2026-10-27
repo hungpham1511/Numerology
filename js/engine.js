@@ -11,6 +11,29 @@ const PYTHA = {
 
 const VOWELS = new Set(['A', 'E', 'I', 'O', 'U']);
 
+function isValidDate(day, month, year) {
+    if (![day, month, year].every(Number.isInteger) || year < 1900 || year > 2100) return false;
+    const date = new Date(Date.UTC(year, month - 1, day));
+    return date.getUTCFullYear() === year && date.getUTCMonth() === month - 1 && date.getUTCDate() === day;
+}
+
+function validateBirthDate(day, month, year) {
+    if (!isValidDate(day, month, year)) throw new Error('Ngày sinh không tồn tại hoặc nằm ngoài 1900–2100.');
+}
+
+function normalizeName(name) {
+    const clean = removeAccents(name).toUpperCase().trim().replace(/\s+/g, ' ');
+    if (!clean || clean.length > 100 || !/^[A-Z]+(?:[ '\-][A-Z]+)*$/.test(clean)) {
+        throw new Error('Tên cần có chữ Latin hoặc tiếng Việt, tối đa 100 ký tự; chỉ dùng khoảng trắng, dấu nháy hoặc gạch nối.');
+    }
+    return clean.replace(/['\-]/g, ' ');
+}
+
+function escapeHtml(value) {
+    return String(value).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+}
+
+
 // ── Helpers ──────────────────────────────────────────────────────
 
 function removeAccents(str) {
@@ -92,6 +115,7 @@ function reduceTrace(n, keepMaster = true) {
 // ── Life Path ────────────────────────────────────────────────────
 
 function calcLifePath(day, month, year) {
+    validateBirthDate(day, month, year);
     const dayR = reduceComponentTrace(day, true);
     const monthR = reduceComponentTrace(month, true);
     const yearR = reduceComponentTrace(year, true);
@@ -120,8 +144,8 @@ function calcBirthday(day) {
 
 // ── Name Numbers ─────────────────────────────────────────────────
 
-function getNameNumbers(fullName) {
-    const clean = removeAccents(fullName).toUpperCase().replace(/[^A-Z ]/g, '');
+function getNameNumbers(fullName, yIsVowel = true) {
+    const clean = normalizeName(fullName);
     const letters = [];
     let vowelSum = 0;
     let consonantSum = 0;
@@ -140,7 +164,7 @@ function getNameNumbers(fullName) {
         const val = PYTHA[ch];
         if (!val) continue;
 
-        const isV = VOWELS.has(ch);
+        const isV = VOWELS.has(ch) || (ch === 'Y' && yIsVowel);
         letters.push({ char: ch, value: val, isVowel: isV, isSpace: false });
 
         totalSum += val;
@@ -161,9 +185,9 @@ function getNameNumbers(fullName) {
     const persR = reduceTrace(consonantSum, true);
 
     return {
-        soul: soulR.value,
+        soul: vowelSum ? soulR.value : null,
         destiny: destR.value,
-        personality: persR.value,
+        personality: consonantSum ? persR.value : null,
         letterCounts,
         letters,
         detail: {
@@ -176,15 +200,16 @@ function getNameNumbers(fullName) {
 
 // ── Bridge Numbers ───────────────────────────────────────────────
 
-function calcBridgeNumbers(soul, personality, lifePath, birthday) {
-    const sR = soul;
-    const pR = personality;
+function calcBridgeNumbers(soul, personality, lifePath, birthday, destiny = null) {
+    const sR = soul === null ? null : reduceSingleDigit(soul);
+    const pR = personality === null ? null : reduceSingleDigit(personality);
     const lR = isMaster(lifePath) ? reduceSingleDigit(lifePath) : lifePath;
     const bR = birthday;
 
     return {
-        soulPersonality: Math.abs(sR - pR),
+        soulPersonality: sR === null || pR === null ? null : Math.abs(sR - pR),
         lifePathBirthday: Math.abs(lR - bR),
+        lifePathDestiny: destiny === null ? null : Math.abs(lR - reduceSingleDigit(destiny)),
         detail: { soul, personality, lifePath, birthday, sR, pR, lR, bR },
     };
 }
@@ -198,10 +223,10 @@ function calcPinnacles(day, month, year, lifePath) {
     const lp = isMaster(lifePath) ? reduceSingleDigit(lifePath) : lifePath;
     const fe = Math.max(27, 36 - lp);
 
-    const p1 = reduceSingleDigit(m + d);
-    const p2 = reduceSingleDigit(d + y);
-    const p3 = reduceSingleDigit(p1 + p2);
-    const p4 = reduceSingleDigit(m + y);
+    const p1 = reduceMaster(m + d);
+    const p2 = reduceMaster(d + y);
+    const p3 = reduceMaster(p1 + p2);
+    const p4 = reduceMaster(m + y);
 
     return {
         pinnacles: [
@@ -255,26 +280,24 @@ function calcChallenges(day, month, year) {
 // ── Life Periods ─────────────────────────────────────────────────
 
 function calcLifePeriods(day, month, year, lifePath) {
-    const d = reduceSingleDigit(day);
-    const m = reduceSingleDigit(month);
-    const y = reduceSingleDigit(year);
-    const lp = isMaster(lifePath) ? reduceSingleDigit(lifePath) : lifePath;
-    const fe = Math.max(27, 36 - lp);
-
+    validateBirthDate(day, month, year);
+    const d = reduceMaster(day), m = reduceMaster(month), y = reduceMaster(year);
+    let transitionYear = year + 27;
+    while (calcPersonalYear(day, month, transitionYear).value !== 1) transitionYear++;
+    const fe = transitionYear - year;
     return {
         periods: [
-            { num: m, label: 'Giai đoạn 1 · Hình thành', from: 0, to: fe },
-            { num: d, label: 'Giai đoạn 2 · Hiện thực', from: fe + 1, to: fe + 27 },
-            { num: y, label: 'Giai đoạn 3 · Hội nhập', from: fe + 28, to: null },
+            { num: m, label: 'Giai đoạn 1 · Hình thành', from: 0, to: fe - 1 },
+            { num: d, label: 'Giai đoạn 2 · Hiện thực', from: fe, to: fe + 26 },
+            { num: y, label: 'Giai đoạn 3 · Hội nhập', from: fe + 27, to: null },
         ],
         detail: {
-            firstEnd: fe,
-            lp,
-            note: `Tuổi chuyển giai đoạn = 36 − Số Đường Đời (${lp}) = ${fe}`,
+            firstEnd: fe, lp: reduceSingleDigit(lifePath),
+            note: `Quy ước năm lịch: Năm cá nhân 1 đầu tiên từ năm tròn 27 tuổi là ${transitionYear}. Mốc tuổi theo năm, không phải ngày chuyển chính xác.`,
             formulas: [
-                `GĐ1 = Rút gọn tháng sinh (${month}) → ${m}  |  0 – ${fe} tuổi`,
-                `GĐ2 = Rút gọn ngày sinh (${day}) → ${d}  |  ${fe + 1} – ${fe + 27} tuổi`,
-                `GĐ3 = Rút gọn năm sinh (${year}) → ${y}  |  ${fe + 28}+ tuổi`,
+                `GĐ1 = Tháng sinh ${month} → ${m}; 0–${fe - 1} tuổi`,
+                `GĐ2 = Ngày sinh ${day} → ${d}; ${fe}–${fe + 26} tuổi (27 năm)`,
+                `GĐ3 = Năm sinh ${year} → ${y}; từ ${fe + 27} tuổi`,
             ],
         },
     };

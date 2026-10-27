@@ -8,8 +8,8 @@ function renderNumCard(label, value, desc, icon = '', delay = 0) {
     return `<div class="num-card" style="animation-delay:${delay}ms">
         <div class="card-icon">${icon}</div>
         <div class="label">${label}</div>
-        <div class="value${masterClass}">${value}</div>
-        <div class="desc">${desc}</div>
+        <div class="value${masterClass}">${value === null ? '—' : value}</div>
+        <div class="desc">${desc.replace(/\bnull\b/g, 'không xác định')}</div>
     </div>`;
 }
 
@@ -23,12 +23,12 @@ function renderCalcDetail(title, stepsHtml) {
 function renderStep(label, content) {
     return `<div class="calc-step">
         <div class="step-label">${label}</div>
-        <div class="step-content">${content}</div>
+        <div class="step-content">${content.replace(/\bnull\b/g, 'không xác định')}</div>
     </div>`;
 }
 
 function renderFormula(text) {
-    return `<div class="formula-box">${text}</div>`;
+    return `<div class="formula-box">${text.replace(/\bnull\b/g, 'không xác định')}</div>`;
 }
 
 function renderNameBreakdownTable(letters) {

@@ -1,127 +1,46 @@
-# 🔮 Thần Số Học · Pythagoras Numerology Calculator
+# NUMEN · Thần số học & Bản đồ sao
 
-> *Khám phá bản thân qua khoa học về những con số*
+Web tĩnh tiếng Việt: thần số học Pythagoras, gợi ý tên và bản đồ sao cá nhân. HTML/CSS/JavaScript thuần; không build, tài khoản hoặc API key. Dữ liệu được tính trong trình duyệt và không lưu vào storage.
 
-A beautiful, fully client-side Numerology (Thần Số Học) calculator built with vanilla HTML, CSS, and JavaScript — no frameworks, no dependencies, no build step. Just open and use.
+## Chạy và kiểm tra
 
-**From hngphm with ♥ love**
+Mở `index.html` trực tiếp, hoặc chạy từ thư mục project:
 
----
-
-## ✨ Features
-
-### 🧮 Full Numerology Engine (Pythagorean Method)
-| Chỉ số | Mô tả |
-|--------|-------|
-| **Số Đường Đời** (Life Path) | Chỉ số quan trọng nhất — tính từ ngày/tháng/năm sinh |
-| **Số Vận Mệnh** (Destiny/Expression) | Tổng giá trị tất cả chữ cái trong tên |
-| **Số Linh Hồn** (Soul Urge) | Từ các nguyên âm trong tên khai sinh |
-| **Số Nhân Cách** (Personality) | Từ các phụ âm trong tên khai sinh |
-| **Số Ngày Sinh** (Birthday) | Rút gọn ngày sinh |
-| **Số Cầu Nối** (Bridge Numbers) | Khoảng cách cần hài hòa giữa các chỉ số |
-| **Số Năm / Tháng Cá Nhân** | Năng lượng chu kỳ hiện tại |
-| **Bốn Đỉnh Cao** (Pinnacles) | 4 giai đoạn cơ hội lớn theo tuổi |
-| **Bốn Thử Thách** (Challenges) | 4 thử thách cần vượt qua |
-| **Ba Giai Đoạn** (Life Periods) | 3 làn sóng định hình cuộc đời |
-| **Bài Học Nghiệp** (Karmic Lessons) | Các số thiếu trong tên |
-| **Biểu Đồ Pythagoras** | Ma trận 3×3 + mũi tên năng lượng |
-
-- ✅ Hỗ trợ **Master Numbers**: 11, 22, 33
-- ✅ Hiển thị **từng bước tính toán** chi tiết (có thể expand/collapse)
-- ✅ **Luận giải sâu** từng con số: tố chất, từ khoá, mặt tối cần chú ý
-
----
-
-## 🎨 Design Highlights
-
-- **Dark mode** glassmorphism với nền tím sâu
-- **Particle system** — ngôi sao 4 cánh và chấm tròn nhấp nháy
-- **Floating orbs** — vầng sáng màu tím/vàng/hồng trôi nổi nền
-- **Stagger animations** — thẻ bật ra tuần tự khi kết quả hiện lên
-- **Shimmer gradient** — tiêu đề "Thần Số Học" có hiệu ứng lấp lánh
-- **Micro-interactions** — hover, scale, pulse trên mọi element
-- **Responsive** — tối ưu cho desktop, tablet, và mobile (320px+)
-- Font chữ: `Playfair Display` · `Cinzel Decorative` · `Inter`
-
----
-
-## 🚀 Cách dùng
-
-Không cần cài đặt gì — chỉ cần mở file:
-
-```bash
-# Clone repo
-git clone https://github.com/hungpham1511/Numerology.git
-cd Numerology
-
-# Mở trực tiếp trong trình duyệt
-open index.html       # macOS
-start index.html      # Windows
-xdg-open index.html   # Linux
+```powershell
+python -m http.server 4323 --bind 127.0.0.1
+# Mở http://127.0.0.1:4323
+node --test tests/engine.test.cjs
 ```
 
-Hoặc dùng Live Server (VS Code extension) để tải font Google Fonts đúng cách.
+Test dùng Node.js với `node:test`, không cần npm package. [Báo cáo rà soát](docs/AUDIT.md) ghi các thay đổi công thức, kết quả đối chiếu và giới hạn.
 
----
+## Quy ước tính
 
-## 📖 Hướng dẫn nhập liệu
+- Đường đời: rút gọn riêng ngày/tháng/năm, giữ 11/22/33 ở mỗi thành phần và tổng.
+- Tên: bỏ dấu, Đ → D; bảng A–Z Pythagoras. Y theo lựa chọn, mặc định nguyên âm với tên tiếng Việt. Tên tiếng Anh cần chọn theo cách phát âm.
+- Ngày sinh: dạng rút gọn 1–9, ngày gốc có trong phần cách tính; khác hệ giữ nguyên 1–31 hoặc giữ Master Number.
+- Cầu nối: hiệu tuyệt đối khi cả hai chỉ số về 1–9. Có Đường đời–Vận mệnh, Linh hồn–Nhân cách và chỉ số bổ sung Đường đời–Ngày sinh.
+- Đỉnh cao: thành phần ngày/tháng/năm về 1–9, giữ Master Number ở kết quả cộng; tuổi kết thúc đỉnh đầu = 36 − Đường đời rút gọn. Thử thách dùng 0–8.
+- Ba giai đoạn giữ Master Number trong tháng/ngày/năm; chuyển ở năm cá nhân 1 đầu tiên từ năm tròn 27 tuổi, sau đó 27 năm. Tuổi là mốc theo năm lịch, không phải ngày chuyển chính xác.
+- Năm/tháng cá nhân theo năm lịch, rút gọn về 1–9.
+- Gợi ý tên: điểm nội bộ 0–100, trọng số 40/20/20/20 cho Vận mệnh, cầu nối Linh hồn–Nhân cách, quan hệ với Đường đời, độ phủ chữ số. Mục tiêu là ưu tiên điểm, không phải bộ lọc bắt buộc. Không đo chất lượng thực tế của tên.
 
-1. **Họ và tên khai sinh** — nhập không dấu (ví dụ: `Nguyen Van An`)  
-   - Tên khai sinh trong giấy khai sinh, không phải tên thường dùng  
-   - Hệ thống tự xử lý diacritics tiếng Việt nếu bạn nhập có dấu  
-2. **Ngày / Tháng / Năm sinh** — nhập đầy đủ
-3. **Năm tính toán** — mặc định năm hiện tại (dùng cho Số Năm Cá Nhân)
-4. **Tháng tính toán** — để trống = tháng hiện tại
+Các trường phái có thể dùng quy ước khác. Giao diện công bố cách tính và nguồn đối chiếu. Không có nguyên âm/phụ âm thì chỉ số tương ứng không xác định (—).
 
-Nhấn **Khám Phá Thần Số Học** hoặc phím `Enter` để tính.
+## Bản đồ sao
 
----
+10 thiên thể từ Mặt Trời đến Diêm Vương; hoàng đạo Tropical, vị trí địa tâm theo hoàng đạo và điểm xuân phân của ngày; ASC/MC; 12 nhà Whole Sign. Năm góc hợp 0°/60°/90°/120°/180° giữa các thiên thể, orb 6°.
 
-## 🔢 Bảng quy đổi Pythagoras
+Múi giờ IANA hoặc UTC±HH:mm. Giờ không tồn tại do DST bị chặn; giờ lặp cần UTC offset để xác định duy nhất. Dữ liệu múi giờ lịch sử phụ thuộc trình duyệt. Có 5 địa điểm Việt Nam với tọa độ trung tâm; nhập tọa độ/múi giờ thủ công cho nơi khác.
 
-```
-1  2  3  4  5  6  7  8  9
-A  B  C  D  E  F  G  H  I
-J  K  L  M  N  O  P  Q  R
-S  T  U  V  W  X  Y  Z
-```
+Không biết giờ sinh: dùng 12:00 địa phương, ẩn ASC/MC/nhà. Tất cả vị trí/góc hợp là tham khảo tại mốc này; Mặt Trăng có thể đổi cung trong ngày. Chưa gồm Chiron, La Hầu/Kế Đô, nghịch hành, Placidus; diễn giải hiện chỉ là gợi ý theo cung Mặt Trời.
 
-- **Nguyên âm** (A, E, I, O, U) → tính Số Linh Hồn  
-- **Phụ âm** → tính Số Nhân Cách  
-- **Tất cả chữ cái** → tính Số Vận Mệnh  
+[Astronomy Engine 2.1.19](https://github.com/cosinekitty/astronomy) lưu tại `js/vendor/`, có giấy phép MIT. Swiss Ephemeris chỉ dùng tạo fixture đối chiếu, không đóng gói làm thư viện web. 11 mẫu độc lập nằm trong `tests/astronomy-reference.json`.
 
----
+## Tải tài nguyên
 
-## 🏗️ Cấu trúc dự án
+`engine.js` và `main.js` tải ban đầu bằng `defer`. `meanings.js`, `render.js`, `numbers.js` tải khi tính số; `suggest.js` khi gợi ý tên; `astro.js` và thư viện thiên văn khi vẽ bản đồ sao. Không font ngoài, animation canvas hoặc delay giả. `particles.js` cũ không được tải.
 
-```
-Numerology/
-└── index.html      # Toàn bộ app (HTML + CSS + JS trong 1 file)
-```
+Thần số học và chiêm tinh là công cụ chiêm nghiệm theo niềm tin; phép tính có thể kiểm chứng, các diễn giải tính cách/dự đoán chưa được khoa học xác nhận.
 
-Single-file architecture — không phụ thuộc, không build step, chạy offline hoàn toàn (ngoại trừ Google Fonts).
-
----
-
-## 📝 Changelog
-
-### v2.0.0 – 2026-04-15
-- 🔤 **Fix font "Thần Số Học"**: tách sang `Playfair Display` thay vì `Cinzel` để hiển thị tiếng Việt đúng
-- 🎬 **Animations mới**: header entrance, floating orbs, twinkling star particles, card stagger pop
-- 📖 **Luận giải chi tiết**: mỗi số nay có mô tả sâu + keyword tags + mặt tối (shadow aspects)
-- ✍️ **Footer signature**: *"From hngphm with ♥ love"* với heartbeat animation
-- 📱 **Responsive hoàn thiện**: layout tối ưu cho mọi breakpoint từ 320px đến 1440px+
-- ✨ **Button shimmer** effect và loading overlay đẹp hơn
-
-### v1.0.0 – 2026-04-14
-- 🎉 Initial release — full Pythagorean numerology engine, glassmorphism UI, particle background
-
----
-
-## 📄 License
-
-MIT — dùng tự do, học tập, chia sẻ. Credit appreciated ✨
-
----
-
-*Made with ♥ by hngphm*
+From hngphm with ♥ love.
