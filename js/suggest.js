@@ -212,6 +212,7 @@ function renderSuggestCard(item, rank, lifePath) {
             Cầu nối: SP=${item.bridgeSP} · LB=${item.bridgeLB}
         </div>
         ${karmicHtml}
+        <details class="name-reading"><summary>Đọc các chỉ số của tên này</summary><p><strong>Vận mệnh ${item.destiny}.</strong> ${escapeHtml(getNumberReading('expression',item.destiny).text)}</p><p><strong>Linh hồn ${item.soul===null?'—':item.soul}.</strong> ${escapeHtml(getNumberReading('soul',item.soul).text)}</p><p><strong>Nhân cách ${item.personality===null?'—':item.personality}.</strong> ${escapeHtml(getNumberReading('personality',item.personality).text)}</p><p class="reading-footnote">Điểm xếp hạng không chứng minh tên tốt hơn về ý nghĩa, cách đọc hoặc sự phù hợp với gia đình.</p></details>
     </div>`;
 }
 

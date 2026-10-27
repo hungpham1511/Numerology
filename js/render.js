@@ -66,7 +66,7 @@ function renderMeaningCard(n, delay = 0) {
         <div class="m-body">${m.desc}</div>
         <div class="m-keywords">${kws}</div>
         <div class="m-shadow">
-            <div class="m-shadow-title">⚠ Mặt tối cần chú ý</div>
+            <div class="m-shadow-title">Điểm cần cân bằng</div>
             <div class="m-shadow-body">${m.shadow}</div>
         </div>
     </div>`;

@@ -59,3 +59,7 @@ Chưa geocoding mọi địa điểm; nơi khác nhập tọa độ/múi giờ t
 Theo yêu cầu sau bản phát hành `8040613`: đổi nền tím đêm, điểm hồng/cyan, thẻ nhiều màu và SVG bản đồ sao theo theme. Thêm animation xử lý 360ms đồng thời tải module, hiệu ứng xuất hiện thẻ, trạng thái aria-busy và hủy kết quả cũ khi đổi đầu vào/công cụ. Không đổi công thức. Chế độ giảm chuyển động bỏ cả nhịp animation.
 
 Đã thử trạng thái đang tính và hoàn tất ở ba công cụ, mobile 390px không tràn ngang, và chế độ giảm chuyển động. 13/13 nhóm test công thức vẫn qua. Tải đầu gồm HTML/CSS/engine/main hiện là 77,092 byte, vẫn không tải font ngoài hoặc thư viện thiên văn lúc mở trang; con số 66 KB/42,5% ở mục trước thuộc bản `8040613`.
+
+## Cập nhật diễn giải mở rộng
+
+Sau bản theme tím `0ae8875`: thêm nội dung tiếng Việt theo vai trò chỉ số, chu kỳ, giai đoạn, thử thách, gợi ý tên và các lớp bản đồ sao. Các đoạn khẳng định số phận hoặc năng lực vượt trội trong bảng ý nghĩa cũ được thay bằng chủ đề, thực hành và câu hỏi. Nguồn, cách ghép theo mẫu và giới hạn được công bố trong [INTERPRETATIONS.md](INTERPRETATIONS.md) và trên giao diện. Không đổi công thức tính. Bộ kiểm thử mở rộng: 21/21 nhóm qua.

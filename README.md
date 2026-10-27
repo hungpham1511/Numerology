@@ -9,7 +9,7 @@ Mở `index.html` trực tiếp, hoặc chạy từ thư mục project:
 ```powershell
 python -m http.server 4323 --bind 127.0.0.1
 # Mở http://127.0.0.1:4323
-node --test tests/engine.test.cjs
+node --test tests/*.test.cjs
 ```
 
 Test dùng Node.js với `node:test`, không cần npm package. [Báo cáo rà soát](docs/AUDIT.md) ghi các thay đổi công thức, kết quả đối chiếu và giới hạn.
@@ -33,9 +33,13 @@ Các trường phái có thể dùng quy ước khác. Giao diện công bố c�
 
 Múi giờ IANA hoặc UTC±HH:mm. Giờ không tồn tại do DST bị chặn; giờ lặp cần UTC offset để xác định duy nhất. Dữ liệu múi giờ lịch sử phụ thuộc trình duyệt. Có 5 địa điểm Việt Nam với tọa độ trung tâm; nhập tọa độ/múi giờ thủ công cho nơi khác.
 
-Không biết giờ sinh: dùng 12:00 địa phương, ẩn ASC/MC/nhà. Tất cả vị trí/góc hợp là tham khảo tại mốc này; Mặt Trăng có thể đổi cung trong ngày. Chưa gồm Chiron, La Hầu/Kế Đô, nghịch hành, Placidus; diễn giải hiện chỉ là gợi ý theo cung Mặt Trời.
+Không biết giờ sinh: dùng 12:00 địa phương, ẩn ASC/MC/nhà. Tất cả vị trí/góc hợp là tham khảo tại mốc này; Mặt Trăng có thể đổi cung trong ngày. Chưa gồm Chiron, La Hầu/Kế Đô, nghịch hành, Placidus; diễn giải gồm các lớp thiên thể/cung/nhà/góc hợp, được biên soạn theo mẫu để tự chiêm nghiệm.
 
 [Astronomy Engine 2.1.19](https://github.com/cosinekitty/astronomy) lưu tại `js/vendor/`, có giấy phép MIT. Swiss Ephemeris chỉ dùng tạo fixture đối chiếu, không đóng gói làm thư viện web. 11 mẫu độc lập nằm trong `tests/astronomy-reference.json`.
+
+## Diễn giải mở rộng
+
+Có nội dung theo vai trò từng chỉ số số học, chu kỳ, giai đoạn, thử thách và gợi ý tên. Bản đồ sao có diễn giải theo thiên thể/cung/nhà, ASC/MC, góc hợp và thống kê nguyên tố. Mục mở rộng và liên kết chuyển nhanh giúp đọc theo nhu cầu. [Nguồn, cách biên soạn và giới hạn](docs/INTERPRETATIONS.md). Bộ kiểm tra hiện có 21 nhóm.
 
 ## Giao diện và chuyển động
 
@@ -43,8 +47,10 @@ Theme tím đêm với điểm hồng–cyan, thẻ kết quả nhiều màu và
 
 ## Tải tài nguyên
 
-`engine.js` và `main.js` tải ban đầu bằng `defer`. `meanings.js`, `render.js`, `numbers.js` tải khi tính số; `suggest.js` khi gợi ý tên; `astro.js` và thư viện thiên văn khi vẽ bản đồ sao. Không font ngoài, animation canvas hoặc delay giả. `particles.js` cũ không được tải.
+`engine.js` và `main.js` tải ban đầu bằng `defer`. `meanings.js`, `render.js`, `numbers.js` tải khi tính số; `suggest.js` khi gợi ý tên; `astro.js`, `astro-readings.js` và thư viện thiên văn khi vẽ bản đồ sao. Không font ngoài, animation canvas hoặc delay giả. `particles.js` cũ không được tải.
 
 Thần số học và chiêm tinh là công cụ chiêm nghiệm theo niềm tin; phép tính có thể kiểm chứng, các diễn giải tính cách/dự đoán chưa được khoa học xác nhận.
 
 From hngphm with ♥ love.
+
+Bản phát hành gắn `asset-version` trong `index.html` và query version cho CSS/script; module tải theo nhu cầu dùng cùng version để tránh trộn script cũ với nội dung mới khi trình duyệt còn cache. Đổi version cùng CSS/engine/main URLs khi phát hành thay đổi phụ thuộc giữa module.

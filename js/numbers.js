@@ -159,7 +159,7 @@ function _doCalculate(name, day, month, year, currentYear, currentMonth) {
 
     if (karmic.length === 0) {
         document.getElementById('karmicLessons').innerHTML =
-            '<div class="karmic-none">✅ Bạn không có bài học nghiệp nào — tên đã đủ các số từ 1 đến 9.</div>' +
+            '<div class="karmic-none">Tên đã đủ các giá trị 1–9 theo bảng quy đổi. Đây là thống kê chữ cái, không phải chứng nhận bạn không còn bài học cần rèn.</div>' +
             renderCalcDetail('Bài Học Nghiệp', karmicDetailHtml);
     } else {
         document.getElementById('karmicLessons').innerHTML =
@@ -213,6 +213,27 @@ function _doCalculate(name, day, month, year, currentYear, currentMonth) {
         .filter((v, i, a) => v !== null && a.indexOf(v) === i);
     document.getElementById('meanings').innerHTML =
         allNums.map((n, i) => renderMeaningCard(n, i * 100)).join('');
+
+
+    function mountReading(targetId,html) {
+        let el=document.getElementById(targetId+'Readings');
+        if(!el){el=document.createElement('div');el.id=targetId+'Readings';el.className='reading-grid';document.getElementById(targetId).insertAdjacentElement('afterend',el);}
+        el.innerHTML=html;
+    }
+    mountReading('coreNumbers',renderNumberSynthesis(lifePath,destiny,soul)+[
+        ['life',lifePath],['expression',destiny],['soul',soul],['personality',personality],['birthday',birthday]
+    ].map(([role,n],i)=>renderNumberReading(role,n,'',i===0)).join(''));
+    mountReading('bridgeNumbers',[
+        ['Đường đời – Vận mệnh',bridges.lifePathDestiny],['Linh hồn – Nhân cách',bSP],['Đường đời – Ngày sinh (bổ sung)',bLB]
+    ].map(([label,n])=>renderNumberReading('bridge',n,label)).join(''));
+    mountReading('personalNumbers',renderCycleReading(personalYear,`Năm cá nhân ${currentYear}`)+renderCycleReading(personalMonth,`Tháng cá nhân ${currentMonth}/${currentYear}`));
+    mountReading('pinnacles',pinnData.pinnacles.map((p,i)=>renderNumberReading('pinnacle',p.num,`Đỉnh ${i+1} · ${p.from}–${p.to===null?'∞':p.to} tuổi`)).join(''));
+    mountReading('challenges',challData.challenges.map((p,i)=>renderNumberReading('challenge',p.num,`Thử thách ${i+1}`)).join(''));
+    mountReading('periods',periodData.periods.map(p=>renderNumberReading('period',p.num,p.label)).join(''));
+    mountReading('karmicLessons',karmic.map(n=>renderNumberReading('karmic',n,`Số ${n} vắng trong tên`)).join(''));
+    const chartNote='<p class="reading-footnote">Biểu đồ chỉ ghi tần suất chữ số trong ngày sinh. Số vắng hoặc lặp không đủ để kết luận một người thiếu phẩm chất, có năng lực hơn hay sẽ gặp sự kiện nào.</p>';
+    mountReading('pythaCalcDetails',chartNote);
+    mountReading('meanings',renderNumberSources());
 
     // ── 12. Show results ──────────────────────────────────────────
     const resultsEl = document.getElementById('results');

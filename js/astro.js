@@ -7,14 +7,6 @@ const CELESTIAL = [
     ['Venus','Sao Kim','♀'],['Mars','Sao Hỏa','♂'],['Jupiter','Sao Mộc','♃'],
     ['Saturn','Sao Thổ','♄'],['Uranus','Thiên Vương','♅'],['Neptune','Hải Vương','♆'],['Pluto','Diêm Vương','♇'],
 ];
-const SIGN_NOTES = [
-    'Gợi ý chiêm nghiệm: cách bạn bắt đầu và chủ động.', 'Gợi ý chiêm nghiệm: điều đem lại cảm giác vững vàng.',
-    'Gợi ý chiêm nghiệm: cách bạn học hỏi và kết nối.', 'Gợi ý chiêm nghiệm: cảm giác thuộc về và sự chăm sóc.',
-    'Gợi ý chiêm nghiệm: cách bạn thể hiện và sáng tạo.', 'Gợi ý chiêm nghiệm: thói quen và sự tỉ mỉ.',
-    'Gợi ý chiêm nghiệm: cân bằng và các mối quan hệ.', 'Gợi ý chiêm nghiệm: chiều sâu và sự chuyển mình.',
-    'Gợi ý chiêm nghiệm: tò mò và những chân trời mới.', 'Gợi ý chiêm nghiệm: mục tiêu và sự bền bỉ.',
-    'Gợi ý chiêm nghiệm: ý tưởng và cộng đồng.', 'Gợi ý chiêm nghiệm: trí tưởng tượng và sự đồng cảm.',
-];
 function wrapDegrees(n) { return ((n % 360) + 360) % 360; }
 function angularDistance(a, b) { return Math.abs(((a - b + 540) % 360) - 180); }
 function zodiacPosition(longitude) {
@@ -171,7 +163,7 @@ function showBirthChart() {
     html+='<div class="section-header"><h2>Các góc hợp chính</h2><div class="section-divider"></div></div><div class="aspect-list">';
     html+=chart.aspects.map(a=>`<div class="aspect-item">${chart.planets[a.a].name} · ${chart.planets[a.b].name}<small>${a.name} ${a.angle}° · lệch ${a.orb.toFixed(2)}°</small></div>`).join('')||'<p>Không có góc hợp trong ngưỡng 6°.</p>';
     html+='</div>';
-    html+=`<div class="section-header"><h2>Gợi ý để tự chiêm nghiệm</h2></div><p class="astro-method">${SIGN_NOTES[sun.index]} Đây là mô tả biểu tượng truyền thống của cung Mặt Trời, không phải đánh giá tính cách đã được kiểm chứng.</p>`;
+    html+=renderAstroReadings(chart);
     html+=`<div class="astro-disclosure">Thời điểm quy đổi UTC: <strong>${date.toISOString()}</strong> · Múi giờ nhập: ${escapeHtml(timezone)} · Tọa độ: ${chart.latitude}, ${chart.longitude}.<br>Vị trí địa tâm theo hoàng đạo nhiệt đới, kinh độ hoàng đạo của ngày; Astronomy Engine 2.1.19. Hệ nhà Whole Sign, mỗi cung trọn một nhà; MC có thể nằm ngoài nhà 10. Chưa gồm Chiron, La Hầu/Kế Đô hay nghịch hành.<br><a href="https://github.com/cosinekitty/astronomy" target="_blank" rel="noopener">Thuật toán &amp; giấy phép MIT</a>. Giờ lịch sử theo dữ liệu múi giờ của trình duyệt; kiểm tra UTC offset nếu giấy khai sinh hoặc địa phương dùng quy ước khác.</div>`;
     const results=document.getElementById('astroResults');
     results.innerHTML=html; results.hidden=false;

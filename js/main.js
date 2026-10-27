@@ -160,7 +160,7 @@ async function suggestNames() {
         normalizeName(lastName);
         validateBirthDate(day, month, year);
         const feedback = startCalculation('suggestForm', 'Đang dệt những gợi ý tên…');
-        await Promise.all([loadLocalScript('js/suggest.js'), feedback.ready]);
+        await Promise.all([loadLocalScript('js/suggest.js'), loadLocalScript('js/meanings.js'), feedback.ready]);
         if (request !== suggestionRequest) return;
         const targets = _selectedTargets.length ? _selectedTargets : null;
         const yIsVowel = document.getElementById('suggestYConvention').value === 'vowel';
@@ -177,12 +177,13 @@ async function suggestNames() {
     } finally { finishCalculation('suggestForm'); button.disabled = false; }
 }
 
+const ASSET_VERSION = document.querySelector('meta[name="asset-version"]')?.content || '1';
 const scriptLoads = new Map();
 function loadLocalScript(src) {
     if (!scriptLoads.has(src)) {
         scriptLoads.set(src, new Promise((resolve, reject) => {
             const script = document.createElement('script');
-            script.src = src;
+            script.src = `${src}?v=${encodeURIComponent(ASSET_VERSION)}`;
             script.onload = resolve;
             script.onerror = () => { script.remove(); scriptLoads.delete(src); reject(new Error('Không tải được dữ liệu. Vui lòng thử lại.')); };
             document.head.append(script);
@@ -212,7 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const feedback = startCalculation('astroForm', 'Đang nối các vì sao trên bầu trời của bạn…');
             await Promise.all([loadLocalScript('js/vendor/astronomy.browser.min.js'), feedback.ready]);
-            await loadLocalScript('js/astro.js');
+            await Promise.all([loadLocalScript('js/astro.js'), loadLocalScript('js/astro-readings.js')]);
             if (request !== astroRequest) return;
             showBirthChart();
             animateResults('astroResults');
