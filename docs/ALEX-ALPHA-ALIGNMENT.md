@@ -1,35 +1,55 @@
-# Đối chiếu Thần số học dễ hiểu — Alex Alpha và Huyền Minh Group
+# Đối chiếu mục lục Thần số học dễ hiểu — Alex Alpha và Huyền Minh Group
 
-## Nguồn đọc được ngày 27/10/2026
+## Phạm vi yêu cầu
 
-[Trang chính thức Nhà sách Thái Hà](https://nhasachthaiha.vn/products/than-so-hoc-de-hieu) công bố giới thiệu và trích đoạn Số Vận mệnh 1, 2. Phần này chưa cung cấp đầy đủ cách tính các chỉ số.
+Ngày 27/10/2026, người dùng xác nhận ưu tiên kiểm tra danh mục phần tính số theo mục lục, sau đó cung cấp 5 ảnh của tr. 10–18. Bản đối chiếu này dùng chính ảnh người dùng gửi; không suy ra công thức từ một tiêu đề mục lục và không yêu cầu toàn văn sách để hoàn thành bước kiểm tra danh mục.
 
-Phần giới thiệu đặt tên và ngày sinh trong cùng bản đồ; lưu ý giới hạn của việc thu gọn thông tin về một người thành con số. Trích đoạn Vận mệnh 1 nhấn mạnh tính chủ động/độc lập và vấn đề áp đặt; số 2 nhấn mạnh phối hợp/cân bằng cùng vấn đề thiếu quyết đoán. Nội dung NUMEN diễn đạt lại các chủ đề này bằng tình huống đời thường do mình viết; không chép đoạn sách hoặc đồng nhất lời luận với sự thật về người dùng.
+Ảnh nguồn nằm trong cuộc trò chuyện, không đưa ảnh cá nhân hoặc ảnh sách vào repository công khai. Photo 1: tr. 10–11; Photo 2: tr. 12–13; Photo 3: tr. 14–15; Photo 4: tr. 16–17; Photo 5: tr. 18.
 
-Không tìm thấy bản đọc thử có đủ công thức trên các nguồn chính thức đã tra cứu. Chưa sử dụng toàn văn sách hay nội dung khóa học. Không lấy công thức từ sách khác rồi gán cho Alex Alpha.
+## Kết luận
 
-## Các quy tắc cần trang sách để đối chiếu
+**Đủ 14/14 nhóm được liệt kê trong chương 3, Cách tính các con số chủ chốt (tr. 45–53).** Đây là kết quả kiểm tra phạm vi chức năng và tên gọi, không phải chứng nhận từng công thức đã trùng sách.
 
-| Hạng mục | NUMEN hiện tại | Trạng thái theo sách |
+| STT | Mục tính trong sách | Trang cách tính | Code hiện có |
+|---|---|---|---|
+| 1 | Số linh hồn | 46 | `getNameNumbers().soul` |
+| 2 | Số vận mệnh | 47 | `getNameNumbers().destiny` |
+| 3 | Số nhân cách | 48 | `getNameNumbers().personality` |
+| 4 | Số đường đời | 49 | `calcLifePath` |
+| 5 | Số ngày sinh | 49 | `calcBirthday` |
+| 6 | Cầu nối linh hồn–nhân cách | 49 | `calcBridgeNumbers().soulPersonality` |
+| 7 | Cầu nối đường đời–ngày sinh | 49 | `calcBridgeNumbers().lifePathBirthday` |
+| 8 | Bốn đỉnh cao | 51 | `calcPinnacles` |
+| 9 | Bốn thử thách | 51 | `calcChallenges` |
+| 10 | Ba giai đoạn | 52 | `calcLifePeriods` |
+| 11 | Số năm cá nhân | 52 | `calcPersonalYear` |
+| 12 | Số tháng cá nhân | 53 | `calcPersonalMonth` |
+| 13 | Bài học nghiệp | 53 | `calcKarmicLessons` |
+| 14 | Biểu đồ ngày sinh | 53 | `calcPythagorasChart` |
+
+## Sai khác và thay đổi đã thực hiện
+
+- **Sửa nhãn cầu nối.** Cầu nối Đường đời–Ngày sinh được nêu trong mục 3.7 (tr. 49) và mục 4.G (tr. 160); không gọi nó là chỉ số bổ sung nữa. Hai cặp trong sách được xếp trước. Cặp Đường đời–Vận mệnh vẫn có trên NUMEN nhưng được ghi là phần bổ sung ngoài danh mục mục lục này.
+- **Phân biệt bài học nghiệp và nợ nghiệp.** Mục 4.J (tr. 185–192) có bài học nghiệp 1–9; mục 4.K (tr. 193–198) có nợ nghiệp 13, 14, 16, 19. NUMEN đang có nhóm đầu, chưa có phép xác định riêng nhóm sau. Không dùng số thiếu trong tên để gán nợ nghiệp, cũng không gán chỉ vì sinh ngày 13/14/16/19 khi chưa có quy tắc của sách.
+- **Thông tin nguồn được cập nhật.** Không tiếp tục nói chưa có mục lục; ghi rõ đã kiểm đủ 14 nhóm và công thức chi tiết chưa được đối chiếu. Thuật toán số học giữ nguyên.
+
+## Những điểm mục lục chưa đủ để xác nhận
+
+| Nội dung thấy trong ảnh | NUMEN hiện tại | Cách ghi nhận |
 |---|---|---|
-| Đường đời | Rút gọn riêng ngày/tháng/năm, giữ 11/22/33 ở thành phần và tổng | Chưa xác minh |
-| Tên | Tổng giá trị toàn bộ chữ cái, sau đó rút gọn; không rút gọn từng từ | Chưa xác minh |
-| Chữ Y | Lựa chọn thủ công; mặc định nguyên âm | Chưa xác minh |
-| Ngày sinh | Rút gọn 1–9 | Chưa xác minh |
-| Cầu nối | Rút gọn các chỉ số trước khi lấy hiệu; có cặp bổ sung Đường đời–Ngày sinh | Chưa xác minh |
-| Đỉnh cao | Thành phần về 1–9; giữ số đặc biệt ở kết quả; mốc 36 − Đường đời rút gọn | Chưa xác minh |
-| Thử thách | Hiệu các thành phần rút gọn; cho phép 0 | Chưa xác minh |
-| Ba giai đoạn | Năm cá nhân 1 đầu tiên từ năm tròn 27 tuổi, sau đó 27 năm | Chưa xác minh |
-| Năm/tháng cá nhân | Theo năm lịch, rút gọn 1–9 | Chưa xác minh |
-| Biểu đồ/mũi tên | Đếm chữ số ngày sinh, bỏ 0 | Chưa xác minh |
-| Điểm gợi ý tên | Công thức xếp hạng nội bộ của NUMEN | Không phải công thức đã xác minh của sách |
-| Diễn giải Vận mệnh 1–2 | Chủ đề và cân bằng đối chiếu trích đoạn; ví dụ viết mới | Đã đối chiếu phần trích đoạn, chưa đối chiếu toàn chương |
-| Diễn giải các số khác/chu kỳ | Nội dung truyền thống từ phiên bản trước, thêm ví dụ viết mới | Chưa xác minh theo sách |
+| Ý nghĩa chung có 11/2, 22/4, 33/6; Đường đời và Vận mệnh có các mục 11/22/33 | Giữ số đặc biệt ở các thành phần và tổng theo quy ước hiện có | Xác nhận có các số đặc biệt trong sách; mục lục không chỉ ra chính xác bước dừng rút gọn |
+| Linh hồn, Nhân cách, Ngày sinh, Đỉnh cao được liệt kê 1–9 | Linh hồn/Nhân cách/Đỉnh cao hiện có thể giữ 11/22/33; Ngày sinh về 1–9 | Ghi nhận khác biệt phạm vi liệt kê; chưa tự đổi công thức chỉ từ việc không có tiêu đề 11/22/33 |
+| Cầu nối và Thử thách được liệt kê 0–8 | Phép hiệu trong engine cho 0–8, có diễn giải riêng cho 0 | Phạm vi kết quả phù hợp danh mục |
+| Năm và tháng cá nhân được liệt kê 1–9 | Engine luôn rút gọn về 1–9 | Phạm vi kết quả phù hợp danh mục |
+| Chương Nguyên âm trong Thần số học (tr. 231) | Bỏ dấu tiếng Việt, Đ→D; Y lựa chọn thủ công | Chưa thể suy ra quy tắc Y hoặc các ngoại lệ phát âm từ tên chương |
+| Ba giai đoạn (tr. 52), đỉnh cao/thử thách | Có công thức và mốc tuổi được công bố trên web | Mục lục không xác nhận cách chốt mốc tuổi |
 
-## Quy trình hoàn tất khi có tài liệu
+Các mục cuối sách: luận giải cho nhóm (tr. 221), ví dụ thực tế (tr. 225), nguyên âm (tr. 231), tài liệu tham khảo (tr. 241). NUMEN chưa có công cụ luận giải nhóm; các ví dụ hiện tại là nội dung tự biên soạn, không phải các ví dụ ở chương 6 của sách. Gợi ý tên và bản đồ sao là chức năng thêm của NUMEN, không tính vào 14 nhóm chương 3.
 
-Cần mục lục và các trang định nghĩa/công thức/ví dụ mẫu, đặc biệt các ngoại lệ chữ Y, 11/22/33 và mốc tuổi. Lập fixture với số trang và kết quả mẫu trước; sửa engine, cách trình bày phép tính, bảng quy đổi và gợi ý tên cùng lúc; chạy lại kiểm tra hồi quy. Không ghi đã hoàn tất đối chiếu chỉ vì kiểm thử công thức hiện tại chạy qua.
+## Nguồn công khai bổ trợ
 
-## Bản cập nhật có thể phát hành ngay
+[Thái Hà](https://nhasachthaiha.vn/products/than-so-hoc-de-hieu) cung cấp giới thiệu và trích đoạn Vận mệnh 1–2. Nội dung này được dùng đối chiếu chủ đề, không thay ảnh mục lục hoặc công thức trong sách. Không sao chép lời luận hoặc trình bày sự tương đồng chủ đề như bằng chứng đánh giá tính cách.
 
-Thêm 60 ví dụ riêng cho 12 hồ sơ × 5 vai trò cốt lõi và 9 ví dụ chu kỳ; mở rộng ví dụ vào gợi ý tên; giải thích cách tính từ chính dữ liệu nhập, phân biệt ý nghĩa từng chỉ số bằng lời đời thường. Công thức số học không thay đổi khi chưa có căn cứ từ sách. Giao diện ghi rõ giới hạn nguồn trong phần Quy ước tính và Nguồn tham khảo.
+## Xác minh triển khai
+
+Chỉnh thứ tự/nhãn và thông tin nguồn; không thay engine, cách xử lý chữ Y, số đặc biệt, phép tính hay mốc tuổi. Chạy bộ kiểm tra hiện có và kiểm tra ba thẻ cầu nối trên trình duyệt trước khi phát hành.

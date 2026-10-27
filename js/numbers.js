@@ -75,16 +75,16 @@ function _doCalculate(name, day, month, year, currentYear, currentMonth) {
     // ── 4. Bridge numbers ─────────────────────────────────────────
     const { soulPersonality: bSP, lifePathBirthday: bLB, detail: bD } = bridges;
     document.getElementById('bridgeNumbers').innerHTML = [
-        renderNumCard('Cầu Nối Đường Đời – Vận Mệnh', bridges.lifePathDestiny, `|${reduceSingleDigit(lifePath)} − ${reduceSingleDigit(destiny)}| = ${bridges.lifePathDestiny}`, '↔', 0),
         renderNumCard('Cầu Nối Linh Hồn – Nhân Cách', bSP, `|${bD.sR} − ${bD.pR}| = ${bSP}`, '🌉', 0),
         renderNumCard('Cầu Nối Đường Đời – Ngày Sinh', bLB, `|${bD.lR} − ${bD.bR}| = ${bLB}`, '🔗', 80),
+        renderNumCard('Cầu Nối Đường Đời – Vận Mệnh (bổ sung)', bridges.lifePathDestiny, `Ngoài danh mục mục lục sách · |${reduceSingleDigit(lifePath)} − ${reduceSingleDigit(destiny)}| = ${bridges.lifePathDestiny}`, '↔', 160),
     ].join('');
     document.getElementById('bridgeCalcDetails').innerHTML =
         renderCalcDetail('Số Cầu Nối',
             renderStep('Công thức', '|Số A − Số B| (rút gọn tất cả Master Number về 1 chữ số trước khi trừ)') +
-            renderStep('Cầu nối Đường Đời − Vận Mệnh', `|${reduceSingleDigit(lifePath)} − ${reduceSingleDigit(destiny)}| = <span class="highlight">${bridges.lifePathDestiny}</span>`) +
             renderStep('Cầu nối Linh Hồn − Nhân Cách', `|${bD.sR} − ${bD.pR}| = <span class="highlight">${bSP}</span>`) +
-            renderStep('Cầu nối Đường Đời − Ngày Sinh',  `|${bD.lR} − ${bD.bR}| = <span class="highlight">${bLB}</span>`));
+            renderStep('Cầu nối Đường Đời − Ngày Sinh',  `|${bD.lR} − ${bD.bR}| = <span class="highlight">${bLB}</span>`) +
+            renderStep('Cầu nối Đường Đời − Vận Mệnh (bổ sung ngoài mục lục sách)', `|${reduceSingleDigit(lifePath)} − ${reduceSingleDigit(destiny)}| = <span class="highlight">${bridges.lifePathDestiny}</span>`));
 
     // ── 5. Personal year / month ──────────────────────────────────
     document.getElementById('personalNumbers').innerHTML = [
@@ -224,7 +224,7 @@ function _doCalculate(name, day, month, year, currentYear, currentMonth) {
         ['life',lifePath],['expression',destiny],['soul',soul],['personality',personality],['birthday',birthday]
     ].map(([role,n],i)=>renderNumberReading(role,n,'',i===0)).join(''));
     mountReading('bridgeNumbers',[
-        ['Đường đời – Vận mệnh',bridges.lifePathDestiny],['Linh hồn – Nhân cách',bSP],['Đường đời – Ngày sinh (bổ sung)',bLB]
+        ['Linh hồn – Nhân cách',bSP],['Đường đời – Ngày sinh',bLB],['Đường đời – Vận mệnh (bổ sung)',bridges.lifePathDestiny]
     ].map(([label,n])=>renderNumberReading('bridge',n,label)).join(''));
     mountReading('personalNumbers',renderCycleReading(personalYear,`Năm cá nhân ${currentYear}`)+renderCycleReading(personalMonth,`Tháng cá nhân ${currentMonth}/${currentYear}`));
     mountReading('pinnacles',pinnData.pinnacles.map((p,i)=>renderNumberReading('pinnacle',p.num,`Đỉnh ${i+1} · ${p.from}–${p.to===null?'∞':p.to} tuổi`)).join(''));

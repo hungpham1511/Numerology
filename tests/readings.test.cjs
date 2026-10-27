@@ -110,7 +110,7 @@ test('calculation guide uses actual inputs, component masters and the selected Y
 
 test('source disclosure distinguishes the published excerpt from unverified book formulas',()=>{
     const html=run('renderNumberSources()');
-    assert.match(html,/nhasachthaiha\.vn/);assert.match(html,/Số Vận mệnh 1–2/);
+    assert.match(html,/nhasachthaiha\.vn/);assert.match(html,/Vận mệnh 1–2/);
     assert.match(html,/chưa có đủ nội dung/);
     assert.match(run('renderCycleReading(4,"Năm cá nhân")'),/Ví dụ để hình dung/);
 });

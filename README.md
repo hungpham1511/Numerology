@@ -19,7 +19,7 @@ Test dùng Node.js với `node:test`, không cần npm package. [Báo cáo rà s
 - Đường đời: rút gọn riêng ngày/tháng/năm, giữ 11/22/33 ở mỗi thành phần và tổng.
 - Tên: bỏ dấu, Đ → D; bảng A–Z Pythagoras. Y theo lựa chọn, mặc định nguyên âm với tên tiếng Việt. Tên tiếng Anh cần chọn theo cách phát âm.
 - Ngày sinh: dạng rút gọn 1–9, ngày gốc có trong phần cách tính; khác hệ giữ nguyên 1–31 hoặc giữ Master Number.
-- Cầu nối: hiệu tuyệt đối khi cả hai chỉ số về 1–9. Có Đường đời–Vận mệnh, Linh hồn–Nhân cách và chỉ số bổ sung Đường đời–Ngày sinh.
+- Cầu nối: hiệu tuyệt đối khi cả hai chỉ số về 1–9. Có Linh hồn–Nhân cách và Đường đời–Ngày sinh như mục lục sách; Đường đời–Vận mệnh là cặp bổ sung ngoài danh mục đó.
 - Đỉnh cao: thành phần ngày/tháng/năm về 1–9, giữ Master Number ở kết quả cộng; tuổi kết thúc đỉnh đầu = 36 − Đường đời rút gọn. Thử thách dùng 0–8.
 - Ba giai đoạn giữ Master Number trong tháng/ngày/năm; chuyển ở năm cá nhân 1 đầu tiên từ năm tròn 27 tuổi, sau đó 27 năm. Tuổi là mốc theo năm lịch, không phải ngày chuyển chính xác.
 - Năm/tháng cá nhân theo năm lịch, rút gọn về 1–9.
@@ -58,6 +58,6 @@ Bản phát hành gắn `asset-version` trong `index.html` và query version cho
 
 ## Nguồn đích Alex Alpha
 
-Đang hướng tới đối chiếu *Thần số học dễ hiểu* của Alex Alpha và Huyền Minh Group. Hiện chỉ đọc được giới thiệu và trích đoạn chính thức Vận mệnh 1–2; chưa xác nhận công thức toàn sách. [Trạng thái từng quy tắc](docs/ALEX-ALPHA-ALIGNMENT.md). Không công bố NUMEN là công cụ đã tính đúng theo sách khi chưa có đủ tài liệu.
+Đã đối chiếu 5 ảnh mục lục tr. 10–18 của *Thần số học dễ hiểu* (Alex Alpha và Huyền Minh Group): đủ 14/14 nhóm tính của chương 3. Đã sửa nhãn cầu nối Đường đời–Ngày sinh thành nhóm trong sách, đánh dấu Đường đời–Vận mệnh là phần thêm. Bài học nghiệp hiện có khác chỉ số nợ nghiệp 13/14/16/19 hiện chưa tính riêng. [Bảng đối chiếu và giới hạn xác minh](docs/ALEX-ALPHA-ALIGNMENT.md). Mục lục chưa xác nhận chi tiết công thức, mốc tuổi hoặc ngoại lệ chữ Y/số đặc biệt.
 
 Diễn giải có 60 ví dụ đời thường riêng cho các vai trò cốt lõi, 9 ví dụ chu kỳ và cách tính bằng chính dữ liệu người dùng nhập. Các ví dụ không phải trích sách hoặc sự kiện suy ra về người đọc.

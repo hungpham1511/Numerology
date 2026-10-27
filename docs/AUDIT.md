@@ -70,3 +70,8 @@ Sau bản theme tím `0ae8875`: thêm nội dung tiếng Việt theo vai trò ch
 Viết lại câu chữ khó đọc, bổ sung 60 ví dụ vai trò cốt lõi và 9 ví dụ chu kỳ, cách tính giải thích bằng dữ liệu vừa nhập và ví dụ trong gợi ý tên. Sửa nhãn công thức Vận mệnh: chỉ rút gọn tổng toàn tên, không tuyên bố có rút gọn từng thành phần. Thuật toán không đổi. Mới đọc được trích đoạn Vận mệnh 1–2 chính thức; các quy tắc chưa đối chiếu được ghi ở `ALEX-ALPHA-ALIGNMENT.md`. Thêm 3 nhóm kiểm tra có ý nghĩa cho hướng dẫn tính và nội dung, tổng 24 nhóm.
 
 Kiểm tra trình duyệt bằng dữ liệu giả DEMO, 1/1/2000: hướng dẫn tính hiển thị đúng tên/ngày sinh; 5 phần cốt lõi và 27 khung ví dụ trong hồ sơ; gợi ý tên có 30 thẻ và 90 ví dụ cho ba chỉ số. Bố cục desktop và viewport 390px không tràn ngang; không lỗi biểu mẫu hoặc console.
+
+
+## 27/10/2026 — Đối chiếu mục lục sách do người dùng cung cấp
+
+Đọc 5 ảnh tr. 10–18, lập bảng khớp đủ 14 mục tính ở chương 3. Sửa nhãn sai: Đường đời–Ngày sinh là cặp có trong sách, Đường đời–Vận mệnh là phần thêm ngoài danh mục; xếp hai cặp của sách trước. Ghi rõ bài học nghiệp không phải nợ nghiệp 13/14/16/19; nhóm sau còn thiếu phép xác định riêng. Mục lục chỉ xác nhận danh mục, không dùng để tuyên bố công thức và mốc tuổi đã trùng sách. Không thay engine.

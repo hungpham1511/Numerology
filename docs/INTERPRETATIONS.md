@@ -48,3 +48,8 @@ Các dữ liệu diễn giải nằm trong `js/meanings.js` và `js/astro-readin
 Theo yêu cầu chọn *Thần số học dễ hiểu* làm nguồn đích, phần công thức hiện chưa được xác minh đầy đủ theo sách. [Bảng đối chiếu chi tiết](ALEX-ALPHA-ALIGNMENT.md) ghi rõ từng phần đã/chưa đọc. Trích đoạn chính thức Thái Hà chỉ đủ để đối chiếu chủ đề Vận mệnh 1–2, không đủ để đổi thuật toán hay gắn nhãn toàn website theo tác giả.
 
 Mỗi vai trò cốt lõi có tình huống minh họa riêng: 60 ví dụ cho 12 hồ sơ, 9 ví dụ năm/tháng; thêm giải thích phép tính theo dữ liệu thật vừa nhập. Ví dụ do NUMEN biên soạn, không lấy làm dự đoán sự kiện của người đọc. Thêm 3 nhóm kiểm tra về nội dung theo vai trò, phép tính minh họa/nhóm chữ thiếu/chữ Y/số đặc biệt và thông tin nguồn; tổng 24 nhóm.
+
+
+## Đối chiếu mục lục từ ảnh người dùng
+
+Đã nhận đủ ảnh tr. 10–18 và xác nhận 14/14 nhóm chương 3 có trong công cụ. Nhãn/thứ tự hai cầu nối được sửa theo mục lục: Linh hồn–Nhân cách, Đường đời–Ngày sinh; Đường đời–Vận mệnh là phần thêm. Bài học nghiệp 1–9 khác nợ nghiệp 13/14/16/19; nhóm sau chưa tính riêng. Trạng thái trước khi có ảnh ở phần lịch sử bên trên được thay bằng [bảng đối chiếu mới](ALEX-ALPHA-ALIGNMENT.md). Chưa thay thuật toán dựa trên tiêu đề mục lục.
