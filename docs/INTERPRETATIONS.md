@@ -41,3 +41,10 @@ Không biết giờ sinh: nội dung lấy mốc 12:00 địa phương; ẩn to�
 `node --test tests/*.test.cjs`: 21 nhóm kiểm thử, gồm 13 nhóm phép tính cũ và 8 nhóm nội dung/hiển thị. Bao phủ các vai trò cốt lõi cho 12 hồ sơ số, 10 thiên thể × 12 cung, thiếu giờ sinh, 12 nhà, năm góc hợp, tổng số nguyên tố, nhãn không xác định và escape nội dung. Các công thức thiên văn/số học không đổi.
 
 Các dữ liệu diễn giải nằm trong `js/meanings.js` và `js/astro-readings.js`, chỉ tải khi sử dụng công cụ tương ứng. Phần trang chủ không tải toàn bộ nội dung mới.
+
+
+## Cập nhật cách viết và đối chiếu Alex Alpha
+
+Theo yêu cầu chọn *Thần số học dễ hiểu* làm nguồn đích, phần công thức hiện chưa được xác minh đầy đủ theo sách. [Bảng đối chiếu chi tiết](ALEX-ALPHA-ALIGNMENT.md) ghi rõ từng phần đã/chưa đọc. Trích đoạn chính thức Thái Hà chỉ đủ để đối chiếu chủ đề Vận mệnh 1–2, không đủ để đổi thuật toán hay gắn nhãn toàn website theo tác giả.
+
+Mỗi vai trò cốt lõi có tình huống minh họa riêng: 60 ví dụ cho 12 hồ sơ, 9 ví dụ năm/tháng; thêm giải thích phép tính theo dữ liệu thật vừa nhập. Ví dụ do NUMEN biên soạn, không lấy làm dự đoán sự kiện của người đọc. Thêm 3 nhóm kiểm tra về nội dung theo vai trò, phép tính minh họa/nhóm chữ thiếu/chữ Y/số đặc biệt và thông tin nguồn; tổng 24 nhóm.

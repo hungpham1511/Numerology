@@ -22,3 +22,26 @@ body{background:radial-gradient(ellipse at 12% 6%,#562a782b,transparent 38%),rad
 @media(prefers-reduced-motion:reduce){.reading-chevron{transition:none}}
 
 .reading-grid>.reading-card[open]{grid-column:1/-1}.reading-card[open] .reading-body{max-width:920px}
+
+/* Everyday examples stay visually separate from personal calculation results. */
+.reading-example{margin:18px 0;padding:16px 18px;border:1px solid rgba(196,155,255,.22);border-left:3px solid var(--accent-light);border-radius:12px;background:rgba(160,100,230,.07)}
+.reading-example>strong{color:var(--accent-light);font-size:.82rem}
+.reading-example p{margin:7px 0 0;line-height:1.8}
+.calculation-guide{grid-column:1/-1;min-width:0;scroll-margin-top:20px}
+.calculation-guide ol{padding-left:24px}
+.calculation-guide li{margin:18px 0}
+.calculation-guide li>p{margin:7px 0}
+.calculation-example{overflow-wrap:anywhere;font-variant-numeric:tabular-nums;color:var(--text)}
+
+#results .reading-body{font-size:15px;line-height:1.85}
+#results .reading-context{font-size:14px}
+#results .reading-overview p{font-size:15px}
+#results .reading-card summary strong{font-size:15px}
+#results .reading-kicker{font-size:11px}
+#results .reading-body blockquote{font-size:14px}
+.calculation-guide{padding:20px 23px;border:1px solid #9269b846;border-radius:14px;background:#21172f;font-size:14px;color:#d7cce6}
+.calculation-guide summary{font-size:15px;font-weight:600;color:#f0e4ff}
+.calculation-guide p{max-width:920px}
+.name-reading{font-size:13px}
+.name-reading-example{padding-left:12px;border-left:2px solid #b77ce666}
+@media(max-width:750px){.calculation-guide{padding:18px}.reading-example{padding:14px}}

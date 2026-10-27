@@ -39,7 +39,7 @@ Không biết giờ sinh: dùng 12:00 địa phương, ẩn ASC/MC/nhà. Tất c
 
 ## Diễn giải mở rộng
 
-Có nội dung theo vai trò từng chỉ số số học, chu kỳ, giai đoạn, thử thách và gợi ý tên. Bản đồ sao có diễn giải theo thiên thể/cung/nhà, ASC/MC, góc hợp và thống kê nguyên tố. Mục mở rộng và liên kết chuyển nhanh giúp đọc theo nhu cầu. [Nguồn, cách biên soạn và giới hạn](docs/INTERPRETATIONS.md). Bộ kiểm tra hiện có 21 nhóm.
+Có nội dung theo vai trò từng chỉ số số học, chu kỳ, giai đoạn, thử thách và gợi ý tên. Bản đồ sao có diễn giải theo thiên thể/cung/nhà, ASC/MC, góc hợp và thống kê nguyên tố. Mục mở rộng và liên kết chuyển nhanh giúp đọc theo nhu cầu. [Nguồn, cách biên soạn và giới hạn](docs/INTERPRETATIONS.md). Bộ kiểm tra hiện có 24 nhóm.
 
 ## Giao diện và chuyển động
 
@@ -54,3 +54,10 @@ Thần số học và chiêm tinh là công cụ chiêm nghiệm theo niềm tin
 From hngphm with ♥ love.
 
 Bản phát hành gắn `asset-version` trong `index.html` và query version cho CSS/script; module tải theo nhu cầu dùng cùng version để tránh trộn script cũ với nội dung mới khi trình duyệt còn cache. Đổi version cùng CSS/engine/main URLs khi phát hành thay đổi phụ thuộc giữa module.
+
+
+## Nguồn đích Alex Alpha
+
+Đang hướng tới đối chiếu *Thần số học dễ hiểu* của Alex Alpha và Huyền Minh Group. Hiện chỉ đọc được giới thiệu và trích đoạn chính thức Vận mệnh 1–2; chưa xác nhận công thức toàn sách. [Trạng thái từng quy tắc](docs/ALEX-ALPHA-ALIGNMENT.md). Không công bố NUMEN là công cụ đã tính đúng theo sách khi chưa có đủ tài liệu.
+
+Diễn giải có 60 ví dụ đời thường riêng cho các vai trò cốt lõi, 9 ví dụ chu kỳ và cách tính bằng chính dữ liệu người dùng nhập. Các ví dụ không phải trích sách hoặc sự kiện suy ra về người đọc.

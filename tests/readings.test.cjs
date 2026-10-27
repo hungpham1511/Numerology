@@ -85,3 +85,32 @@ test('renderers escape supplied display labels rather than creating executable m
     const html=run(`(()=>{const chart=${chartCode};chart.planets[0].name=payload;return renderAstroReadings(chart)})()`);
     assert.doesNotMatch(html,/<img/);assert.match(html,/&lt;img/);
 });
+
+test('every core role has its own everyday example; missing groups and zero keep their meaning',()=>{
+    for(const n of [1,2,3,4,5,6,7,8,9,11,22,33]){
+        const examples=['life','expression','soul','personality','birthday'].map(role=>run(`getNumberExample('${role}',${n})`));
+        assert.equal(new Set(examples).size,5);
+        for(const example of examples)assert.ok(example.length>90);
+    }
+    assert.match(run('getNumberExample("soul",null)'),/nguyên âm/);
+    assert.match(run('getNumberExample("personality",null)'),/Nhân cách/);
+    assert.match(run('getNumberExample("bridge",0)'),/11 và 2/);
+    assert.notEqual(run('getNumberExample("bridge",0)'),run('getNumberExample("challenge",0)'));
+});
+
+test('calculation guide uses actual inputs, component masters and the selected Y convention',()=>{
+    const demo=run('renderCoreCalculationGuide("DEMO",1,1,2000,true)');
+    assert.match(demo,/D\(4\) \+ E\(5\) \+ M\(4\) \+ O\(6\)/);
+    assert.match(demo,/1 \+ 1 \+ 2 = 4/);
+    assert.match(demo,/E\(5\) \+ O\(6\): 11.*kết quả 11/);
+    assert.match(run('renderCoreCalculationGuide("MY",11,2,2000,false)'),/ngày → 11; tháng → 2; năm → 2/);
+    assert.match(run('renderCoreCalculationGuide("MY",11,2,2000,false)'),/Y đang được tính là <strong>phụ âm/);
+    for(const name of ['AEIOU','BCDF','MY'])assert.doesNotMatch(run(`renderCoreCalculationGuide('${name}',11,2,2000,false)`),/undefined|NaN|\bnull\b/);
+});
+
+test('source disclosure distinguishes the published excerpt from unverified book formulas',()=>{
+    const html=run('renderNumberSources()');
+    assert.match(html,/nhasachthaiha\.vn/);assert.match(html,/Số Vận mệnh 1–2/);
+    assert.match(html,/chưa có đủ nội dung/);
+    assert.match(run('renderCycleReading(4,"Năm cá nhân")'),/Ví dụ để hình dung/);
+});

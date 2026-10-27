@@ -31,7 +31,7 @@ function _doCalculate(name, day, month, year, currentYear, currentMonth) {
 
     // ── 3. Core numbers ───────────────────────────────────────────
     document.getElementById('coreNumbers').innerHTML = [
-        renderNumCard('Số Đường Đời',  lifePath,    'Chỉ số quan trọng nhất',          '🛤️', 0),
+        renderNumCard('Số Đường Đời',  lifePath,    'Bài học và hướng phát triển dài hạn',          '🛤️', 0),
         renderNumCard('Số Vận Mệnh',   destiny,     'Từ họ và tên đầy đủ',             '📜', 80),
         renderNumCard('Số Linh Hồn',   soul,        'Từ các nguyên âm trong tên',      '💜', 160),
         renderNumCard('Số Nhân Cách',  personality, 'Từ các phụ âm trong tên',        '🎭', 240),
@@ -50,7 +50,7 @@ function _doCalculate(name, day, month, year, currentYear, currentMonth) {
             renderFormula(`Số Đường Đời = <span class="result">${lifePath}</span>`)) +
 
         renderCalcDetail('Số Vận Mệnh (Expression)',
-            renderStep('Công thức', 'Cộng giá trị tất cả chữ cái → rút gọn (giữ 11/22/33 ở từng thành phần và tổng)') +
+            renderStep('Công thức', 'Cộng giá trị tất cả chữ cái của toàn tên → rút gọn tổng (dừng ở 11/22/33)') +
             renderStep('Giá trị', nd.allParts.join(' + ') + ` = <span class="highlight">${nd.totalSum}</span>`) +
             (nd.destinySteps.length ? renderStep('Rút gọn', nd.destinySteps.join(' → ')) : '') +
             renderFormula(`Số Vận Mệnh = <span class="result">${destiny}</span>`)) +
@@ -88,8 +88,8 @@ function _doCalculate(name, day, month, year, currentYear, currentMonth) {
 
     // ── 5. Personal year / month ──────────────────────────────────
     document.getElementById('personalNumbers').innerHTML = [
-        renderNumCard(`Số Năm Cá Nhân ${currentYear}`,    personalYear,  'Năng lượng của năm hiện tại',   '🌟', 0),
-        renderNumCard(`Số Tháng Cá Nhân (T${currentMonth})`, personalMonth, 'Năng lượng của tháng hiện tại', '🌙', 80),
+        renderNumCard(`Số Năm Cá Nhân ${currentYear}`,    personalYear,  'Chủ đề của năm để tham khảo',   '🌟', 0),
+        renderNumCard(`Số Tháng Cá Nhân (T${currentMonth})`, personalMonth, 'Chủ đề ngắn hạn trong năm', '🌙', 80),
     ].join('');
     document.getElementById('personalCalcDetails').innerHTML =
         renderCalcDetail('Số Năm & Tháng Cá Nhân',
@@ -220,7 +220,7 @@ function _doCalculate(name, day, month, year, currentYear, currentMonth) {
         if(!el){el=document.createElement('div');el.id=targetId+'Readings';el.className='reading-grid';document.getElementById(targetId).insertAdjacentElement('afterend',el);}
         el.innerHTML=html;
     }
-    mountReading('coreNumbers',renderNumberSynthesis(lifePath,destiny,soul)+[
+    mountReading('coreNumbers',renderNumberSynthesis(lifePath,destiny,soul)+renderCoreCalculationGuide(name,day,month,year,document.getElementById('yConvention').value === 'vowel')+[
         ['life',lifePath],['expression',destiny],['soul',soul],['personality',personality],['birthday',birthday]
     ].map(([role,n],i)=>renderNumberReading(role,n,'',i===0)).join(''));
     mountReading('bridgeNumbers',[

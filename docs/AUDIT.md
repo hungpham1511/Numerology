@@ -63,3 +63,10 @@ Theo yêu cầu sau bản phát hành `8040613`: đổi nền tím đêm, điể
 ## Cập nhật diễn giải mở rộng
 
 Sau bản theme tím `0ae8875`: thêm nội dung tiếng Việt theo vai trò chỉ số, chu kỳ, giai đoạn, thử thách, gợi ý tên và các lớp bản đồ sao. Các đoạn khẳng định số phận hoặc năng lực vượt trội trong bảng ý nghĩa cũ được thay bằng chủ đề, thực hành và câu hỏi. Nguồn, cách ghép theo mẫu và giới hạn được công bố trong [INTERPRETATIONS.md](INTERPRETATIONS.md) và trên giao diện. Không đổi công thức tính. Bộ kiểm thử mở rộng: 21/21 nhóm qua.
+
+
+## 27/10/2026 — Ví dụ đời thường và nguồn đích Alex Alpha
+
+Viết lại câu chữ khó đọc, bổ sung 60 ví dụ vai trò cốt lõi và 9 ví dụ chu kỳ, cách tính giải thích bằng dữ liệu vừa nhập và ví dụ trong gợi ý tên. Sửa nhãn công thức Vận mệnh: chỉ rút gọn tổng toàn tên, không tuyên bố có rút gọn từng thành phần. Thuật toán không đổi. Mới đọc được trích đoạn Vận mệnh 1–2 chính thức; các quy tắc chưa đối chiếu được ghi ở `ALEX-ALPHA-ALIGNMENT.md`. Thêm 3 nhóm kiểm tra có ý nghĩa cho hướng dẫn tính và nội dung, tổng 24 nhóm.
+
+Kiểm tra trình duyệt bằng dữ liệu giả DEMO, 1/1/2000: hướng dẫn tính hiển thị đúng tên/ngày sinh; 5 phần cốt lõi và 27 khung ví dụ trong hồ sơ; gợi ý tên có 30 thẻ và 90 ví dụ cho ba chỉ số. Bố cục desktop và viewport 390px không tràn ngang; không lỗi biểu mẫu hoặc console.
